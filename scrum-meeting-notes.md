@@ -2,7 +2,9 @@
 
 ## Monday 05/10/2020 - Initial Meeting
 - Went over brief together
-- Set Leader roles (Teodora Udrea as Team Leader, Kamila Gorska as scrum master)
+- Set Leader roles 
+  - Teodora Udrea as Team Leader
+  - Kamila Gorska as Scrum Master
 - Split into Teams
   - Frontend: Gregor Mitchell, Justas Same, Peter Short, Teodora Udrea, Tingjie Zhao
   - Backend: Afzal Miah, Charlie Hewitt, John Grossi, Kamila Gorska, Neilson Desa
