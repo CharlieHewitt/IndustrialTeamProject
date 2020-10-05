@@ -1,0 +1,7 @@
+# node
+
+node_modules
+
+# mac os
+
+.DS_STORE
