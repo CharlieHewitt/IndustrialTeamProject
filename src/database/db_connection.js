@@ -3,6 +3,11 @@ const mongoose = require("mongoose");
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useUnifiedTopology", true);
 
+/**
+ * Connect to mongoDB Atlas.
+ *
+ * @param {string} MONGODB_CONNECTIONSTRING - database connection uri.
+ */
 function connectToDatabase(MONGODB_CONNECTIONSTRING) {
   mongoose
     .connect(MONGODB_CONNECTIONSTRING, { useNewUrlParser: true })
