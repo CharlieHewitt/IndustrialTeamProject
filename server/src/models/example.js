@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const exampleSchema = new mongoose.Schema({
   field1: String,
@@ -6,4 +6,4 @@ const exampleSchema = new mongoose.Schema({
 });
 
 // can be imported in other files as 'Example' from this file.
-module.exports = mongoose.model('Example', exampleSchema);
+module.exports = mongoose.model("Example", exampleSchema);
