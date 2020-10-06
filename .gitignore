@@ -5,3 +5,7 @@ node_modules
 # mac os
 
 .DS_STORE
+
+# server (sensitive environment variables)
+
+server/.env
