@@ -1,6 +1,5 @@
 const express = require("express");
 const connectToDatabase = require("./database/db_connection.js");
-const dbTest = require("./database/db_test.js");
 
 // import env variables
 // Create .env file if you haven't!
