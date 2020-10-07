@@ -1,22 +1,24 @@
 ## Some notes:
 
-### Components: (src/components)
+### Components: (`src/components`)
 Splitting up code in to components is common practice in React. 
-You can check ExampleComponent in the components folder to see the basic structure.
-- index.js: used just to make importing the component cleaner (import '...ExampleComponent/ExampleComponent' -> import '...ExampleComponent')
-- index.css: this is where the styling for the component is. It is imported in component file (e.g. ExampleComponent.js)
-- ExampleComponent.js: this is where the React code for the component resides and main logic for the component.
-- ExampleComponent.test.js: this is where component testing happens.
+You can check `ExampleComponent` in the components folder to see the basic structure.
+- `index.js`: used just to make importing the component cleaner (`import '...ExampleComponent/ExampleComponent'` -> `import '...ExampleComponent'`)
+- `index.css`: this is where the styling for the component is. It is imported in component file (e.g. `ExampleComponent.js`)
+- `ExampleComponent.js`: this is where the React code for the component resides and main logic for the component.
+- `ExampleComponent.test.js`: this is where component testing happens.
 
-### Views: (src/views)
-These are views for the website (pages, e.g. /home, /shop). 
-The file structure is the same as component structure.
-The only difference is you have to import the views you want to use in src/Routes.js (see the file and it should be clear how)
+### Views: (`src/views`)
+- These are views for the website (pages, e.g. `/home`, `/shop`). 
+- The file structure is the same as component structure.
+- The only difference is you have to import the views you want to use in `src/Routes.js` (see the file and it should be clear how)
 
-### Quicker creation (client/helper.sh)
-I've written a short bash script which allows for a quicker creation of components/views.
-It puts in some boilerplate code and generates files (index.js, index.css, SomeName.js, SomeName.test.js).
-You should run it when you are in 'client' folder (not from the IndustrialTeamProject root, since it uses relative path to create files).
+### Quicker creation (`client/helper.sh`)
+- I've written a short bash script which allows for a quicker creation of components/views.
+- It puts in some boilerplate code and generates files (index.js, index.css, SomeName.js, SomeName.test.js).
+- You should run it when you are in 'client' folder (not from the IndustrialTeamProject root, since it uses relative path to create files).
+
+
 
 ## Create React App docs:
 
