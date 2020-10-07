@@ -1,0 +1,9 @@
+{
+  "lobbyID": "id",
+  "playerID": "id",
+  "questionID": "id",
+  "correctAnswer": "string/value (A B C D) or index/number tbd",
+  "correct": "boolean",
+  "score": "number - can send the players score, or whole lobby's leaderboard ... tbd (or can be a seperate request)",
+  "scoreIncrease": "number the players score went up by? if we're using some sort of speed based scoring system"
+}

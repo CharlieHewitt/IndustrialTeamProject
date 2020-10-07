@@ -1,0 +1,6 @@
+{
+  "lobbyName": "name",
+  "isHostNameChosen": "boolean",
+  "hostName": "chosen name or blank (string)",
+  "options": "Not designed yet --- Options object for number of questions/ category selection/time per question ..."
+}
