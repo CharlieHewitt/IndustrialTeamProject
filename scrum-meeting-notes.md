@@ -14,7 +14,7 @@
 
 ## Tuesday 06/10/2020
 Present: Neilson, John, Kamila, Charlie, Afzal, Gregor, Tingjie, Peter, Teodora  
-Absent: Justas
+Apologies: Justas
 - Neilson
   - Worked on database setup
   - Plan for Today: Populating database
@@ -53,6 +53,42 @@ Absent: Justas
  ---
 
 ## Wednesday 07/10/2020
+Present: Kamila, Charlie, Afzal, Gregor, Tingjie, Peter, Teodora  
+Apologies: Neilson, John, Charlie
+- Neilson (sent in update)
+  - Worked on populating database
+  - Plan for Today: processing dataset
+- Kamila
+  - Set up Jira
+  - Practicing with new tech
+  - Plan for Today: node js practice + starting on random name generation
+- Afzal
+  - Wireframes for homepage and hosting page
+  - Set up local server
+  - Node Js reading
+  - Plan for Today: Node js research, ux tasks
+- Gregor
+  - Wireframes for lobby page
+  - React tutorials
+  - Plan for Today: combining all wireframes + starting on new user stories (to be set today)
+- Justas
+  - Made basic react template + folder structure
+  - Plan for Today: starting on new user stories (to be set today)
+- Tingjie
+  - Wireframes
+  - Plan for Today: More react research + user story splitting
+- Peter
+  - Wireframes
+  - Plan for Today: React research + splitting user stries
+- Teodora
+  - Wireframes
+  - Plan for Today: Setting up react skeleton
+  
+ **Group goal for before next meeting:**
+ - Everyone has task assigned on Jira
+ - Individual wireframes combined
+ 
+ ---
 
 ## Thursday 08/10/2020
 
