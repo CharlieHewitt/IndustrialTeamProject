@@ -1,0 +1,15 @@
+{
+  "lobbyid": "id",
+  "playerid": "id",
+  "questionNumber": "number",
+  "question": {
+    "questionID": "id",
+    "question": "string",
+    "answers": {
+      "A": "string",
+      "B": "string",
+      "C": "string",
+      "D": "string"
+    }
+  }
+}

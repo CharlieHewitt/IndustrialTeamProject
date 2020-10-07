@@ -1,0 +1,7 @@
+{
+  "lobbyID": "id",
+  "playerID": "id",
+  "questionID": "id",
+  "answer": "string/value (A B C D) or index/number tbd",
+  "time": "time question was answered/ request was sent? - not sure if we need this"
+}

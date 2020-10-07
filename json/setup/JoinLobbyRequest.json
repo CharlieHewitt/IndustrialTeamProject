@@ -1,0 +1,5 @@
+{
+  "lobbyID": "id",
+  "isNameChosen": "boolean",
+  "name": "blank or the name if given"
+}

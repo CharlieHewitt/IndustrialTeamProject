@@ -1,0 +1,6 @@
+{
+  "lobbyID": "id",
+  "lobbyName": "string",
+  "playerID": "id",
+  "playerName": "chosen or generated name"
+}

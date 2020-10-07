@@ -1,0 +1,10 @@
+{
+  "lobbyID": "id",
+  "leaderboard": {
+    "playerID": {
+      "playerName": "string",
+      "playerScore": "number",
+      "numQuestionsCorrect": "number"
+    }
+  }
+}
