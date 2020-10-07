@@ -10,10 +10,13 @@ const MONGODB_CONNECTIONSTRING = process.env.MONGODB_CONNECTIONSTRING;
 
 const app = express();
 
+app.use(express.json({ extented: false }))
+
 connectToDatabase(MONGODB_CONNECTIONSTRING);
 
 // define routes
 app.use("/example", require("./routes/example.js"));
+app.use("/api/username", require("./routes/username.js"));
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
