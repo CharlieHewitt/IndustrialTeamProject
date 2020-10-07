@@ -1,3 +1,8 @@
+## Quickstart:
+- Install the node modules (only need to do this first time and then if new modules are added). `npm install`
+- Start the dev environment `npm start`
+- If you want to run tests type `npm test`
+
 ## Some notes:
 
 ### Components: (`src/components`)
@@ -18,7 +23,8 @@ You can check `ExampleComponent` in the components folder to see the basic struc
 - It puts in some boilerplate code and generates files (index.js, index.css, SomeName.js, SomeName.test.js).
 - You should run it when you are in 'client' folder (not from the IndustrialTeamProject root, since it uses relative path to create files).
 
-
+<br />
+<br />
 
 ## Create React App docs:
 
