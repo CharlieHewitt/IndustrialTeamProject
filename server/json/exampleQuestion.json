@@ -1,0 +1,20 @@
+{
+  "question1": {
+    "question": "What is the capital of the USA",
+    "answers": {
+      "A": "New York",
+      "B": "New York",
+      "C": "New York",
+      "D": "New York"
+    },
+    "correctAnswer": "A"
+  },
+  "question2": {
+    "question": "Is New York the capital of the USA",
+    "answers": {
+      "A": "true",
+      "B": "false"
+    },
+    "correctAnswer": ""
+  }
+}
