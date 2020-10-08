@@ -10,7 +10,7 @@ const MONGODB_CONNECTIONSTRING = process.env.MONGODB_CONNECTIONSTRING;
 
 const app = express();
 
-app.use(express.json({ extented: false }))
+app.use(express.json())
 
 connectToDatabase(MONGODB_CONNECTIONSTRING);
 
