@@ -91,5 +91,49 @@ Apologies: Neilson, John, Charlie
  ---
 
 ## Thursday 08/10/2020
-
+Present: Neilson, John, Justas, Charlie, Afzal, Gregor, Tingjie, Peter, Teodora  
+Apologies: Kamila
+- Neilson 
+  - Researched MonngoDB compass shell
+  - Understood the Json format we'll use
+  - Processed datasets
+  - Plan for today: More work involving datasets
+- Kamila
+  - Plan for Today: 
+- Afzal
+  - Created design prototypes
+  - Set up google doc for the final report
+  - Updated user stories to fit requirements
+  - Plan for Today: Finishing the design prototypes and starting on the report
+- Gregor
+  - Created design prototypes
+  - Set up react for VS
+  - Updated user stories to fit requirements
+  - Plan for Today: Combining all design prototypes
+- Justas
+  - Created template based on wireframes
+  - Had a look at making API requests
+  - Plan for Today: Finishing the frontennd template and helping team members
+- Tingjie
+  - Created design prototype
+  - Started working on the frontend template 
+  - Updated user stories to fit requirements
+  - Plan for Today: More research about react and working on templates
+- Peter
+  - Created design prototypes
+  - Updates user stories to fit requirements
+  - Set up Git Bash and React
+  - Plan for Today: Finishing design prototypes and getting started on frontend
+- Teodora
+  - Created design prototypes
+  - Updated user stories to fit requirements
+  - Set up git for mac and VS 
+  - Plan for Today: Putting together all the design prototypes
+- Charlie
+  - Created diagrams for request and response
+  - Sequential diagram
+  - Plan for today: Help the backend team
+- Johnn
+  - Finished the user story - Creating a random ID and setting a score
+  - Plan for today: Fix issues with already implemented features and start storing data.
 ## Friday 09/10/2020
