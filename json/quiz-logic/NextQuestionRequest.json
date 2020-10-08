@@ -1,0 +1,5 @@
+{
+  "lobbyid": "id",
+  "playerid": "id",
+  "questionsCompleted": "number"
+}
