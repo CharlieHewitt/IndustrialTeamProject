@@ -16,7 +16,7 @@ router.post('/send', (req, res) => {
   id = createID();
   score = 0;
 
-  userStats = new User({username, id, score})
+  userStats = new User(username, id, score)
   res.json(userStats)
 });
 
