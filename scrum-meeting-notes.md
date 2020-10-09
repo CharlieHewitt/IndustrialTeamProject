@@ -99,7 +99,8 @@ Apologies: Kamila
   - Processed datasets
   - Plan for today: More work involving datasets
 - Kamila
-  - Plan for Today: 
+  - Finished node js practice + looked into random generation libraries
+  - Plan for Today: Start writing generate username code
 - Afzal
   - Created design prototypes
   - Set up google doc for the final report
@@ -133,7 +134,48 @@ Apologies: Kamila
   - Created diagrams for request and response
   - Sequential diagram
   - Plan for today: Help the backend team
-- Johnn
+- John
   - Finished the user story - Creating a random ID and setting a score
   - Plan for today: Fix issues with already implemented features and start storing data.
+  ---
 ## Friday 09/10/2020
+Present: Kamila Neilson, John, Justas, Charlie, Gregor, Tingjie, Peter, Teodora  
+Apologies: Afzal
+- Neilson 
+  - Finished script for populaitng database
+  - Database now has questions
+  - Plan for today: Setting up queries
+- Kamila
+  - Generating Random Username + tests
+  - Checking for dupliacted
+  - Plan for Today: complete random username (checking for dupliactes) + client meeting prep
+- Afzal
+  - Created design prototypes
+  - Set up google doc for the final report
+  - Updated user stories to fit requirements
+  - Plan for Today: Finishing the design prototypes and starting on the report
+- Gregor
+  - Finishing prototype
+  - Started on homepage
+  - Plan for Today: Keep working on homepage
+- Justas
+  - Setting up settings page in react
+  - Plan for Today: Working on pages
+- Tingjie
+  - Started on Questions page
+  - Plan for Today: Keep working on code exported from XD
+- Peter
+  - Prototyping with UX team
+  - Errors settign up server
+  - Plan for Today: Fix bugs + settings page
+- Teodora
+  - Finished prototypes
+  - Sorting out react + installing software
+  - Plan for Today: Starting on leaderboard page
+- Charlie
+  - Helped Neilson
+  - Plan for today: Help Neilson with db
+- John
+  - Bug fixes for receiving usernames
+  - Working on receiving usernames
+  - Plan for today: Finish username user story
