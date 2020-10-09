@@ -91,5 +91,91 @@ Apologies: Neilson, John, Charlie
  ---
 
 ## Thursday 08/10/2020
-
+Present: Neilson, John, Justas, Charlie, Afzal, Gregor, Tingjie, Peter, Teodora  
+Apologies: Kamila
+- Neilson 
+  - Researched MonngoDB compass shell
+  - Understood the Json format we'll use
+  - Processed datasets
+  - Plan for today: More work involving datasets
+- Kamila
+  - Finished node js practice + looked into random generation libraries
+  - Plan for Today: Start writing generate username code
+- Afzal
+  - Created design prototypes
+  - Set up google doc for the final report
+  - Updated user stories to fit requirements
+  - Plan for Today: Finishing the design prototypes and starting on the report
+- Gregor
+  - Created design prototypes
+  - Set up react for VS
+  - Updated user stories to fit requirements
+  - Plan for Today: Combining all design prototypes
+- Justas
+  - Created template based on wireframes
+  - Had a look at making API requests
+  - Plan for Today: Finishing the frontennd template and helping team members
+- Tingjie
+  - Created design prototype
+  - Started working on the frontend template 
+  - Updated user stories to fit requirements
+  - Plan for Today: More research about react and working on templates
+- Peter
+  - Created design prototypes
+  - Updates user stories to fit requirements
+  - Set up Git Bash and React
+  - Plan for Today: Finishing design prototypes and getting started on frontend
+- Teodora
+  - Created design prototypes
+  - Updated user stories to fit requirements
+  - Set up git for mac and VS 
+  - Plan for Today: Putting together all the design prototypes
+- Charlie
+  - Created diagrams for request and response
+  - Sequential diagram
+  - Plan for today: Help the backend team
+- John
+  - Finished the user story - Creating a random ID and setting a score
+  - Plan for today: Fix issues with already implemented features and start storing data.
+  ---
 ## Friday 09/10/2020
+Present: Kamila Neilson, John, Justas, Charlie, Gregor, Tingjie, Peter, Teodora  
+Apologies: Afzal
+- Neilson 
+  - Finished script for populaitng database
+  - Database now has questions
+  - Plan for today: Setting up queries
+- Kamila
+  - Generating Random Username + tests
+  - Checking for dupliacted
+  - Plan for Today: complete random username (checking for dupliactes) + client meeting prep
+- Afzal
+  - Created design prototypes
+  - Set up google doc for the final report
+  - Updated user stories to fit requirements
+  - Plan for Today: Finishing the design prototypes and starting on the report
+- Gregor
+  - Finishing prototype
+  - Started on homepage
+  - Plan for Today: Keep working on homepage
+- Justas
+  - Setting up settings page in react
+  - Plan for Today: Working on pages
+- Tingjie
+  - Started on Questions page
+  - Plan for Today: Keep working on code exported from XD
+- Peter
+  - Prototyping with UX team
+  - Errors settign up server
+  - Plan for Today: Fix bugs + settings page
+- Teodora
+  - Finished prototypes
+  - Sorting out react + installing software
+  - Plan for Today: Starting on leaderboard page
+- Charlie
+  - Helped Neilson
+  - Plan for today: Help Neilson with db
+- John
+  - Bug fixes for receiving usernames
+  - Working on receiving usernames
+  - Plan for today: Finish username user story
