@@ -1,0 +1,10 @@
+.title {
+  width: 100%;
+  max-width: 40vw;
+  text-align: center;
+  line-height: 10vh;
+  height: 10vh;
+  position: relative;
+  border: 1px solid black;
+  margin: 20px auto;
+}
