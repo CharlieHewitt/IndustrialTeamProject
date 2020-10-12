@@ -26,9 +26,4 @@ class Lobby {
 
     }
 }
-
-const lobby = new Lobby(new User("user", "123", 0))
-lobby.addPlayer(new User("user2", "321", 0))
-
-console.log(lobby);
-  module.exports = Lobby;
+module.exports = Lobby;
