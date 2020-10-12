@@ -1,0 +1,65 @@
+
+#Q Which word refers to a colourless, odourless gaseous element that occurs in trace amounts in air?
+^ Xenon
+A Xylose
+B Xenon
+C Xanthene
+D Xylene
+
+#Q Were X-rays at one time proposed to be called Röntgen rays?
+^ Yes
+A Yes
+B No
+
+#Q When you add 55 and 45 the sum is 100. When you add 65 and 35 the sum is also 100. But which is greater: 55 multiplied by 45 or 65 multiplied by 35?
+^ 55 multiplied by 45
+A 55 multiplied by 45
+B They are equal.
+C 65 multiplied by 35
+D None of these
+
+#Q Two doctors and two mothers went to an ice cream shop. Each one of them ordered different flavors. The waiter then gave them one chocolate, one vanilla, and one strawberry and everybody on the table had an ice cream. Is this possible?
+^ Yes
+A No
+B Yes
+
+#Q Two children were on their way to school, when they began to question what day of the week it was. They were so confused in their reckoning that one of them gave the following riddle to help sort the matter out: When the day after tomorrow is yesterday, then today will be as far from Sunday as that day was which was today when the day before yesterday was tomorrow!
+On which day of the week were the children heading to school?
+^ Sunday
+A Saturday
+B Sunday
+C Friday
+D Monday
+
+#Q We know very little about the life of the mathematician Diophantus (called the father of algebra) except that he lived around the year 250 B.C. Due to one admirer of his, who described his life by the means of an algebraic riddle, we can at least determine his age at death:
+Diophantuss youth lasted 1/6 of his life. He had his first beard in the next 1/12 of his life. At the end of the following 1/7 of his life Diophantus got married. Five years from then his son was born. His son lived exactly 1/2 of Diophantuss life. Diophantus died 4 years after the death of his son.
+How long did Diophantus live?
+^ 84 years
+A 84 years
+B 96 years
+C 90 years
+D 72 years
+
+#Q Three goddesses were sitting in an old Indian temple. Their names were Truth (who always tells the truth), Lie (who is always lying) and Wisdom (who sometimes lies). In order to figure out which goddess was which you posed the following questions to each:
+Asking the left one: Who is sitting next to you?
+Truth, she answered.
+Asking the middle one: Who are you?
+Wisdom.
+And at last question for the right one: Who is your neighbor?
+Lie, she replied.
+
+From left to right in what order are goddesses sitting?
+^ 1. Wisdom 2. Lie 3. Truth
+A 1. Wisdom 2. Truth 3. Lie
+B 1. Lie 2.Truth 3. Wisdom
+C 1. Wisdom 2. Lie 3. Truth
+D 1. Truth 2. Lie 3. Wisdom
+
+#Q There are two kinds of people who live on a mysterious island. They are the so-called Honestants, who always speak the truth, and the others are the Swindlecants, who always lie.
+
+A visitor to the island went to a local pub and had a few drinks. When he was ready to leave he asked the bartender how much he owed. The bartender told him the total for his bill. It was quite expensive, so he asked the bartender if he spoke the truth. But the visitor did not hear the whispered answer so he asked a man sitting next to him about it. And the man said: The bartender said yes, but he is a big liar.
+
+Was the bartender a Honestant?
+^ No
+A Yes
+B No
