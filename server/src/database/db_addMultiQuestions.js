@@ -57,7 +57,7 @@ function processFileData() {
   const directoryPath = 'D:/IndustrialProject/OpenTriviaQA/categories';
 
   fs.readdir(directoryPath, function (err, files) {
-    //handling error
+    // handling error
     if (err) {
       return console.log('Unable to scan directory: ' + err);
     }
@@ -116,11 +116,7 @@ function parseQuestionToSchema(stringArray, CATEGORY) {
         c: stringArray[4].substring(2, stringArray[4].length).replace('\r', ''),
         d: stringArray[5].substring(2, stringArray[5].length).replace('\r', ''),
       };
-      // for (var i in answers) {
-      //   if (answers[i] === correctAnswer) correctAnswer = i;
-      // }
       correctAnswer = convertCorrectAnswerToLetter(answers, correctAnswer);
-      // correctAnswer = convertCorrectAnswerToLetter(stringArray, correctAnswer);
       createMultiChoiceQuestion(question, category, answers, correctAnswer);
     }
     // If boolean Question

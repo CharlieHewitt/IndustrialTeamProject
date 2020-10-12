@@ -20,4 +20,5 @@ app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
 
-processFile();
+// call this to run populate database pipeline
+// processFile();
