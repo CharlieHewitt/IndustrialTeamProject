@@ -17,7 +17,7 @@ router.post('/send', (req, res) => {
   score = 0;
 
   userStats = new User(username, id, score)
-  res.json(userStats)
+  res.json(userStats) //this will be changed to add them to the lobby?
 });
 
 //create a random ID for new user
