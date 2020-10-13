@@ -4,6 +4,7 @@ const Player = require('../player/player');
 //will create a lobby instance when the host starts a game?
 class Lobby {
     constructor(firstPlayer){      //newUser object
+
         //may add more things to this in the future
         this.lobbyID = this.createLobbyID();
         this.players = {};
