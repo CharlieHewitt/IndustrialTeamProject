@@ -9,7 +9,7 @@ if [[ `git status --porcelain` ]];
 then
   echo "You currently have changes in your local repository."
   echo "Aborting deploy."
-  #exit 1
+  exit 1
 else
   echo "No detected changes in repository"
 fi
@@ -20,7 +20,6 @@ echo "Swapping to dev branch ..."
 echo "Pulling from remote for updates ..."
 `git pull` || echo "Aborting deploy." && exit 2
 
-# deploy server folder
 echo "Attempting to deploy ..."
 `git subtree push --prefix server origin deploy-backend` || echo "Aborting deploy." && exit 3
 
