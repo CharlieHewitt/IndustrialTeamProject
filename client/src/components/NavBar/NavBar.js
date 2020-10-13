@@ -13,6 +13,9 @@ const NavBar = (props) => {
           <Link to="/Test">Test</Link>
         </li>
         <li>
+          <Link to="/Leaderboard">Leaderboard</Link>
+        </li>
+        <li>
           <Link to="/something">Non-existing page</Link>
         </li>
       </ul>
