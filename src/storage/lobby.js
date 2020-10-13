@@ -9,6 +9,10 @@ class Lobby {
         this.addPlayer(firstPlayer);
     }
 
+    constructor(category){
+        this.categories = category;
+    }
+
     createLobbyID() {
         var ID = Math.random().toString(36).substring(7);
         return ID;
