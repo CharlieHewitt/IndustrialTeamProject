@@ -4,6 +4,10 @@ import Home from "./views/Home";
 import NotFound from "./views/NotFound";
 import HostSettings from "./views/HostSettings";
 
+import Answer from "./views/Quizing";
+import Score from "./views/Score";
+import Total from "./views/TotalScore";
+
 import NavBar from "./components/NavBar";
 
 import { Route, Switch, Redirect } from "react-router-dom";
@@ -18,7 +22,17 @@ export const Routes = () => {
           <Redirect to="/Home" />
         </Route>
         <Route exact path="/host-settings" component={HostSettings} />
+
+        <Route path="/Quizing" component={Answer} />
+        <Route path="/Score" component={Score} />
+        <Route path="/Totalscore" component={Total} />
+
+        <Route path="/answer" component={Answer} />
+        <Route path="/score" component={Score} />
+        <Route path="/total" component={Total} />
+
         <Route component={NotFound} />
+
       </Switch>
     </>
   );
