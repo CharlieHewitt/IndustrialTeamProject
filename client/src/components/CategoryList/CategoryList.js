@@ -4,30 +4,35 @@ import RoundedBtn from "../RoundedBtn/RoundedBtn";
 import styles from "./CategoryList.module.css";
 import "./index.css";
 
-{
-  /* <Category
-  title="Category A"
-  checked={categories[0].checked}
-  onChange={(ev) => {
-    categories[0].checked = ev.target.checked;
-    setCategories((c) => [categories[0], ...c.slice(1)]);
-  }}
-/>; */
-}
-
 const CategoryList = ({ categories, setCategories }) => {
+  let catSize = 3; // how many categories per row
+  let rows = Object.keys(categories)
+    .map((cat) => (
+      <Category
+        title={cat}
+        checked={categories[cat]}
+        onChange={(ev) =>
+          setCategories({ ...categories, [cat]: ev.target.checked })
+        }
+      />
+    ))
+    .reduce((prev, curr, index) => {
+      // create element groups with size 3, result looks like:
+      // [[elem1, elem2, elem3], [elem4, elem5, elem6], ...]
+      index % catSize === 0 && prev.push([]);
+      prev[prev.length - 1].push(curr);
+      return prev;
+    }, [])
+    .map((rowContent) => <div className={styles.row}>{rowContent}</div>);
+
   return (
     <div className={styles.wrap}>
       <div className={styles.row}>
         <RoundedBtn title="Random" />
+        <h1 className={styles.title}>Categories</h1>
+        <RoundedBtn title="Random" style={{ visibility: "hidden" }} />
       </div>
-      <div className={styles.row}>
-        <Category title="Category A" />
-        <Category title="Category A" />
-        <Category title="Category A" />
-      </div>
-      <div></div>
-      <div></div>
+      {rows}
     </div>
   );
 };

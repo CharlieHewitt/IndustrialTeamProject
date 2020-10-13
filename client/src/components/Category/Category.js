@@ -4,9 +4,17 @@ import "./index.css";
 
 const Category = ({ title, checked, onChange }) => {
   return (
-    <div>
-      <label for={title}>{title}</label>
-      <input id={title} type="checkbox" checked={checked} onChange={onChange} />
+    <div className={styles.wrap}>
+      <label className={styles.label} for={title}>
+        {title}
+      </label>
+      <input
+        className={styles.checkBox}
+        id={title}
+        type="checkbox"
+        checked={checked}
+        onChange={onChange}
+      />
     </div>
   );
 };
