@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# move to root
+cd ../..
+
 # check for local changes
 if [[ `git status --porcelain` ]];
 then
@@ -14,4 +17,4 @@ fi
 `git pull`
 
 # deploy
-# `git  `
+`git subtree push --prefix server origin deploy-backend`
