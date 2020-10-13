@@ -1,0 +1,18 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  height: 40px;
+  margin: 20px;
+}
+
+.rowTitle {
+  width: 70%;
+  text-align: center;
+  border: 1px solid gray;
+  line-height: 40px;
+  background-color: #ffffff;
+  color: #0e1c42;
+  border-radius: 60px;
+}
