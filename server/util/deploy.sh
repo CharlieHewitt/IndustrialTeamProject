@@ -1,20 +1,28 @@
 #!/bin/bash
 
 # move to root
-cd ../..
+
+while [[ $PWD != '/' && ${PWD##*/} != 'IndustrialTeamProject' ]]; do cd ..; done
 
 # check for local changes
 if [[ `git status --porcelain` ]];
 then
   echo "You currently have changes in your local repository."
-  exit 1
+  echo "Aborting deploy."
+  #exit 1
 else
   echo "No detected changes in repository"
 fi
 
-# make sure we are on dev branch
-`git checkout dev`
-`git pull`
+echo "Swapping to dev branch ..."
+`git checkout dev` || echo "Aborting deploy." && exit 2
 
-# deploy
-`git subtree push --prefix server origin deploy-backend`
+echo "Pulling from remote for updates ..."
+`git pull` || echo "Aborting deploy." && exit 2
+
+# deploy server folder
+echo "Attempting to deploy ..."
+`git subtree push --prefix server origin deploy-backend` || echo "Aborting deploy." && exit 3
+
+echo "Deployment successful"
+exit 0
