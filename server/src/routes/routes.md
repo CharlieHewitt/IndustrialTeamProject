@@ -6,6 +6,8 @@ eg
 
 /categories GET - retrieve a list of categories
 
+/lobby/categories GET - retrieve a list of categories
+
 /:gameid/:playerid/response POST - { questionID: string, answerID: number}
 
 Post - Passes in Username
