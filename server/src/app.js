@@ -1,8 +1,6 @@
 const express = require("express");
 const connectToDatabase = require("./database/db_connection.js");
 const Lobbies = require('./storage/lobbyManager');
-const Lobby = require('./storage/lobby');
-const User = require('./storage/newUser');
 
 // import env variables
 // Create .env file if you haven't!
