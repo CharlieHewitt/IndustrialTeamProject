@@ -1,6 +1,6 @@
 const express = require("express");
 const connectToDatabase = require("./database/db_connection.js");
-const Lobbies = require('./storage/lobbyManager');
+const LobbyManager = require('./storage/lobbyManager');
 
 // import env variables
 // Create .env file if you haven't!
@@ -12,7 +12,7 @@ const MONGODB_CONNECTIONSTRING = process.env.MONGODB_CONNECTIONSTRING;
 const app = express();
 
 app.use(express.json());
-app.locals.allLobbies = new Lobbies();
+app.locals.allLobbies = new LobbyManager();
 
 connectToDatabase(MONGODB_CONNECTIONSTRING);
 

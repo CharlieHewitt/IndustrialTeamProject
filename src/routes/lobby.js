@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const Lobbbies = require('../storage/lobbyManager');
+const LobbyManager = require('../storage/lobbyManager');
 const Lobby = require('../storage/lobby');
 const User = require('../storage/newUser');
 
