@@ -17,6 +17,7 @@ connectToDatabase(MONGODB_CONNECTIONSTRING);
 // define routes
 app.use("/example", require("./routes/example.js"));
 app.use("/api/username", require("./routes/username.js"));
+app.use("/api/lobby/getCategories", require("./routes/category.js"));
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
