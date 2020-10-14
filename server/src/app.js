@@ -21,4 +21,3 @@ app.use("/api/username", require("./routes/username.js"));
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
-
