@@ -16,31 +16,19 @@ router.get('/getCategories', (req, res) => {
     var sender = [];
     
     //get request lobbies to check
-    var lobbies = req.body.lobbies;
+    var lobbies = req.app.locals.allLobbies;
     //get request lobby ID
     var lobbyid =  req.body.lobbyID;
 
-    //loop through to find current lobbyID from all lobbies in lobbyManager
-    for(i = 0; i < lobbies.length; i++){
+    //find matching lobby to lobby id
+    var lobby = lobbies.getLobby(lobbyid);
 
-      if (lobbyid == lobbies[i].lobbyID){   //it is an existing lobby confirmed, now find lobby class
-        console.log("LobbyID Match");
-        sender = lobbies[i].categories;    //fetch categories to be sent
+    //get categories list from lobby object
+    categories = lobby.categories;
 
+    //send json
+    res.json(categories);
 
-        //send response - list of categories in json
-        console.log("The categories are: " + sender);
-        console.log("The categories have been sent!");
-      }
-
-      //if no match then lobbyID doesnt belong to any lobby and/or lobby doesnt exist
-      else{
-        console.log("LobbyID does not Match any lobby currently in session");
-      }
-    };
-
-    //send list of categories response in json
-    res.json(sender);
 
 });
 
