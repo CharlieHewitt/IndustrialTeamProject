@@ -1,0 +1,17 @@
+.wrap {
+  background-color: #0e1c42;
+  border: 1px solid #707070;
+  color: #ffffff;
+  padding: 0 20px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0px;
+}
+
+.title {
+  text-decoration: underline;
+}

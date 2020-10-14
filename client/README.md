@@ -1,3 +1,11 @@
+## New info:
+`helper.sh` now generates `Name.module.css` as well. <br />
+You can use it or use regular `index.css`.
+### Why use it?
+-  https://create-react-app.dev/docs/adding-a-css-modules-stylesheet/
+- No need to keep track of different class names clashing
+
+
 ## Quickstart:
 - Install the node modules (only need to do this first time and then if new modules are added). `npm install`
 - Start the dev environment `npm start`

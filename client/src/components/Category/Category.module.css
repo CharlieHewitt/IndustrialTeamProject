@@ -1,0 +1,15 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label {
+  font-size: 26px;
+  padding-right: 10px;
+}
+
+.checkBox {
+  width: 26px;
+  height: 26px;
+}
