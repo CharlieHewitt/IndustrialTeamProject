@@ -39,7 +39,7 @@ async function getRandomMultiChoiceQuestions(
   const randomMultiChoiceQuestions = [];
 
   for (count; count < numOfQuestions; count++) {
-    const random = Math.floor(Math.random() * 42);
+    const random = Math.floor(Math.random() * 41);
     await getMCQuestion(requestedCategory, random)
       .then((dbResponse) => {
         if (randomMultiChoiceQuestions.includes(dbResponse)) {
