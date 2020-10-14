@@ -6,7 +6,7 @@ const Lobbies = require('./storage/lobbyManager');
 // Create .env file if you haven't!
 require("dotenv").config();
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 4000;
 const MONGODB_CONNECTIONSTRING = process.env.MONGODB_CONNECTIONSTRING;
 
 const app = express();
@@ -24,3 +24,5 @@ app.use("/api/lobby", require("./routes/lobby.js"));
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
+
+
