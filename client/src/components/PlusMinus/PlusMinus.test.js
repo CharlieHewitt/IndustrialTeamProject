@@ -1,8 +1,8 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import TestPage from "./TestPage";
+import PlusMinus from "./PlusMinus";
 
-it("renders TestPage", () => {
+it("renders PlusMinus", () => {
   const div = document.createElement("div");
-  render(<TestPage />, div);
+  render(<PlusMinus />, div);
 });

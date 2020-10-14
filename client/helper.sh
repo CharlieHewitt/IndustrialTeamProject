@@ -54,12 +54,14 @@ createFiles() {
 
     touch "index.css"
     echo -e "\n Created index.css...\n"
+    touch "${name}.module.css"
     cat >"index.js" <<EOF
-    export { default } from './$name';
+export { default } from './$name';
 EOF
     echo -e "\n Created index.js...\n"
     cat >"${name}.js" <<EOF
 import React from 'react';
+import styles from './$name.module.css';
 import './index.css';
 
 const $name = props => {
