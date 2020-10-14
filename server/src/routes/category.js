@@ -5,6 +5,7 @@ const Lobbies = require('../storage/lobbyManager');
 const Lobby = require('../storage/lobby');
 const User = require('../storage/newUser');
 
+
 // @route   GET /api/lobby/getCategories
 // @desc    recieve lobby id and send categories back for lobby
 router.get('/getCategories', (req, res) => {
