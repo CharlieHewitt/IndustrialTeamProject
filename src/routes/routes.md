@@ -6,7 +6,7 @@ eg
 
 /categories GET - retrieve a list of categories
 
-/lobby/categories GET - retrieve a list of categories
+api/lobby/getCategories GET - retrieve a list of categories
 
 /:gameid/:playerid/response POST - { questionID: string, answerID: number}
 
