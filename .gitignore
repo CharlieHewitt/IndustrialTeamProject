@@ -1,0 +1,4 @@
+# Deploy Branch gitignore
+
+node_modules
+.env
