@@ -44,7 +44,7 @@ const Answer = ({ location: { search }, history }) => {
         //Clear the timer when run out of time
         clearInterval(timer);
         if (data.num === data.active) {
-          history.push(`/total?${stringify({ ...data, name: "empty" })}`);
+          history.push(`/totalscore?${stringify({ ...data, name: "empty" })}`);
         } else {
           history.push(`/score?${stringify({ ...data, name: "empty" })}`);
         }
@@ -61,7 +61,7 @@ const Answer = ({ location: { search }, history }) => {
     //console.log(query);
     // To see if it is the last question, push everything if it is 
     if (query.num === query.active) {
-      history.push(`/total?${stringify({ ...query, name })}`);
+      history.push(`/totalscore?${stringify({ ...query, name })}`);
     } else {
       history.push(`/score?${stringify({ ...query, name })}`);
     }

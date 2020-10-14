@@ -11,6 +11,7 @@ import Total from "./views/TotalScore";
 import NavBar from "./components/NavBar";
 
 import { Route, Switch, Redirect } from "react-router-dom";
+import Waiting from "./views/Waiting";
 
 export const Routes = () => {
   return (
@@ -26,10 +27,7 @@ export const Routes = () => {
         <Route path="/Quizing" component={Answer} />
         <Route path="/Score" component={Score} />
         <Route path="/Totalscore" component={Total} />
-
-        <Route path="/answer" component={Answer} />
-        <Route path="/score" component={Score} />
-        <Route path="/total" component={Total} />
+        <Route path="/Waiting" component={Waiting} />
 
         <Route component={NotFound} />
 

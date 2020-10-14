@@ -31,7 +31,7 @@ const Score = ({ location: { search }, history }) => {
     setScore(90);
     const timer = setTimeout(() => {
       history.push(
-        `/answer?${stringify({ ...data, active: Number(data.active) + 1 })}`
+        `/quizing?${stringify({ ...data, active: Number(data.active) + 1 })}`
       );
     }, 3000);
     return () => {
