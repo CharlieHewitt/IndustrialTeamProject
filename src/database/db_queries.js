@@ -2,28 +2,6 @@ const MultiChoiceQuestionModel = require('../models/multiChoiceQuestionSchema');
 const BooleanQuestionModel = require('../models/booleanQuestionSchema');
 
 /**
- * Returns a list of json documents that correspond to all
- * multi-choice questions that belong to the requested category.
- *
- * @param {string} requestedCategory - category name
- */
-function getAllMultiChoiceQuestions(requestedCategory) {
-  MultiChoiceQuestionModel.find({ category: requestedCategory }, function (
-    err,
-    document
-  ) {
-    if (err) return handleError(err);
-    if (document.length === 0) {
-      console.log(
-        `document length is 0 - ${requestedCategory} may not exist; please check category is spelt correctly.`
-      );
-    } else {
-      console.log(document);
-    }
-  });
-}
-
-/**
  * Gets an array of json documents that correspond to a random
  * selection of multi-choice questions from the requested category.
  *
@@ -56,13 +34,73 @@ async function getRandomMultiChoiceQuestions(
   return randomMultiChoiceQuestions;
 }
 
+/**
+ * Gets an array of json documents that correspond to a random
+ * selection of boolean questions from the requested category.
+ *
+ * @param {string} requestedCategory - category name
+ * @param {number} numOfQuestions - number of questions requested
+ * @returns array of boolean question objects
+ */
+async function getRandomBooleanQuestions(requestedCategory, numOfQuestions) {
+  let count = 0;
+  const randomBooleanQuestions = [];
+
+  for (count; count < numOfQuestions; count++) {
+    const random = Math.floor(Math.random() * 80);
+    await getBooleanQuestion(requestedCategory, random)
+      .then((dbResponse) => {
+        if (randomBooleanQuestions.includes(dbResponse)) {
+          count--;
+        } else {
+          randomBooleanQuestions.push(dbResponse);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  return randomBooleanQuestions;
+}
+
+/**
+ * Queries mongoDB for a boolean question.
+ *
+ * @param {string} requestedCategory - category of requested question
+ * @param {number} random - random indice of question from category
+ * @return BooleanQuestionModel object - a boolean question json
+ */
+async function getBooleanQuestion(requestedCategory, random) {
+  return BooleanQuestionModel.findOne({ category: requestedCategory })
+    .skip(random)
+    .exec();
+}
+
+/**
+ * Queries mongoDB for a multi-choice question.
+ *
+ * @param {string} requestedCategory - category of requested question
+ * @param {number} random - random indice of question from category
+ * @return MultiChoiceQuestionModel object - a multi-choice question json
+ */
 async function getMCQuestion(requestedCategory, random) {
   return MultiChoiceQuestionModel.findOne({ category: requestedCategory })
     .skip(random)
     .exec();
 }
 
+/**
+ * Gets all unique categories for questions from mongoDB.
+ *
+ * @returns array of strings containing all the unique question categories
+ */
+async function getListOfUniqueCategories() {
+  return MultiChoiceQuestionModel.collection.distinct('category');
+}
+
 module.exports = {
-  getAllMultiChoiceQuestions: getAllMultiChoiceQuestions,
+  getRandomBooleanQuestions: getRandomBooleanQuestions,
   getRandomMultiChoiceQuestions: getRandomMultiChoiceQuestions,
+  getListOfUniqueCategories: getListOfUniqueCategories,
 };
