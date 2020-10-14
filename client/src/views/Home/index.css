@@ -1,0 +1,22 @@
+* {
+    background-color: #3D5B84;
+    margin: 0;
+    font-family: 'Segoe UI';
+}
+
+h1 {
+    background-color: #0E1C42;
+    font-size: 80px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    position: relative;
+    top: 45px;
+}
+
+.banner {
+    margin-top: 56px;
+    background-color: #0E1C42;
+    width: 100%;
+    height: 200px;
+}
