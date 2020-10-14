@@ -213,6 +213,7 @@ Apologies: Justas
   - React tutorials
   - UX prototype
   - Plan for Today: Finish animations for buttons, new user stories
+  ---
 
 
 ## Tuesday 13/10/2020
@@ -243,4 +244,43 @@ Apologies: Justas
   - Leaderboard page
   - User evaluation research
   - Plan for Today: Work on leaderboard and user evaluation form
+  ---
 
+## Wednesday 14/10/2020
+Present: Kamila, Neilson, John, Afzal, Gregor, Tingjie, Teodora
+Apologies: Charlie, Justas
+- Neilson 
+  - Queries
+  - Plan for today: Making queries
+- John
+  - Requests to see players in lobby
+  - Started tests
+  - Plan for today: returning leaderboard
+- Kamila
+  - started Report
+  - planning generating join link
+  - Plan for Today: joining lobby + report
+- Charlie (sent in notes)
+  - Bash script for deployment
+  - Github management
+  - Plan for today: Deploying frontend + settings backend user story
+- Afzal
+  - Script to send categories to lobby
+  - Plan for Today: tests for above script
+- Gregor
+  - Homepage finished + pushed to git
+  - Plan for Today: Research into connected
+- Tingjie
+  - Pushed quizzing and leaderboard page to git
+  - Problem: style didn't work
+  - Plan for Today: API
+- Teodora
+  - Read user evaluation documents
+  - Got documents ready
+  - Plan for Today: Create form for testing app + API
+  
+**Goal for Today:**
+- All pages finished
+- Started functionality on frontend
+
+  ---
