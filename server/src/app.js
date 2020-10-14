@@ -1,6 +1,5 @@
 const express = require('express');
 const connectToDatabase = require('./database/db_connection.js');
-const getAllMultiChoiceQuestions = require('./database/db_queries.js');
 
 // import env variables
 // Create .env file if you haven't!
@@ -18,9 +17,8 @@ connectToDatabase(MONGODB_CONNECTIONSTRING);
 // define routes
 app.use('/example', require('./routes/example.js'));
 app.use('/api/username', require('./routes/username.js'));
+app.use('/api/databasetest', require('./routes/exampleAsyncRequest.js'))
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
-
-getAllMultiChoiceQuestions('brain-teaserss');
