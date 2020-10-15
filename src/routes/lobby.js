@@ -43,11 +43,8 @@ router.get('/getLobbyLeaderboard', (req, res) => {
     }
 
     const responseObject = {};
-    const users = {};
-
     responseObject["playersRanked"] = id;
     responseObject["users"] = wantedLobby.players;
-
 
     res.json(responseObject);
 });
