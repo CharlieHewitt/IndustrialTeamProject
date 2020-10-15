@@ -284,3 +284,30 @@ Apologies: Charlie, Justas
 - Started functionality on frontend
 
   ---
+## Thursday 14/10/2020
+Present: Kamila, Neilson, Charlie, John, Afzal, Gregor, Teodora  
+Apologies: Tingjie, Justas
+- Neilson 
+  - Finished queries
+  - Plan for today: Backend work - hooking up queries to requests
+- John
+  - Returning players in order by score finished
+  - Plan for today: game logic on backend
+- Kamila
+  - Player joining lobby
+  - Plan for Today: tidying up tests + generating url, game logic on backend
+- Charlie
+  - Route testing db code
+  - Frontend/backend route documentation
+  - Plan for today: route documentation
+- Afzal
+  - Refactored script
+  - Plan for Today: report + game logic
+- Gregor
+  - Blocked by page sbeing finished
+  - Reserach how to link pages
+  - Plan for Today: Start linking up pages
+- Teodora
+  - Made participant form
+  - Finished how to modal
+  - Plan for Today: Link how to page to lobby, help Jay with joining lobby, create join game page

@@ -4,7 +4,7 @@ const LobbyManager = require('./storage/lobbyManager');
 
 // import env variables
 // Create .env file if you haven't!
-require("dotenv").config();
+require('dotenv').config();
 
 const PORT = process.env.PORT || 4000;
 const MONGODB_CONNECTIONSTRING = process.env.MONGODB_CONNECTIONSTRING;
@@ -20,6 +20,7 @@ connectToDatabase(MONGODB_CONNECTIONSTRING);
 app.use("/example", require("./routes/example.js"));
 app.use("/api/username", require("./routes/username.js"));
 app.use("/api/lobby/getCategories", require("./routes/category.js"));
+app.use('/api/databasetest', require('./routes/exampleAsyncRequest.js'));
 app.use("/api/lobby", require("./routes/lobby.js"));
 
 app.listen(PORT, () => {
