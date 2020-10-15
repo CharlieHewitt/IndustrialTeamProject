@@ -1,4 +1,4 @@
-const Lobby = require('../storage/Lobby');
+const Lobby = require('../storage/lobby');
 
 class LobbyManager {
     constructor(){      //newUser object      
@@ -16,5 +16,9 @@ class LobbyManager {
         }
 
     }
+
+    getLobby(lobbyID) {
+        return this.lobbies[lobbyID];
+    }
 }
-module.exports = Lobby;
+module.exports = LobbyManager;
