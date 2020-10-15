@@ -1,6 +1,7 @@
 const Chance = require('chance').Chance();
 const faker = require('faker');
 
+
 module.exports = {
   generatePlayerName: function() {
     var randomAnimal = Chance.animal({type: 'zoo'});

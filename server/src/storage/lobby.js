@@ -17,6 +17,12 @@ class Lobby {
         return ID;
     }
 
+    createGameLink() {
+      // TODO: fix url
+      var url = "localhost:4000" + "/joingame" + "/" + this.lobbyID;
+      return url;
+    }
+
     addPlayer(newUserObject) {
 
         var player = newUserObject;
@@ -62,7 +68,7 @@ class Lobby {
       return duplicate;
     }
 
-    
+
 }
 
 module.exports = Lobby;
