@@ -24,12 +24,11 @@ class LobbyManager {
       return false;
     }
 
-    joinLobby(lobbyID, username, id, score) {
+    joinLobby(lobbyID, user) {
       var valid = this.checkLobbyValid(lobbyID);
       if (valid) {
-        var user = new User(username, id, score);
         this.lobbies[lobbyID].addPlayer(user);
-      }
+      } else {console.log("invalid lobby id: lobby does not exist");} // TODO: handle error
     }
 }
 module.exports = LobbyManager;

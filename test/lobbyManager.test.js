@@ -11,9 +11,10 @@ describe('lobbyManager class', () => {
       var lobby = new Lobby(host);
       var lobId = lobby.lobbyID;
       lobbyManager.addLobby(lobby);
-      lobbyManager.joinLobby(lobId, "player1", "122", 0);
-      console.log(lobbyManager);
-      console.log(lobby.players);
+      var player = new User("player1", "112", 0);
+      lobbyManager.joinLobby(lobId, player);
+
+      assert.containsAllKeys(lobby.players, player.id);
     });
   });
 });

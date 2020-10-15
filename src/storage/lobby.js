@@ -17,7 +17,7 @@ class Lobby {
     }
 
     createGameLink() {
-      // TODO: change start of url
+      // TODO: fix url
       var url = "localhost:4000" + "/joingame" + "/" + this.lobbyID;
       return url;
     }
@@ -25,8 +25,6 @@ class Lobby {
     addPlayer(newUserObject) {
 
         var player = newUserObject;
-        console.log(newUserObject);
-        console.log(player);
         var duplicate = false;
         var newUsername = "";
 
