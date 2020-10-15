@@ -1,5 +1,6 @@
 const Lobby = require('../storage/Lobby');
-const User = require('../storage/newUser');
+
+
 
 class LobbyManager {
     constructor(){      //newUser object
@@ -17,6 +18,7 @@ class LobbyManager {
         }
 
     }
+
     checkLobbyValid(lobbyID) {
       if (lobbyID in this.lobbies) {
         return true;
@@ -29,6 +31,11 @@ class LobbyManager {
       if (valid) {
         this.lobbies[lobbyID].addPlayer(user);
       } else {console.log("invalid lobby id: lobby does not exist");} // TODO: handle error
+    }
+
+    getLobby(lobbyID) {
+        return this.lobbies[lobbyID];
+
     }
 }
 module.exports = LobbyManager;
