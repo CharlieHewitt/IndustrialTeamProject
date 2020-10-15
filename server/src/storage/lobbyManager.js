@@ -30,7 +30,12 @@ class LobbyManager {
       var valid = this.checkLobbyValid(lobbyID);
       if (valid) {
         this.lobbies[lobbyID].addPlayer(user);
-      } else {console.log("invalid lobby id: lobby does not exist");} // TODO: handle error
+        if (user.id in this.lobbies[lobbyID].players) {
+          return true
+        } else {
+          return false
+        }
+      } else {console.log("invalid lobby id: lobby does not exist"); return false;} 
     }
 
     getLobby(lobbyID) {
