@@ -30,5 +30,3 @@ app.use("/api/lobby", require("./routes/lobby.js"));
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
-
-

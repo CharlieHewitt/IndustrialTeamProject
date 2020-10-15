@@ -13,7 +13,7 @@ class Lobby {
 
 
     createLobbyID() {
-        var ID = Math.random().toString(36).substring(7);
+        var ID = Math.random().toString(36).substring(7); //"testID" when testing
         return ID;
     }
 
