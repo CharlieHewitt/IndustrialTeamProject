@@ -2,5 +2,6 @@
   "lobbyID": "id",
   "lobbyName": "string",
   "playerID": "id",
-  "playerName": "chosen or generated name"
+  "playerName": "chosen or generated name",
+  "categories": ["list of categories"]
 }

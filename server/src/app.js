@@ -17,8 +17,9 @@ app.locals.allLobbies = new LobbyManager();
 connectToDatabase(MONGODB_CONNECTIONSTRING);
 
 // define routes
-app.use('/example', require('./routes/example.js'));
-app.use('/api/username', require('./routes/username.js'));
+app.use("/example", require("./routes/example.js"));
+app.use("/api/username", require("./routes/username.js"));
+app.use("/api/lobby/getCategories", require("./routes/category.js"));
 app.use('/api/databasetest', require('./routes/exampleAsyncRequest.js'));
 app.use("/api/lobby", require("./routes/lobby.js"));
 
