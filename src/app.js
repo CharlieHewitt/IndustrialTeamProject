@@ -4,7 +4,11 @@ const LobbyManager = require('./storage/lobbyManager');
 
 // import env variables
 // Create .env file if you haven't!
-require('dotenv').config();
+if (process.env.NODE_ENV === development)
+{
+  require('dotenv').config();
+}
+
 
 const PORT = process.env.PORT || 4000;
 const MONGODB_CONNECTIONSTRING = process.env.MONGODB_CONNECTIONSTRING;
