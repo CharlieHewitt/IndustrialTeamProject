@@ -179,3 +179,135 @@ Apologies: Afzal
   - Bug fixes for receiving usernames
   - Working on receiving usernames
   - Plan for today: Finish username user story
+  ---
+  
+## Monday 12/10/2020
+Present: Kamila, Neilson, John, Afzal, Charlie, Gregor, Tingjie, Teodora  
+Apologies: Justas
+- Neilson 
+  - Worked on script to populate database and format it correctly
+  - Plan for today: Making queries
+- John
+  - Lobby class working storing usernames
+  - Plan for today: work on next user story
+- Kamila
+  - Created document for client meeting
+  - Duplication
+  - Plan for Today: duplication of random name s_ start next sotry
+- Charlie
+  - Heroku setup
+  - Plan for today: Heloing backend team
+- Afzal
+  - UX finishing prototypes
+  - Aerver bug fixes
+  - Plan for Today: Backend user stories
+- Gregor
+  - UX prototype
+  - Page on react started
+  - Plan for Today: finish page from friday - new user story
+- Tingjie
+  - Ux prototype
+  - React tutorial
+  - Plan for Today: Development - new user stories
+- Teodora
+  - React tutorials
+  - UX prototype
+  - Plan for Today: Finish animations for buttons, new user stories
+  ---
+
+
+## Tuesday 13/10/2020
+Present: Kamila, Neilson, John, Charlie, Afzal, Gregor, Tingjie, Teodora  
+Apologies: Justas
+- Neilson 
+  - Working on queries
+  - Plan for today: Making queries
+- John
+  - Writing tests for code + planning
+  - Plan for today: start leaderboard
+- Kamila
+  - Duplication of names
+  - Plan for Today: start joining lobby + report
+- Charlie
+  - Reading devops
+  - Plan for today: Setup frontend server + plan settings
+- Afzal
+  - Working on user story - categories
+  - Plan for Today: Continue categories story
+- Gregor
+  - Finishing off sprint 1 story
+  - Plan for Today: starting next story
+- Tingjie
+  - Worked on question page and leaderboard
+  - Plan for Today: Research API to see how to add into pages
+- Teodora
+  - Leaderboard page
+  - User evaluation research
+  - Plan for Today: Work on leaderboard and user evaluation form
+  ---
+
+## Wednesday 14/10/2020
+Present: Kamila, Neilson, John, Afzal, Gregor, Tingjie, Teodora
+Apologies: Charlie, Justas
+- Neilson 
+  - Queries
+  - Plan for today: Making queries
+- John
+  - Requests to see players in lobby
+  - Started tests
+  - Plan for today: returning leaderboard
+- Kamila
+  - started Report
+  - planning generating join link
+  - Plan for Today: joining lobby + report
+- Charlie (sent in notes)
+  - Bash script for deployment
+  - Github management
+  - Plan for today: Deploying frontend + settings backend user story
+- Afzal
+  - Script to send categories to lobby
+  - Plan for Today: tests for above script
+- Gregor
+  - Homepage finished + pushed to git
+  - Plan for Today: Research into connected
+- Tingjie
+  - Pushed quizzing and leaderboard page to git
+  - Problem: style didn't work
+  - Plan for Today: API
+- Teodora
+  - Read user evaluation documents
+  - Got documents ready
+  - Plan for Today: Create form for testing app + API
+  
+**Goal for Today:**
+- All pages finished
+- Started functionality on frontend
+
+  ---
+## Thursday 14/10/2020
+Present: Kamila, Neilson, Charlie, John, Afzal, Gregor, Teodora  
+Apologies: Tingjie, Justas
+- Neilson 
+  - Finished queries
+  - Plan for today: Backend work - hooking up queries to requests
+- John
+  - Returning players in order by score finished
+  - Plan for today: game logic on backend
+- Kamila
+  - Player joining lobby
+  - Plan for Today: tidying up tests + generating url, game logic on backend
+- Charlie
+  - Route testing db code
+  - Frontend/backend route documentation
+  - Plan for today: route documentation
+- Afzal
+  - Refactored script
+  - Plan for Today: report + game logic
+- Gregor
+  - Blocked by page sbeing finished
+  - Reserach how to link pages
+  - Plan for Today: Start linking up pages
+- Teodora
+  - Made participant form
+  - Finished how to modal
+  - Plan for Today: Link how to page to lobby, help Jay with joining lobby, create join game page
