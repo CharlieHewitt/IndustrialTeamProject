@@ -16,7 +16,6 @@ import Waiting from "./views/Waiting";
 export const Routes = () => {
   return (
     <>
-
       <Switch>
         <Route exact path="/Home" component={Home} />
         <Route exact path="/">
@@ -30,7 +29,6 @@ export const Routes = () => {
         <Route path="/Waiting" component={Waiting} />
 
         <Route component={NotFound} />
-
       </Switch>
     </>
   );

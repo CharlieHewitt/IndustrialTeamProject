@@ -16,7 +16,7 @@ const Answer = ({ location: { search }, history }) => {
     setQuery(data);
     setTime(data.time);
     // Get data from the backend and store into the answerList(Depends on the api)
-    
+
     setAnswerList([
       {
         name: "answer1",
@@ -59,7 +59,7 @@ const Answer = ({ location: { search }, history }) => {
   // Upload the answer and get points
   const handleChose = (name) => {
     //console.log(query);
-    // To see if it is the last question, push everything if it is 
+    // To see if it is the last question, push everything if it is
     if (query.num === query.active) {
       history.push(`/totalscore?${stringify({ ...query, name })}`);
     } else {
