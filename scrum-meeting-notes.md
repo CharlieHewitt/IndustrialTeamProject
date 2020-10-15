@@ -285,7 +285,7 @@ Apologies: Charlie, Justas
 
   ---
 ## Thursday 14/10/2020
-Present: Kamila, Neilson, Charlie, John, Afzal, Gregor,  Teodora
+Present: Kamila, Neilson, Charlie, John, Afzal, Gregor, Teodora  
 Apologies: Tingjie, Justas
 - Neilson 
   - Finished queries
