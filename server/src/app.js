@@ -2,6 +2,9 @@ const express = require("express");
 const connectToDatabase = require("./database/db_connection.js");
 const LobbyManager = require('./storage/lobbyManager');
 
+const Lobby = require('./storage/lobby');
+const User = require('./storage/newUser');
+
 // import env variables
 // Create .env file if you haven't!
 require("dotenv").config();
@@ -24,5 +27,3 @@ app.use("/api/lobby", require("./routes/lobby.js"));
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
-
-
