@@ -40,5 +40,6 @@ describe('lobby class', () => {
         it ('should return a link to a lobby', () => {
           assert.isNotNull(url);
         });
+        // TODO: Actual tests testing for url need written
     });
 });
