@@ -9,7 +9,7 @@ describe('lobby class', () => {
     const firstPlayer = new User("user1", "1234", 0);
     const secondPlayer = new User("user2", "4321", 0);
     const lobby = new Lobby(firstPlayer);
-    
+
     describe('initialising lobby', () => {
         it ('adds host to the lobby', () => {
             assert.equal(lobby.players[firstPlayer.id], firstPlayer);
@@ -31,6 +31,15 @@ describe('lobby class', () => {
         lobby.addPlayer(secondPlayer);
         it ('should have added correct player to lobby', () => {
             assert.equal(lobby.players[secondPlayer.id], secondPlayer);
+        });
+        //TODO check for duplicates
+    });
+
+    describe('createGameLink function', () => {
+        let url = lobby.createGameLink();
+        it ('should return a link to a lobby', () => {
+          assert.isNotNull(url);
+          //console.log(url);
         });
         //TODO check for duplicates
     });
