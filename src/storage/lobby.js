@@ -16,9 +16,17 @@ class Lobby {
         return ID;
     }
 
+    createGameLink() {
+      // TODO: change start of url
+      var url = "localhost:4000" + "/joingame" + "/" + this.lobbyID;
+      return url;
+    }
+
     addPlayer(newUserObject) {
 
         var player = newUserObject;
+        console.log(newUserObject);
+        console.log(player);
         var duplicate = false;
         var newUsername = "";
 
@@ -61,7 +69,7 @@ class Lobby {
       return duplicate;
     }
 
-    
+
 }
 
 module.exports = Lobby;
