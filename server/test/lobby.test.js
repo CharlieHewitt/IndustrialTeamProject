@@ -39,8 +39,6 @@ describe('lobby class', () => {
         let url = lobby.createGameLink();
         it ('should return a link to a lobby', () => {
           assert.isNotNull(url);
-          //console.log(url);
         });
-        //TODO check for duplicates
     });
 });
