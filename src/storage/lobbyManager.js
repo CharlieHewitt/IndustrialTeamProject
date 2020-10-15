@@ -1,4 +1,4 @@
-const Lobby = require('../storage/Lobby');
+const Lobby = require('../storage/lobby');
 
 
 
