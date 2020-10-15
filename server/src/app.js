@@ -4,7 +4,7 @@ const LobbyManager = require('./storage/lobbyManager');
 
 // import env variables
 // Create .env file if you haven't!
-if (process.env.NODE_ENV === development)
+if (process.env.NODE_ENV === 'development')
 {
   require('dotenv').config();
 }
