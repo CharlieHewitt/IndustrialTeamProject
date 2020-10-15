@@ -8,7 +8,6 @@ router.get('/getCategories', (req, res) => {
     //take lobby id from request, find req lobbyid in lobbymanager, take categories, send categories.
 
     console.log("Request for Lobby Categories. Sending Response...");
-    var sender = [];
     
     //get request lobbies to check
     var lobbies = req.app.locals.allLobbies;
