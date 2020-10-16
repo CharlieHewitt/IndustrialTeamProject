@@ -10,7 +10,7 @@ const User = require('../storage/newUser');
 router.get('/getLobbyPlayers', (req, res) => {
     var lobbies = req.app.locals.allLobbies;
     var wantedID = req.body.id;
-  
+
     var wantedLobby = lobbies.getLobby(wantedID);
 
     res.json(wantedLobby.players);
@@ -24,7 +24,7 @@ router.get('/getLobbyLeaderboard', (req, res) => {
     var wantedLobby = lobbies.getLobby(wantedID);
     var inOrder = [];
     var id = [];
-    
+
     //change obj to array so i can sort
     for (key in wantedLobby.players){
         inOrder.push([key.toString(), wantedLobby.players[key].username, wantedLobby.players[key].score])
