@@ -34,7 +34,7 @@ const Total = () => {
           <div className={styles.left} />
           <div className={styles.msg}>
             <div>THE GAME HAS ENDED</div>
-            <div>YOU PLACED XHE</div>
+            <div>YOU PLACED NTH</div>
           </div>
           <div className={styles.setting}>Settings</div>
         </div>

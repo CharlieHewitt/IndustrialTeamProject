@@ -1,4 +1,8 @@
-h1 {
+.banner {
+  background-color: #0e1c42;
+  width: 100%;
+  height: 200px;
+  line-height: 200px;
   background-color: #0e1c42;
   font-size: 80px;
   text-align: center;
@@ -8,9 +12,50 @@ h1 {
   top: 45px;
 }
 
-.banner {
-  margin-top: 56px;
-  background-color: #0e1c42;
-  width: 100%;
-  height: 200px;
+.hostbtn {
+  position: absolute;
+  left: 515px;
+  top: 650px;
+  background-color: #ffffff;
+  height: 240px;
+  width: 440px;
+  display: inline-block;
+  font-size: 70px;
+  text-align: center;
+  color: #0E1C42;
+  font-weight: bold;
+  border-radius: 60px;
+  line-height: 240px;
+  cursor: pointer;
+}
+
+.joinbtn {
+  position: absolute;
+  left: 968px;
+  top: 650px;
+  background-color: #ffffff;
+  height: 240px;
+  width: 440px;
+  display: inline-block;
+  font-size: 70px;
+  text-align: center;
+  color: #0E1C42;
+  font-weight: bold;
+  border-radius: 60px;
+  line-height: 240px;
+  cursor: pointer;
+}
+.settings {
+  left: 1672px;
+  top: 60px;
+  position: absolute;
+  text-align: center;
+  background: #fff;
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  line-height: 80px;
+  font-size: 12px;
+  color: #3d5884;
+  cursor: pointer;
 }
