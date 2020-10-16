@@ -20,10 +20,9 @@ connectToDatabase(MONGODB_CONNECTIONSTRING);
 
 // define routes
 app.use("/example", require("./routes/example.js"));
-app.use("/api/lobby", require("./routes/username.js"));
+app.use("/api/lobby", require("./routes/lobby.js"));
 app.use("/api/lobby/categories", require("./routes/category.js"));
 app.use('/api/databasetest', require('./routes/exampleAsyncRequest.js'));
-app.use("/api/lobby", require("./routes/lobby.js"));
 app.use("/api/quiz", require("./routes/quiz.js"));
 
 app.listen(PORT, () => {
