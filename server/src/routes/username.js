@@ -27,7 +27,7 @@ router.post('/send', (req, res) => {
 
 // @route   POST /api/lobby/create
 // @desc    create lobby and add host
-router.post('/createLobby', (req, res) => {
+router.post('/create', (req, res) => {
     var lobbies = req.app.locals.allLobbies;
     var hostUsername = req.body.hostName;
     var categories = req.body.categories;
