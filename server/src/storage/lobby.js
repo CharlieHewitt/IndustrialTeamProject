@@ -1,5 +1,6 @@
 const User = require('../storage/newUser');
 const Player = require('../player/player');
+const LobbySettings = require('./lobbySettings');
 
 //will create a lobby instance when the host starts a game?
 class Lobby {
@@ -8,7 +9,9 @@ class Lobby {
         this.lobbyID = this.createLobbyID();
         this.players = {};
         this.addPlayer(firstPlayer);
-        this.categories = categories;
+        this.settings = new LobbySettings();
+        this.settings.updateCategories(categories);
+        // this.settings.updateCategories(categories);
     }
 
 
