@@ -313,8 +313,8 @@ Apologies: Tingjie, Justas
   ---  
   
 ## Friday 16/10/2020
-Present: Kamila, Neilson, Charlie, John, Afzal, Gregor, Teodora  
-Apologies: Tingjie, Justas
+Present: Kamila, Neilson, Charlie, John, Afzal, Gregor, Teodora, Tingjie 
+Apologies: Justas
 - Neilson 
   - Finished queries
   - Plan for today: Backend work - hooking up queries to requests
