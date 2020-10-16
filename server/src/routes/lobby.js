@@ -40,6 +40,8 @@ router.post('/create', (req, res) => {
 
     var lobbyid = lobby.lobbyID;
 
+    req.app.locals.allLobbies.addLobby(lobby);
+
     const responseObject = {};
     responseObject["lobbyId"] = lobbyid;
     responseObject["hostId"] = id;
