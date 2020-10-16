@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-// @route   GET /api/lobby/getCategories
+// @route   GET /api/lobby/categories
 // @desc    recieve lobby id and send categories back for lobby
-router.get('/getCategories', (req, res) => {
+router.get('/lobby/categories', (req, res) => {
     //get list of categories from server for lobbyID requesting
     //take lobby id from request, find req lobbyid in lobbymanager, take categories, send categories.
 
@@ -12,10 +12,10 @@ router.get('/getCategories', (req, res) => {
     //get request lobbies to check
     var lobbies = req.app.locals.allLobbies;
     //get request lobby ID
-    var lobbyid =  req.body.lobbyID;
+    var lobbyId =  req.body.lobbyID;
 
     //find matching lobby to lobby id
-    var lobby = lobbies.getLobby(lobbyid);
+    var lobby = lobbies.getLobby(lobbyId);
 
     //get categories list from lobby object
     categories = lobby.categories;
