@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors');
 const connectToDatabase = require("./database/db_connection.js");
 const LobbyManager = require('./storage/lobbyManager');
 
@@ -13,6 +14,7 @@ const MONGODB_CONNECTIONSTRING = process.env.MONGODB_CONNECTIONSTRING;
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.locals.allLobbies = new LobbyManager();
 
