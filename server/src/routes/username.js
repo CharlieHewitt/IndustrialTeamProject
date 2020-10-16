@@ -5,7 +5,7 @@ const User = require('../storage/newUser');
 
 // @route   POST /api/lobby/join
 // @desc    Recieve username and give it an ID and Score
-router.post('/send', (req, res) => {
+router.post('/join', (req, res) => {
   const username = req.body.playerName;
 
   id = createID();
@@ -37,6 +37,7 @@ router.post('/create', (req, res) => {
     var lobby = new Lobby(categories, user);
 
     var lobbyid = lobby.lobbyID;
+    res.app.locals.allLobbies.addLobby(lobby);
 
     const responseObject = {};
     responseObject["lobbyId"] = lobbyid;
