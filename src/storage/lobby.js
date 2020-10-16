@@ -1,6 +1,6 @@
 const User = require('../storage/newUser');
 const Player = require('../player/player');
-const LobbySettings = require('./lobbySettings');
+const LobbySettings = require('./LobbySettings');
 
 //will create a lobby instance when the host starts a game?
 class Lobby {
