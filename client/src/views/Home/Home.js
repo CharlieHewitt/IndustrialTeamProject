@@ -14,6 +14,7 @@ const Home = ({ history }) => {
       </div >
       <EnterName />
 
+
       <div onClick={() => history.push("/host-settings")} className="hostbtn">
         Host Game
       </div>
