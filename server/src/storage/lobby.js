@@ -3,17 +3,24 @@ const Player = require('../player/player');
 
 //will create a lobby instance when the host starts a game?
 class Lobby {
-    constructor(firstPlayer){      //newUser object
-
+    constructor(firstPlayer, categories){      //newUser object      
         //may add more things to this in the future
         this.lobbyID = this.createLobbyID();
         this.players = {};
         this.addPlayer(firstPlayer);
+        this.categories = categories;
     }
 
+
     createLobbyID() {
-        var ID = Math.random().toString(36).substring(7);
+        var ID = Math.random().toString(36).substring(7); //"testID" when testing
         return ID;
+    }
+
+    createGameLink() {
+      // TODO: fix url
+      var url = "localhost:4000" + "/joingame" + "/" + this.lobbyID;
+      return url;
     }
 
     addPlayer(newUserObject) {
@@ -61,7 +68,7 @@ class Lobby {
       return duplicate;
     }
 
-    
+
 }
 
 module.exports = Lobby;
