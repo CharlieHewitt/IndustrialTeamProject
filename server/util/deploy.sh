@@ -18,10 +18,10 @@ echo "Swapping to dev branch ..."
 git checkout dev
 
 echo "Pulling from remote for updates ..."
-git pull || echo "Aborting deploy." && exit 2
+git pull || { echo "Aborting deploy."; exit 2; }
 
 echo "Attempting to deploy ..."
-git subtree push --prefix server origin deploy-backend || echo "Aborting deploy." && exit 3
+git subtree push --prefix server origin deploy-backend || { echo "Aborting deploy."; exit 3; }
 
 echo "Deployment successful"
 exit 0
