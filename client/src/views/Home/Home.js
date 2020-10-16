@@ -1,18 +1,26 @@
 import React from "react";
 import "./index.css";
 import EnterName from "../../components/EnterName";
-import Host from "../../components/HostButton";
-import Join from "../../components/JoinButton";
 
-const Home = (props) => {
+const Home = ({ history }) => {
+
   return (
     <div>
+
+
       <div className="banner">
-        <h1>THE QUIZ</h1>
-      </div>
+        THE QUIZ
+        <div className="settings">Settings</div>
+      </div >
       <EnterName />
-      <Host />
-      <Join />
+
+      <div onClick={() => history.push("/host-settings")} className="hostbtn">
+        Host Game
+      </div>
+
+      <div onClick={() => history.push("/waiting")} className="joinbtn">
+        Join Game
+      </div>
     </div>
   );
 };

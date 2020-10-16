@@ -6,7 +6,7 @@ import SettingsBtn from "../../components/SettingsBtn";
 import styles from "./HostSettings.module.css";
 import "./index.css";
 
-const HostSettings = (props) => {
+const HostSettings = ({history}) => {
   const [categories, setCategories] = useState({
     "Category A": false,
     "Category B": false,
@@ -55,6 +55,7 @@ const HostSettings = (props) => {
             borderRadius: 30,
             textAlign: "left",
           }}
+          onClick={() => history.push("/waiting")} //sends to waiting/lobby page
         />
       </div>
     </div>
