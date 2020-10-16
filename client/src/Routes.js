@@ -3,15 +3,11 @@ import React from "react";
 import Home from "./views/Home";
 import NotFound from "./views/NotFound";
 import HostSettings from "./views/HostSettings";
-<<<<<<< HEAD
-import HowTo from "./views/HowTo"
-=======
+import HowTo from "./views/Waiting";
 
 import Answer from "./views/Quizing";
 import Score from "./views/Score";
 import Total from "./views/TotalScore";
-
->>>>>>> frontend-quizingandleaderboard
 import NavBar from "./components/NavBar";
 
 import { Route, Switch, Redirect } from "react-router-dom";

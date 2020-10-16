@@ -12,7 +12,7 @@ const Home = (props) => {
       </div>
       <EnterName />
       <Host />
-      <Join />
+      <Join/>
     </div>
   );
 };
