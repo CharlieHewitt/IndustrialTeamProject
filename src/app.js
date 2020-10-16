@@ -24,6 +24,7 @@ app.use("/api/lobby", require("./routes/lobby.js"));
 app.use("/api/lobby/categories", require("./routes/category.js"));
 app.use('/api/databasetest', require('./routes/exampleAsyncRequest.js'));
 app.use("/api/quiz", require("./routes/quiz.js"));
+app.use("/api/categories", require('./routes/categories_list.js'))
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
