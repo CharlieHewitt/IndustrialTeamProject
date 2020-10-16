@@ -282,14 +282,13 @@ Apologies: Charlie, Justas
 **Goal for Today:**
 - All pages finished
 - Started functionality on frontend
-
   ---
-## Thursday 14/10/2020
+  ## Thursday 15/10/2020
 Present: Kamila, Neilson, Charlie, John, Afzal, Gregor, Teodora  
 Apologies: Tingjie, Justas
 - Neilson 
-  - Finished queries
-  - Plan for today: Backend work - hooking up queries to requests
+  - Designing the game log loop
+  - Plan for today: Structure for main game
 - John
   - Returning players in order by score finished
   - Plan for today: game logic on backend
@@ -310,4 +309,34 @@ Apologies: Tingjie, Justas
 - Teodora
   - Made participant form
   - Finished how to modal
-  - Plan for Today: Link how to page to lobby, help Jay with joining lobby, create join game page
+  - Plan for Today: Link how to page to lobby, help Jay with joining lobby, create join game page  
+  ---  
+  
+## Friday 16/10/2020
+Present: Kamila, Neilson, Charlie, John, Afzal, Gregor, Teodora  
+Apologies: Tingjie, Justas
+- Neilson 
+  - Finished queries
+  - Plan for today: Backend work - hooking up queries to requests
+- John
+  - Spent time going over game logic annd api routes, made quiz routes with dummy data
+  - Plan for today: routes properly implemented
+- Kamila
+  - Finished user joining the lobby, game logic api routes, made routes for lobby
+  - Plan for Today: implementing routes
+- Charlie
+  - Writing API documentation for backend
+  - Game logic 
+  - Plan for today: settings on backend + devops
+- Afzal
+  - Game logic + API routes + report
+  - Plan for Today: routes + report
+- Gregor
+  - Finished linking pages
+  - Plan for Today: Let host change length of game
+- Tingjie
+  - API tutorials, made changes on quiz page
+  - Plan for Today: Linking fronend to backend
+- Teodora
+  - Finished modal for instructions, link modal to lobby page
+  - Plan for Today: user testing invites, link modal to other page
