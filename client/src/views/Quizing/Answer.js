@@ -19,20 +19,24 @@ const Answer = ({ location: { search }, history }) => {
 
     setAnswerList([
       {
+        hint: "Hint1",
         name: "answer1",
-        msg: "this is answer1 msg",
+        msg: "Hint1",
       },
       {
+        hint: "Hint2",
         name: "answer2",
-        msg: "this is answer2 msg",
+        msg: "Hint2",
       },
       {
+        hint: "Hint3",
         name: "answer3",
-        msg: "this is answer3 msg",
+        msg: "Hint3",
       },
       {
+        hint: "Hint4",
         name: "answer4",
-        msg: "this is answer4 msg",
+        msg: "Hint4",
       },
     ]);
     // Start the timer after getting data of the questions
@@ -59,6 +63,9 @@ const Answer = ({ location: { search }, history }) => {
   // Upload the answer and get points
   const handleChose = (name) => {
     //console.log(query);
+
+    //Compare with the correct answer to see if it is right
+
     // To see if it is the last question, push everything if it is
     if (query.num === query.active) {
       history.push(`/totalscore?${stringify({ ...query, name })}`);
@@ -97,8 +104,8 @@ const Answer = ({ location: { search }, history }) => {
       <div className={styles.hint}>
         <div className={styles.blank} />
         {answerList.map((item) => (
-          <Popover key={item.name} content={item.msg}>
-            <div className={styles.btn}>{item.name}</div>
+          <Popover key={item.hint} content={item.msg}>
+            <div className={styles.btn}>{item.hint}</div>
           </Popover>
         ))}
         <div className={styles.blank} />
