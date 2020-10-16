@@ -1,5 +1,7 @@
 const { assert } = require('chai');
 const player = require('../src/player/player.js');
+const lobby = require('../src/storage/lobby.js');
+const LobbyManager = require('../src/storage/lobbyManager.js');
 
 // chai assertion library docs : https://www.chaijs.com/api/assert/
 
