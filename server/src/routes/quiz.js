@@ -139,34 +139,35 @@ router.post('/answer/', (req, res) => {
 // @route   POST /leaderboard/
 // @desc    A client can request the leaderboard for a quiz by sending a request here.
 router.post('/leaderboard/', (req, res) => {
-  const success = true;
 
-  /*
-  Request:
-  {
-    lobbyId: string,
-    playerId: string,
+  var lobbies = req.app.locals.allLobbies;
+  var wantedID = req.body.id;
+  var wantedLobby = lobbies.getLobby(wantedID);
+  var inOrder = [];
+  var id = [];
+
+  //change obj to array so i can sort
+  for (key in wantedLobby.players){
+      inOrder.push([key.toString(), wantedLobby.players[key].username, wantedLobby.players[key].score])
   }
-  */
 
-  const leaderboard = {
-    sortedArray: [641,672], // playerId's sorted by highest score
-    users : {
-      "641": {
-         username: "John",
-         id: "641",
-         score: 50
-         },
-      "672": {
-        username: "Kamila",
-        id: "672",
-        score: 25
-        },
-       // users contains the above object for all users in Lobby
-     }
-   }
+  //sort array DEC
+  inOrder.sort(function(a, b) {
+      return b[2] - a[2];
+  });
 
-  res.json(leaderboard) 
+  for (i in inOrder) {
+      var test2 = inOrder[i];
+      test2.toString();
+      var fields = test2.toString().split(',');
+      id.push(fields[0]);
+  }
+
+  const responseObject = {};
+  responseObject["playersRanked"] = id;
+  responseObject["users"] = wantedLobby.players;
+
+  res.json(responseObject);
 });
 
 module.exports = router;
