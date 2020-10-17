@@ -7,7 +7,7 @@ const URL =
 const fetchJSON = async (url, reqData = {}) => {
   let res = await fetch(url, reqData);
   res = await res.json();
-  return res.data;
+  return res;
 };
 
 const API = {
