@@ -9,13 +9,13 @@
   color: white;
   font-weight: bold;
   position: relative;
-  top: 45px;
+  top: 56px;
 }
 
 .hostbtn {
   position: absolute;
   left: 515px;
-  top: 650px;
+  top: 600px;
   background-color: #ffffff;
   height: 240px;
   width: 440px;
@@ -32,7 +32,7 @@
 .joinbtn {
   position: absolute;
   left: 968px;
-  top: 650px;
+  top: 600px;
   background-color: #ffffff;
   height: 240px;
   width: 440px;

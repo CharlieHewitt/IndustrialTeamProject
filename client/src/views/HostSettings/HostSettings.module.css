@@ -1,14 +1,13 @@
 .title {
   width: 100%;
   text-align: center;
-  line-height: 10vh;
-  height: 10vh;
+  line-height: 200px;
+  height: 200px;
   position: relative;
-  margin: 20px auto;
+  top: 56px;
   color: #ffffff;
-  font-size: 40px;
+  font-size: 80px;
   font-weight: bold;
-  text-decoration: underline;
   background-color: #0E1C42;
 }
 
@@ -17,7 +16,7 @@
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 20px;
+  padding:125px;
 }
 
 .wrap {

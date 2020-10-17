@@ -79,7 +79,7 @@ const Answer = ({ location: { search }, history }) => {
       <div className={styles.header}>
         <div className={styles.container}>
           <div className={styles.title}>CATEGORY:***</div>
-          <div className={styles.msg}>1.hello word</div>
+          <div className={styles.msg}>hello world</div>
         </div>
       </div>
       <div className={styles.content}>
