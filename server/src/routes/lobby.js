@@ -19,51 +19,50 @@ router.post('/join', (req, res) => {
   var success = lobbyManager.joinLobby(lobbyId, userStats);
 
   const responseObject = {};
-  responseObject["success"] = success;
-  responseObject["lobbyId"] = lobbyId;
-  responseObject["playerId"] = userStats.id;
-  responseObject["playerName"] = userStats.username;
+  responseObject['success'] = success;
+  responseObject['lobbyId'] = lobbyId;
+  responseObject['playerId'] = userStats.id;
+  responseObject['playerName'] = userStats.username;
   res.json(responseObject);
-
 });
 
 // @route   POST /api/lobby/create
 // @desc    create lobby and add host
 router.post('/create', (req, res) => {
-    var lobbies = req.app.locals.allLobbies;
-    var hostUsername = req.body.hostName;
-    var categories = req.body.categories;
-    var id = createID();
+  var lobbies = req.app.locals.allLobbies;
+  var hostUsername = req.body.hostName;
+  var categories = req.body.categories;
+  var id = createID();
 
-    var user = new User(hostUsername, id, 0);
-    var lobby = new Lobby(categories, user);
+  var user = new User(hostUsername, id, 0);
+  var lobby = new Lobby(categories, user);
 
-    var lobbyid = lobby.lobbyID;
+  var lobbyid = lobby.lobbyID;
 
-    req.app.locals.allLobbies.addLobby(lobby);
+  req.app.locals.allLobbies.addLobby(user);
 
-    const responseObject = {};
-    responseObject["lobbyId"] = lobbyid;
-    responseObject["hostId"] = id;
-    responseObject["hostName"] = user.username;
-    res.json(responseObject);
+  const responseObject = {};
+  responseObject['lobbyId'] = lobbyid;
+  responseObject['hostId'] = id;
+  responseObject['hostName'] = user.username;
+  res.json(responseObject);
 });
 
 // @route   GET /api/lobby/getLobbyPlayers
 // @desc    return everyone in the lobby
 router.get('/getLobbyPlayers', (req, res) => {
-    var lobbies = req.app.locals.allLobbies;
-    var wantedID = req.body.id;
+  var lobbies = req.app.locals.allLobbies;
+  var wantedID = req.body.id;
 
-    var wantedLobby = lobbies.getLobby(wantedID);
+  var wantedLobby = lobbies.getLobby(wantedID);
 
-    res.json(wantedLobby.players);
+  res.json(wantedLobby.players);
 });
 
 //create a random ID for new user
-function createID(){
-    var seq = Math.floor(1000 + Math.random() * 9000)
-    return seq;
-    }
+function createID() {
+  var seq = Math.floor(1000 + Math.random() * 9000);
+  return seq;
+}
 
 module.exports = router;
