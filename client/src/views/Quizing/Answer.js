@@ -11,20 +11,9 @@ const Answer = ({ location: { search }, history }) => {
   const [time, setTime] = useState(0);
 
   const [hostname] = useState("lobby");
-  const [hostInfo, setHostInfo] = useState([]);
-  const [res, setRes] = useState([
-    {Info:{
-        question: "aaa",
-        category: "aaa",
-        answers: {
-        a: "aaa",
-        b: "bbb",
-        c: "ccc",
-        d: "ddd",
-        }
-      }
-    }
-  ]);
+  const [hostInfo, setHostInfo] = useState({});
+  const [category, setCategory] = useState("");
+  const [question, setQuestion] = useState("");
 
   // Get data from url
   useEffect(() => {
@@ -33,43 +22,39 @@ const Answer = ({ location: { search }, history }) => {
     setQuery(data);
     setTime(data.time);
 
-    async function createLobby(hostname){
-      hostInfo = await API.createLobby(hostname);
-      setHostInfo(hostInfo);
-    }
-    async function getQuestion(lobbyId, playerId, questionNumber){
-      res = await API.getNextQuestion(lobbyId, playerId, questionNumber)
-      setRes(res);
-    // Get data from the backend and store into the answerList(Depends on the api)
-    }
-
     createLobby(hostname);
-    console.log(hostInfo);
-    //getQuestion()
 
-    // console.log(res)
-    setAnswerList([
-      {
-        hint: "Hint1",
-        name: res[0].Info.answers.a,
-        msg: "Hint1",
-      },
-      {
-        hint: "Hint2",
-        name: res[0].Info.answers.b,
-        msg: "Hint2",
-      },
-      {
-        hint: "Hint3",
-        name: res[0].Info.answers.c,
-        msg: "Hint3",
-      },
-      {
-        hint: "Hint4",
-        name: res[0].Info.answers.d,
-        msg: "Hint4",
-      },
-    ]);
+    async function createLobby(hostname){
+      const res = await API.createLobby(hostname);
+      console.log(res);
+      setHostInfo(res);
+      const res2 = await API.getNextQuestion(res.lobbyId, res.hostId, "2");
+      console.log(res2);
+      setCategory(res2.questionInfo.category);
+      setQuestion(res2.questionInfo.question);
+      setAnswerList([
+        {
+          hint: "Hint1",
+          name: res2.questionInfo.answers.a,
+          msg: "Hint1",
+        },
+        {
+          hint: "Hint2",
+          name: res2.questionInfo.answers.b,
+          msg: "Hint2",
+        },
+        {
+          hint: "Hint3",
+          name: res2.questionInfo.answers.c,
+          msg: "Hint3",
+        },
+        {
+          hint: "Hint4",
+          name: res2.questionInfo.answers.d,
+          msg: "Hint4",
+        },
+      ]);
+    }
 
     // Start the timer after getting data of the questions
     let i = data.time;
@@ -91,6 +76,8 @@ const Answer = ({ location: { search }, history }) => {
     };
   }, [search, history]);
 
+  // console.log(res);
+
   // store the answer using api
   // Upload the answer and get points
   const handleChose = (name) => {
@@ -110,8 +97,8 @@ const Answer = ({ location: { search }, history }) => {
     <div className={styles.answer}>
       <div className={styles.header}>
         <div className={styles.container}>
-          <div className={styles.title}>CATEGORY:***</div>
-          <div className={styles.msg}>1.hello word</div>
+          <div className={styles.title}>CATEGORY:{category}</div>
+          <div className={styles.msg}>{question}</div>
         </div>
       </div>
       <div className={styles.content} >
