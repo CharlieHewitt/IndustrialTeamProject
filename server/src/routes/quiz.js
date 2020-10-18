@@ -46,7 +46,7 @@ router.post('/host/start/', async (req, res) => {
 
   //assuming player[0] is always the host of the lobby.
   //check if playerid is firstid in given lobbyid, if correct then is host so start.
-  if (playerId == lobby.players[0]){
+  if (playerId == lobby.players[0].id){
     console.log("Player is Host of Lobby. Starting...")
     success = true;
     const ready = {
