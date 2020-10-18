@@ -14,11 +14,12 @@ const Home = ({ history }) => {
       </div >
       <EnterName />
 
+
       <div onClick={() => history.push("/host-settings")} className="hostbtn">
         Host Game
       </div>
 
-      <div onClick={() => history.push("/waiting")} className="joinbtn">
+      <div onClick={() => history.push("/joinwaiting")} className="joinbtn">
         Join Game
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Waiting.less";
+import Modal from "../../components/Modal/Modal";
 
 const Waiting = ({ history }) => {
   const [data, setData] = useState({});
@@ -7,6 +8,13 @@ const Waiting = ({ history }) => {
   const handleStart = () => {
     history.push("/quizing?num=5&time=20&active=1"); //Push data when click the "Start" button
   };
+
+  const modalRef = React.useRef();
+
+  const openModal = () => {
+    modalRef.current.openModal()
+  };
+
 
   useEffect(() => {
     setData({
@@ -38,7 +46,17 @@ const Waiting = ({ history }) => {
       </div>
       <div className={styles.footer}>
         <div className={styles.blank} />
-        <div className={styles.btn}>HOW TO PLAY</div>
+        <div className={styles.btn} onClick={openModal}>HOW TO PLAY</div>
+        <Modal ref={modalRef}>
+          <h2>How To Play</h2>
+          <p>Instruction 1</p>
+          <p>Instruction 2</p>
+          <p>Instruction 3</p>
+          <p>Instruction 4</p>
+          <p>Instruction 5</p>
+
+          <button className={styles.btn} onClick={() => modalRef.current.close()} style={{alignSelf:"center"}}>Close!</button>
+          </Modal>
         <div onClick={() => handleStart()} className={styles.btn}>
           START
         </div>
