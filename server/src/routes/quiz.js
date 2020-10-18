@@ -33,22 +33,40 @@ router.post('/host/settings/', (req, res) => {
 
 // @route   POST /host/start/
 // @desc    A host can start the quiz on the server for all the connected players by sending a request here.
-router.post('/host/start/', (req, res) => {
-  const success = true;
+router.post('/host/start/', async (req, res) => {
+  const success = false;
+  var lobbies = req.app.locals.allLobbies;
 
-  /*
-  Request:
-  {
-    lobbyId: string,
-    playerId: string
+  //request variables
+  var lobbyId = req.body.lobbyId;
+  var playerId = req.body.playerId;
+
+  //find matching lobby to lobby id
+  var lobby = lobbies.getLobby(lobbyId);
+
+  //assuming player[0] is always the host of the lobby.
+  //check if playerid is firstid in given lobbyid, if correct then is host so start.
+  if (playerId == lobby.players[0]){
+    console.log("Player is Host of Lobby. Starting...")
+    success = true;
+    const ready = {
+      success: success,
+      lobbyId: lobbyId
+    }
   }
-  */
 
- const ready = {
-  success: success,
-}
+  //if doesnt match then not host of lobby. respond with false for success with lobbyid
+  else{
+    console.log("Player is not Host of Lobby. Fail...")
+    const ready = {
+      success: success,
+      lobbyId: lobbyId
+    }
+  }
 
-  res.json(ready) 
+  //send response object
+  res.json(ready)
+
 });
 
 // @route   POST /start/
