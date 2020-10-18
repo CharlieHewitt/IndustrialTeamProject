@@ -30,9 +30,8 @@ const Waiting = ({ history }) => {
     <div className={styles.waiting}>
       <div className={styles.header}>
         <div className={styles.container}>
-          <div className={styles.logo} />
           <div className={styles.msg}>{data.title}</div>
-          <div className={styles.setting}>Settings</div>
+          {/*<div className={styles.setting}>Settings</div>*/}
         </div>
       </div>
       <div className={styles.content}>

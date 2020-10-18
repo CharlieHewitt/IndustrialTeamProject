@@ -36,7 +36,7 @@ const Total = () => {
             <div>THE GAME HAS ENDED</div>
             <div>YOU PLACED NTH</div>
           </div>
-          <div className={styles.setting}>Settings</div>
+          {/*<div className={styles.setting}>Settings</div>*/}
         </div>
       </div>
       <div className={styles.content}>

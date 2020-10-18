@@ -14,7 +14,7 @@ export class EnterName extends Component {
                         position: 'absolute',
                         fontSize: '70px',
                         left: '515px',
-                        top:'443px'
+                        top:'393px'
                     }}
                     placeholder="Enter name..." 
                 />

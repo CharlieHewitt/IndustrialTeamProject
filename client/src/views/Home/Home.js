@@ -17,7 +17,7 @@ const Home = ({ history }) => {
 
       <div className="banner">
         THE QUIZ
-        <div className="settings">Settings</div>
+        {/*<div className="settings">Settings</div>*/}
       </div >
       <EnterName />
 
