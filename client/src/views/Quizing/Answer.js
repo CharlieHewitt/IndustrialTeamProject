@@ -11,7 +11,6 @@ const Answer = ({ location: { search }, history }) => {
   const [time, setTime] = useState(0);
 
   const [hostname] = useState("lobby");
-  const [hostInfo, setHostInfo] = useState({});
   const [category, setCategory] = useState("");
   const [question, setQuestion] = useState("");
 
@@ -27,7 +26,6 @@ const Answer = ({ location: { search }, history }) => {
     async function createLobby(hostname){
       const res = await API.createLobby(hostname);
       console.log(res);
-      setHostInfo(res);
       const res2 = await API.getNextQuestion(res.lobbyId, res.hostId, "2");
       console.log(res2);
       setCategory(res2.questionInfo.category);
@@ -81,8 +79,8 @@ const Answer = ({ location: { search }, history }) => {
   // store the answer using api
   // Upload the answer and get points
   const handleChose = (name) => {
-    //console.log(query);
-
+    console.log(query);
+    console.log(name);
     //Compare with the correct answer to see if it is right
 
     // To see if it is the last question, push everything if it is

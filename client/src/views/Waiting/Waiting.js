@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Waiting.less";
 import Modal from "../../components/Modal/Modal";
+import API from "../../api";
 
 const Waiting = ({ history }) => {
   const [data, setData] = useState({});
+
+  const [hostname] = useState("lobby");
+  const [lobbyId, setLobbyId] = useState("");
+  // const [categories, setCategories] = useState([]);
+
   // Get data from api
   const handleStart = () => {
     history.push("/quizing?num=5&time=20&active=1"); //Push data when click the "Start" button
@@ -14,16 +20,29 @@ const Waiting = ({ history }) => {
   const openModal = () => {
     modalRef.current.openModal()
   };
-
-
+  console.log(lobbyId);
   useEffect(() => {
-    setData({
-      title: "GAME CODE：******",
-      competitors: "COMPETITORS",
-      topics: "TOPICS / CATEGORIES",
-      time: "TIME PER QUESTION",
-      num: "NUMBER OF QUESTIONS",
-    });
+
+    async function getAPIData(hostname){
+      const res = await API.createLobby(hostname);
+
+      console.log(res.lobbyId);
+      setLobbyId(res.lobbyId);
+
+      // const res2 = await API.getChosenCategories(lobbyId);
+      // setCategories(res2);
+    
+      setData({
+        title: "GAME CODE：",
+        competitors: "COMPETITORS",
+        topics: "",
+        time: "TIME PER QUESTION",
+        num: "NUMBER OF QUESTIONS",
+      });
+    }
+    
+    getAPIData(hostname);
+  
   }, []);
 
   return (
@@ -31,7 +50,7 @@ const Waiting = ({ history }) => {
       <div className={styles.header}>
         <div className={styles.container}>
           <div className={styles.logo} />
-          <div className={styles.msg}>{data.title}</div>
+          <div className={styles.msg}>{data.title}{lobbyId}</div>
           <div className={styles.setting}>Settings</div>
         </div>
       </div>

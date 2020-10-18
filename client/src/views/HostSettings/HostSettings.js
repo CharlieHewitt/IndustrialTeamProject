@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CategoryList from "../../components/CategoryList/CategoryList";
 import HostSettingRow from "../../components/HostSettingRow";
 import RoundedBtn from "../../components/RoundedBtn/RoundedBtn";
