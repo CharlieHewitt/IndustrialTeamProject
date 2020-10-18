@@ -10,13 +10,14 @@ const Answer = ({ location: { search }, history }) => {
   const [answerList, setAnswerList] = useState([]);
   const [time, setTime] = useState(0);
 
-  const [hostname] = useState("lobby");
+  const [hostname] = useState("Team10");
   const [category, setCategory] = useState("");
   const [question, setQuestion] = useState("");
 
   // Get data from url
   useEffect(() => {
     const data = parse(search.split("?")[1]);
+    console.log(data);
     // Store the data into query, set the timer
     setQuery(data);
     setTime(data.time);
@@ -95,7 +96,7 @@ const Answer = ({ location: { search }, history }) => {
     <div className={styles.answer}>
       <div className={styles.header}>
         <div className={styles.container}>
-          <div className={styles.title}>CATEGORY:{category}</div>
+          <div className={styles.title}>CATEGORY: {category}</div>
           <div className={styles.msg}>{question}</div>
         </div>
       </div>

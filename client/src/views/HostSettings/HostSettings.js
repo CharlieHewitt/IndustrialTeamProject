@@ -30,6 +30,7 @@ const HostSettings = ({history}) => {
           position: "absolute",
           top: 10,
           right: 10,
+
         }}
       />
       <div className={styles.mainWrap}>
@@ -39,7 +40,11 @@ const HostSettings = ({history}) => {
             setValue={setRoundCount}
             title="Number of Rounds"
           />
-          <HostSettingRow value={timer} setValue={setTimer} title="Timer" />
+          <HostSettingRow 
+            value={timer}
+            setValue={setTimer} 
+            title="Timer" 
+          />
           <HostSettingRow
             value={playerCount}
             setValue={setPlayerCount}
@@ -53,7 +58,7 @@ const HostSettings = ({history}) => {
             width: 125,
             height: 125,
             borderRadius: 30,
-            textAlign: "left",
+            textAlign: "center",
           }}
           onClick={() => history.push("/waiting")} //sends to waiting/lobby page
         />
