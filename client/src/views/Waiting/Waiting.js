@@ -12,7 +12,7 @@ const Waiting = ({ history }) => {
 
   // Get data from api
   const handleStart = () => {
-    history.push("/quizing?num=5&time=20&active=1"); //Push data when click the "Start" button
+    history.push("/quizing?num=3&time=20&active=1"); //Push data when click the "Start" button
   };
 
   const modalRef = React.useRef();
