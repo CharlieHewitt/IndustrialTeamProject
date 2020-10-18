@@ -3,7 +3,7 @@ const router = express.Router();
 
 // @route   POST /host/settings/
 // @desc    Get settings details and send them back successful
-router.post('/host/settings/', (req, res) => {
+router.post('/host/settings/', async (req, res) => {
   const success = false;
   var lobbies = req.app.locals.allLobbies;
 
@@ -11,25 +11,27 @@ router.post('/host/settings/', (req, res) => {
   var lobbyId = req.body.lobbyId;
   var playerId = req.body.playerId;
   
+  if (lobbies.checkLobbiesValid(lobbyId)){
+    success = true;
+  }
+
+  //lobby to update
   var lobby = lobbies.getLobby(lobbyId);
 
-  //request lobby settings
+  //requested lobby settings
   var settings = {
     categories     : req.body.settings.categories,
     timePerQuestion: req.body.settings.timePerQuestions,
     numQuestion    : req.body.settings.numQuestion
   }
   
-  //update settings with request values then respond with updates values
+  //update saved lobby settings with request values 
+  lobby.settings = settings;
 
-
+  //response data
   const person = {lobbyId : lobbyId,
                   success: success,
-                  settings: {
-                    categories     : req.body.settings.categories,
-                    timePerQuestion: req.body.settings.timePerQuestions,
-                    numQuestion    : req.body.settings.numQuestion
-                  }
+                  settings: settings
   }
 
   res.json(person) 
