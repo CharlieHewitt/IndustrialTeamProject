@@ -21,10 +21,8 @@ class LobbyManager {
 
     checkLobbyValid(lobbyID) {
       if (lobbyID in this.lobbies) {
-        console.log("true");
         return true;
       }
-      console.log("false");
       return false;
     }
 
