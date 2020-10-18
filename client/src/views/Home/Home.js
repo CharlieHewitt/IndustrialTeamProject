@@ -26,6 +26,7 @@ const Home = ({ history }) => {
       </div>
 
       <div onClick={openModal} className="joinbtn">
+
         Join Game
       </div>
       <Modal ref={modalRef}>

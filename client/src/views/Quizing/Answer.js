@@ -3,11 +3,17 @@ import { parse, stringify } from "querystring";
 import { Progress, Popover } from "antd";
 import dayjs from "dayjs";
 import styles from "./Answer.less";
+import API from "../../api";
 
 const Answer = ({ location: { search }, history }) => {
   const [query, setQuery] = useState({});
   const [answerList, setAnswerList] = useState([]);
   const [time, setTime] = useState(0);
+
+  const [hostname] = useState("lobby");
+  const [hostInfo, setHostInfo] = useState({});
+  const [category, setCategory] = useState("");
+  const [question, setQuestion] = useState("");
 
   // Get data from url
   useEffect(() => {
@@ -15,30 +21,41 @@ const Answer = ({ location: { search }, history }) => {
     // Store the data into query, set the timer
     setQuery(data);
     setTime(data.time);
-    // Get data from the backend and store into the answerList(Depends on the api)
 
-    setAnswerList([
-      {
-        hint: "Hint1",
-        name: "answer1",
-        msg: "Hint1",
-      },
-      {
-        hint: "Hint2",
-        name: "answer2",
-        msg: "Hint2",
-      },
-      {
-        hint: "Hint3",
-        name: "answer3",
-        msg: "Hint3",
-      },
-      {
-        hint: "Hint4",
-        name: "answer4",
-        msg: "Hint4",
-      },
-    ]);
+    createLobby(hostname);
+
+    async function createLobby(hostname){
+      const res = await API.createLobby(hostname);
+      console.log(res);
+      setHostInfo(res);
+      const res2 = await API.getNextQuestion(res.lobbyId, res.hostId, "2");
+      console.log(res2);
+      setCategory(res2.questionInfo.category);
+      setQuestion(res2.questionInfo.question);
+      setAnswerList([
+        {
+          hint: "Hint1",
+          name: res2.questionInfo.answers.a,
+          msg: "Hint1",
+        },
+        {
+          hint: "Hint2",
+          name: res2.questionInfo.answers.b,
+          msg: "Hint2",
+        },
+        {
+          hint: "Hint3",
+          name: res2.questionInfo.answers.c,
+          msg: "Hint3",
+        },
+        {
+          hint: "Hint4",
+          name: res2.questionInfo.answers.d,
+          msg: "Hint4",
+        },
+      ]);
+    }
+
     // Start the timer after getting data of the questions
     let i = data.time;
     const timer = setInterval(() => {
@@ -59,6 +76,8 @@ const Answer = ({ location: { search }, history }) => {
     };
   }, [search, history]);
 
+  // console.log(res);
+
   // store the answer using api
   // Upload the answer and get points
   const handleChose = (name) => {
@@ -78,11 +97,11 @@ const Answer = ({ location: { search }, history }) => {
     <div className={styles.answer}>
       <div className={styles.header}>
         <div className={styles.container}>
-          <div className={styles.title}>CATEGORY:***</div>
-          <div className={styles.msg}>1.hello word</div>
+          <div className={styles.title}>CATEGORY:{category}</div>
+          <div className={styles.msg}>{question}</div>
         </div>
       </div>
-      <div className={styles.content}>
+      <div className={styles.content} >
         {answerList.map((item) => (
           <div
             key={item.name}
