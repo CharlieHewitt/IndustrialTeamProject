@@ -21,10 +21,13 @@ class LobbyManager {
 
     checkLobbyValid(lobbyID) {
       if (lobbyID in this.lobbies) {
+        console.log("true");
         return true;
       }
+      console.log("false");
       return false;
     }
+
 
     joinLobby(lobbyID, user) {
       var valid = this.checkLobbyValid(lobbyID);
@@ -35,7 +38,7 @@ class LobbyManager {
         } else {
           return false
         }
-      } else {console.log("invalid lobby id: lobby does not exist"); return false;} 
+      } else {console.log("invalid lobby id: lobby does not exist"); return false;}
     }
 
     getLobby(lobbyID) {
