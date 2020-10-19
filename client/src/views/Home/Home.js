@@ -18,7 +18,7 @@ const Home = ({ location: { search }, history }) => {
 
   const handleHost = (e) => {
     console.log(inputValue.value);
-    history.push(`/waiting?hostName=${inputValue.value}`);
+    history.push(`/host-settings?hostName=${inputValue.value}`);
   }
 
   return (

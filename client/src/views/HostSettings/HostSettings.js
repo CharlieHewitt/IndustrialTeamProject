@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CategoryList from "../../components/CategoryList/CategoryList";
 import HostSettingRow from "../../components/HostSettingRow";
 import RoundedBtn from "../../components/RoundedBtn/RoundedBtn";
 import SettingsBtn from "../../components/SettingsBtn";
 import styles from "./HostSettings.module.css";
+import { parse } from "querystring";
 import "./index.css";
 
-const HostSettings = ({history}) => {
+const HostSettings = ({ location: {search }, history}) => {
   const [categories, setCategories] = useState({
     "Category A": false,
     "Category B": false,
@@ -21,6 +22,12 @@ const HostSettings = ({history}) => {
   const [roundCount, setRoundCount] = useState(7);
   const [timer, setTimer] = useState(7);
   const [playerCount, setPlayerCount] = useState(7);
+  const [hostName, setHostName] = useState("");
+
+  useEffect(() => {
+    const data1 = parse(search.split("?")[1]);
+    setHostName(data1);
+  }, [search, history]);
 
   return (
     <div>
@@ -60,7 +67,7 @@ const HostSettings = ({history}) => {
             borderRadius: 30,
             textAlign: "center",
           }}
-          onClick={() => history.push("/waiting")} //sends to waiting/lobby page
+          onClick={() => history.push(`/waiting?hostName=${hostName.hostName}`)} //sends to waiting/lobby page
         />
       </div>
     </div>
