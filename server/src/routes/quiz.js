@@ -78,22 +78,30 @@ router.post('/host/start/', async (req, res) => {
 // @route   POST /start/
 // @desc    A client can ask the server if the quiz has started by sending a request here.
 router.post('/start/', (req, res) => {
-  const success = true;
+  var lobbies = req.app.locals.allLobbies;
 
-  /*
-  Request:
-  {
-    lobbyId: string,
-    playerId: string
-  }
-  */
-
- const gameSettings = {
-    started: success,
+  var gameSettings = {
+    started: Boolean,
     settings: {
       timePerQuestion: 10,
-      numQuestions: 10
-    } //add this } to charlies file
+      numQuestions: 20
+    }
+  }
+
+  //request variables
+  var lobbyId = req.body.lobbyId;
+
+  //find matching lobby to lobby id
+  var lobby = lobbies.getLobby(lobbyId);
+
+  //check if the game has started. NO - set to false YES - set to true and set to the lobby settings
+  if (lobby.isGameStarted() == false) {
+    gameSettings.started = false;
+
+  } else if (lobby.isGameStarted() == true) {
+    gameSettings.started = true;
+    gameSettings.settings.timePerQuestion = lobby.settings.answerTime;
+    gameSettings.settings.numQuestion = lobby.settings.numTime;
   }
 
   res.json(gameSettings) 
