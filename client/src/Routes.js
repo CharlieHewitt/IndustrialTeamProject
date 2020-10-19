@@ -8,10 +8,10 @@ import HowTo from "./views/Waiting";
 import Answer from "./views/Quizing";
 import Score from "./views/Score";
 import Total from "./views/TotalScore";
-import NavBar from "./components/NavBar";
+import Waiting from "./views/Waiting";
+import JoinWaiting from "./views/JoinWaiting";
 
 import { Route, Switch, Redirect } from "react-router-dom";
-import Waiting from "./views/Waiting";
 
 export const Routes = () => {
   return (
@@ -28,6 +28,7 @@ export const Routes = () => {
         <Route path="/Score" component={Score} />
         <Route path="/Totalscore" component={Total} />
         <Route path="/Waiting" component={Waiting} />
+        <Route path="/JoinWaiting" component={JoinWaiting} />
 
         <Route component={NotFound} />
       </Switch>
