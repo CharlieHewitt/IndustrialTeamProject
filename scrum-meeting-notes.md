@@ -340,3 +340,39 @@ Apologies: Justas
 - Teodora
   - Finished modal for instructions, link modal to lobby page
   - Plan for Today: user testing invites, link modal to other page
+  
+---
+
+## Monday 19/10/2020
+Present: Neilson, John, Kamila, Charlie, Afzal, Gregor, Tingjie, Peter, Teodora, Justas
+Apologies: 
+- Neilson
+  - Skeleton for main game logic
+  - Plan for Today: Timing for questions, API requests updating needs done or assigned
+- John
+  - Fixing routes and tidying up code
+  - Plan for Today: carry on with routes
+- Kamila
+  - tests + report
+  - Plan for Today: game logic to be decided more exactly after backend team meeting
+- Charlie
+  - Deployed backend server + helping Jay with API linking
+  - Plan for Today: deploying frontend server, fix automatically deploying issue
+- Afzal
+  - Finished routes allocated
+  - Plan for Today: report or backend work assigned
+- Gregor
+  - Polishing pages and started linking
+  - Plan for Today: to be decided after frontend team meeting
+- Justas
+  - made API wrapper
+  - Plan for Today: look into sharing things throughout app without having them in url
+- Peter
+  - section 5 of report, settings modal
+  - Plan for Today: settings modal
+- Tingjie
+  - linking frontend to backend routes
+  - Plan for Today: game logic and linking frontend to backend
+- Teodora
+  - looked into how to use API wrapper
+  - Plan for Today: to be decided after frontend team meeting
