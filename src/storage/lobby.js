@@ -22,7 +22,7 @@ class Lobby {
     this.settings = new LobbySettings();
     this.settings.updateCategories(categories);
 
-    this.questions = getQuestions(this.settings);
+    // this.questions = getQuestions(this.settings);
   }
 
   startGame() {
@@ -30,8 +30,8 @@ class Lobby {
 
     this.questions.forEach((questionsPerCategory) => {
       questionsPerCategory.forEach((question) => {
-        this.currentQuestion = this.parseQuestion(question);
-        this.answer = this.parseAnswer(question);
+        // this.currentQuestion = this.parseQuestion(question);
+        // this.answer = this.parseAnswer(question);
         // wait this.settings.answerTime
       });
     });
@@ -42,13 +42,15 @@ class Lobby {
   /** Call lobbyManager logic to delete this instance of lobby
    * from lobbyManager's list of lobbies.
    */
-  endGame() {}
+  // endGame() {}
 
-  getQuestions(settings) {}
+  // getQuestions(settings) {}
 
-  parseQuestion(question) {}
+  // parseQuestion(question) {}
 
-  parseAnswer(question) {}
+  // parseAnswer(question) {}
+
+  // updatePlayerScore(playerID) {}
 
   isGameStarted() {
     return this.gameStarted;
@@ -61,8 +63,6 @@ class Lobby {
   getCurrentAnswer() {
     return this.currentAnswer;
   }
-
-  updatePlayerScore(playerID) {}
 
   createLobbyID() {
     var ID = Math.random().toString(36).substring(7); //"testID" when testing
