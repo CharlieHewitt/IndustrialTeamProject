@@ -1,4 +1,4 @@
-const User = require('../storage/newUser');
+const User = require('../storage/user');
 const Player = require('../player/player');
 const LobbySettings = require('./LobbySettings');
 //will create a lobby instance when the host starts a game?
@@ -116,6 +116,22 @@ class Lobby {
       }
     }
     return duplicate;
+  }
+
+  checkPlayerAnswer(playerid, playerAnswer) {
+    if (this.checkPlayerIsInLobby(playerid)) {
+      if (playerAnswer == this.answer) {
+        this.players[playerid].updateScore();
+        return true;
+      } else {return false;}
+    }
+  }
+
+  checkPlayerIsInLobby(playerid) {
+    if(this.players[playerid]){
+      return true;
+    }
+    return false;
   }
 }
 

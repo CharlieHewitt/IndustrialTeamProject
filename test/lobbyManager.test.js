@@ -1,7 +1,7 @@
 const { assert } = require('chai');
 const Lobby = require('../src/storage/lobby');
 const LobbyManager = require('../src/storage/lobbyManager');
-const User = require('../src/storage/newUser');
+const User = require('../src/storage/user');
 
 describe('lobbyManager class', () => {
   var lobbyManager = new LobbyManager();
