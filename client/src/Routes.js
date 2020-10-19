@@ -8,7 +8,6 @@ import HowTo from "./views/Waiting";
 import Answer from "./views/Quizing";
 import Score from "./views/Score";
 import Total from "./views/TotalScore";
-import NavBar from "./components/NavBar";
 
 import { Route, Switch, Redirect } from "react-router-dom";
 import Waiting from "./views/Waiting";

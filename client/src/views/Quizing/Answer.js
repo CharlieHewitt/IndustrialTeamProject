@@ -10,14 +10,14 @@ const Answer = ({ location: { search }, history }) => {
   const [answerList, setAnswerList] = useState([]);
   const [time, setTime] = useState(0);
 
-  const [hostname] = useState("lobby");
-  const [hostInfo, setHostInfo] = useState({});
+  const [hostname] = useState("Team10");
   const [category, setCategory] = useState("");
   const [question, setQuestion] = useState("");
 
   // Get data from url
   useEffect(() => {
     const data = parse(search.split("?")[1]);
+    console.log(data);
     // Store the data into query, set the timer
     setQuery(data);
     setTime(data.time);
@@ -27,7 +27,6 @@ const Answer = ({ location: { search }, history }) => {
     async function createLobby(hostname){
       const res = await API.createLobby(hostname);
       console.log(res);
-      setHostInfo(res);
       const res2 = await API.getNextQuestion(res.lobbyId, res.hostId, "2");
       console.log(res2);
       setCategory(res2.questionInfo.category);
@@ -81,8 +80,8 @@ const Answer = ({ location: { search }, history }) => {
   // store the answer using api
   // Upload the answer and get points
   const handleChose = (name) => {
-    //console.log(query);
-
+    console.log(query);
+    console.log(name);
     //Compare with the correct answer to see if it is right
 
     // To see if it is the last question, push everything if it is
@@ -97,7 +96,7 @@ const Answer = ({ location: { search }, history }) => {
     <div className={styles.answer}>
       <div className={styles.header}>
         <div className={styles.container}>
-          <div className={styles.title}>CATEGORY:{category}</div>
+          <div className={styles.title}>CATEGORY: {category}</div>
           <div className={styles.msg}>{question}</div>
         </div>
       </div>
