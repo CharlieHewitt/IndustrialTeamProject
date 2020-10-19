@@ -37,6 +37,7 @@ router.post('/host/settings/', async (req, res) => {
   //do start code to start lobby for everyone
   lobby.startGame();
 
+  //send response
   res.json(person) 
 });
 
