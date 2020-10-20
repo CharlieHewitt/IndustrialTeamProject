@@ -206,4 +206,46 @@ router.post('/leaderboard/', (req, res) => {
   res.json(responseObject);
 });
 
+// @route   POST /fiftyFifty/
+// @desc    A client can request to use the 50/50 lifeline, return 2 answers with one being correct
+router.post('/fiftyFifty/', (req, res) => {
+  var userId = req.body.playerId;
+  var lobbyId = req.body.lobbyId;
+  //var currentQuestion = req.body.currentQuestion;
+  var available = false;
+  
+  var wantedLobby = lobbies.getLobby(lobbyId);
+  var player = wantedLobby.players[userId];
+  var answer = wantedLobby.answer;
+
+  //check if they've use the 50/50 lifeline
+  if (player.fiftyFifty == false) {
+    available = true;
+  }
+
+  //if its a true or false Q they cant use it
+  var t = Object.keys(wantedLobby.currentQuestion.questionInfo.answers);
+  if (t.length == 2) {
+    available = false;
+  }
+
+  //remove the right answer so i can get another random one
+  const index = array.indexOf(answer);
+  if (index > -1) {
+    t.splice(index, 1);
+  }
+  
+  //pick a random answer
+  var randomAnswer =  Math.floor(Math.random() * t.length);
+
+  var hint = {
+    available: available, //if false shouldn't use it
+    answer1: answer,
+    answer2: randomAnswer
+  }
+
+  res.json(hint);
+});
+
+
 module.exports = router;
