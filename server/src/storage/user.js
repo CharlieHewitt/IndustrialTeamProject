@@ -6,8 +6,8 @@ class User {
     this.score = score;
   }
 
-  updateScore() {
-    this.score += 10;
+  updateScore(points) {
+    this.score += parseInt(points); 
     return this.score;
   }
 }
