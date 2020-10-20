@@ -4,6 +4,7 @@ import { Progress, Popover } from "antd";
 import dayjs from "dayjs";
 import styles from "./Answer.less";
 import API from "../../api";
+import AnswerList from "./AnswerList";
 
 const Answer = ({ location: { search }, history }) => {
   const [query, setQuery] = useState({});
@@ -13,6 +14,17 @@ const Answer = ({ location: { search }, history }) => {
   const [hostname] = useState("Team10");
   const [category, setCategory] = useState("");
   const [question, setQuestion] = useState("");
+  const [correctAnswer, setCorrectAnswer] = useState("");
+  const [test, setTest] = useState({
+    question: "how are you",
+    conrrectAnswer:"a",
+    answers:{
+      a: "a",
+      b: "b",
+      c: "c",
+      d: "d",
+    }
+  })
 
   // Get data from url
   useEffect(() => {
@@ -27,7 +39,7 @@ const Answer = ({ location: { search }, history }) => {
     async function createLobby(hostname){
       const res = await API.createLobby(hostname);
       console.log(res);
-      const res2 = await API.getNextQuestion(res.lobbyId, res.hostId, "2");
+      const res2 = await API.getNextQuestion(res.lobbyId, res.hostId, "");
       console.log(res2);
       setCategory(res2.questionInfo.category);
       setQuestion(res2.questionInfo.question);
@@ -69,8 +81,10 @@ const Answer = ({ location: { search }, history }) => {
   }, [search, history]);
 
   // console.log(res);
+  async function getNextQuestion(){
 
-  // store the answer using api
+  }
+
   // Upload the answer and get points
   const handleChose = (name) => {
     console.log(query);
@@ -94,7 +108,12 @@ const Answer = ({ location: { search }, history }) => {
         </div>
       </div>
       <div className={styles.content} >
-        {answerList.map((item) => (
+        <AnswerList
+          answers={answerList}
+          correctAnswer={correctAnswer}
+          getNextQuestion={()=>{getNextQuestion()}}
+        />
+        {/* {answerList.map((item) => (
           <div
             key={item.name}
             onClick={() => handleChose(item.name)}
@@ -102,7 +121,7 @@ const Answer = ({ location: { search }, history }) => {
           >
             <div className={styles.btn}>{item.name}</div>
           </div>
-        ))}
+        ))} */}
         <div className={styles.time}>
           <Progress
             type="circle"

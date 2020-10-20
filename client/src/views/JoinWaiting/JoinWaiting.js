@@ -7,6 +7,7 @@ import API from "../../api";
 const JoinWaiting = ({ location: { search }, history }) => {
   const [data, setData] = useState([]);
   const [lobbyId, setLobbyId] = useState("");
+  const [playerName, setPlayerName] = useState("");
   const [playerId, setPlayerId] = useState("");
   const [categories, setCategories] = useState([]);
   const [playerList, setPlayerList] = useState({});
@@ -22,8 +23,10 @@ const JoinWaiting = ({ location: { search }, history }) => {
   useEffect(() => {
     const data = parse(search.split("?")[1]);
     setLobbyId(data.lobbyId);
+    setPlayerName(data.username);
 
-    const joinRes = joinLobby(data.lobbyId, data.username);
+    console.log(data.username);
+    joinLobby(data.lobbyId, data.username);
     // console.log(joinRes);
     // getCategories(lobbyId);
     // getPlayers(data.lobbyId);
@@ -58,8 +61,7 @@ const JoinWaiting = ({ location: { search }, history }) => {
       num: "NUMBER OF QUESTIONS",
     });
   }, []);
-  console.log(playerId);
-  console.log(lobbyId);
+
   return (
     <div className={styles.joinwaiting}>
       <div className={styles.header}>
@@ -70,7 +72,7 @@ const JoinWaiting = ({ location: { search }, history }) => {
       </div>
       <div className={styles.content}>
         <div className={styles.blank} />
-        <div className={`${styles.left} ${styles.box}`}>{data.competitors}</div>
+        <div className={`${styles.left} ${styles.box}`}>{playerName}</div>
         <div className={`${styles.left} ${styles.box}`}>{data.topics}</div>
         <div className={styles.right}>
           <div className={`${styles.top} ${styles.box}`}>{data.time}</div>
