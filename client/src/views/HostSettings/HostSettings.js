@@ -6,28 +6,30 @@ import SettingsBtn from "../../components/SettingsBtn";
 import styles from "./HostSettings.module.css";
 import { parse } from "querystring";
 import "./index.css";
+import API from "../../api";
 
-const HostSettings = ({ location: {search }, history}) => {
-  const [categories, setCategories] = useState({
-    "Category A": false,
-    "Category B": false,
-    "Category C": false,
-    "Category D": false,
-    "Category E": false,
-    "Category F": false,
-    "Category G": false,
-    "Category H": false,
-    "Category I": false,
-  });
+const HostSettings = ({ location: { search }, history }) => {
+  const [categories, setCategories] = useState();
   const [roundCount, setRoundCount] = useState(7);
   const [timer, setTimer] = useState(7);
   const [playerCount, setPlayerCount] = useState(7);
   const [hostName, setHostName] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const data1 = parse(search.split("?")[1]);
-    setHostName(data1);
-  }, [search, history]);
+    async function init() {
+      try {
+        const categories = await API.getCategories();
+        let catObj = {};
+        categories.categories.forEach((cat) => (catObj[cat] = false));
+        setCategories(catObj);
+      } catch (err) {
+        setError(err.message);
+      }
+    }
+
+    init();
+  }, []);
 
   return (
     <div>
@@ -37,7 +39,6 @@ const HostSettings = ({ location: {search }, history}) => {
           position: "absolute",
           top: 10,
           right: 10,
-
         }}
       />
       <div className={styles.mainWrap}>
@@ -47,17 +48,22 @@ const HostSettings = ({ location: {search }, history}) => {
             setValue={setRoundCount}
             title="Number of Rounds"
           />
-          <HostSettingRow 
-            value={timer}
-            setValue={setTimer} 
-            title="Timer" 
-          />
+          <HostSettingRow value={timer} setValue={setTimer} title="Timer" />
           <HostSettingRow
             value={playerCount}
             setValue={setPlayerCount}
             title="Number of Players"
           />
-          <CategoryList categories={categories} setCategories={setCategories} />
+          {categories && (
+            <CategoryList
+              categories={categories}
+              setCategories={setCategories}
+            />
+          )}
+          {!categories && !error && (
+            <h1 style={{ textAlign: "center" }}>Loading...</h1>
+          )}
+          {error && <h1 style={{ textAlign: "center" }}>Error: {error}</h1>}
         </div>
         <RoundedBtn
           title="Start Lobby"
