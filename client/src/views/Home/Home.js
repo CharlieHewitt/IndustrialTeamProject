@@ -5,29 +5,38 @@ import "./index.css";
 import Modal from "../../components/Modal/Modal";
 
 const Home = ({ location: { search }, history }) => {
-
   const modalRef = React.useRef();
+  const [userName, setUsername] = useState("");
+
   let inputValue;
 
-  const openModal = () => {
-    modalRef.current.openModal()
-  };
   useEffect(() => {
 
   }, [search, history]);
 
   const handleHost = (e) => {
+    // e.preventDefault;
     console.log(inputValue.value);
     history.push(`/host-settings?hostName=${inputValue.value}`);
+  }
+
+  const openModal = (e) => {
+    // e.preventDefault;
+    modalRef.current.openModal()
+    setUsername(inputValue.value);
+  };
+
+  const handleJoin = (e) => {
+    
+    history.push(`/joinwaiting?username=${userName}&lobbyId=${inputValue.value}`);
   }
 
   return (
     <div>
       <div className="banner">
-        THE QUIZ
+        CRANE-IUM
         {/*<div className="settings">Settings</div>*/}
       </div >
-      {/* <EnterName /> */}
 
       <form onSubmit = {handleHost}>
         <input 
@@ -35,7 +44,7 @@ const Home = ({ location: { search }, history }) => {
           type="text" 
           name="userName" 
           placeholder="Enter name..."
-          // onChange = {handleInput}
+          required
           style={{
               backgroundColor: '#ffffff',
               width: '890px', 
@@ -49,29 +58,36 @@ const Home = ({ location: { search }, history }) => {
         <div onClick = {handleHost} className="hostbtn" type="submit">
           Host Game
         </div>
+        {/* The Big One  */}
+        <div onClick = {openModal} className="joinbtn" type="submit">
+          Join Game
+        </div>
       </form>
 
-      <div onClick={openModal} className="joinbtn">
-        Join Game
-      </div>
-
-      <Modal ref={modalRef}>
-                <input 
-                    type="text" 
-                    name="title" 
-                    maxLength="5"
-                    style={{
-                        backgroundColor: '#ffffff',
-                        width: '50%', 
-                        height: '25%',
-                        position: 'relative',
-                        fontSize: '20px',
-                    }}
-                    placeholder="Enter game code..." 
-                />
-          <button onClick={() => history.push("/joinwaiting")}>Join Game</button>
-          <button onClick={() => modalRef.current.close()}>Close!</button>
-          </Modal>
+        <Modal ref={modalRef}>
+          <form onSubmit={handleJoin}>
+            <input 
+              ref={input => inputValue = input}
+              type="text" 
+              name="lobbyId" 
+              maxLength="20"
+              required
+              style={{
+                backgroundColor: '#ffffff',
+                width: '50%', 
+                height: '25%',
+                position: 'relative',
+                fontSize: '20px',
+              }}
+              placeholder="Enter game code..." 
+            />
+            {/* the small one  */}
+            <button onClick={handleJoin} type="submit">Join Game</button>
+            <button onClick={() => modalRef.current.close()}>Close!</button>
+          </form>
+        </Modal>
+      
+      
     </div>
   );
 };

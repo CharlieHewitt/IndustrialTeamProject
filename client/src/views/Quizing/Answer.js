@@ -33,26 +33,19 @@ const Answer = ({ location: { search }, history }) => {
       setQuestion(res2.questionInfo.question);
       setAnswerList([
         {
-          hint: "Hint1",
           name: res2.questionInfo.answers.a,
-          msg: "Hint1",
         },
         {
-          hint: "Hint2",
           name: res2.questionInfo.answers.b,
-          msg: "Hint2",
         },
         {
-          hint: "Hint3",
           name: res2.questionInfo.answers.c,
-          msg: "Hint3",
         },
         {
-          hint: "Hint4",
           name: res2.questionInfo.answers.d,
-          msg: "Hint4",
         },
       ]);
+
     }
 
     // Start the timer after getting data of the questions
@@ -121,14 +114,37 @@ const Answer = ({ location: { search }, history }) => {
       </div>
       <div className={styles.hint}>
         <div className={styles.blank} />
-        {answerList.map((item) => (
+        {/* {answerList.map((item) => (
           <Popover key={item.hint} content={item.msg}>
             <div className={styles.btn}>{item.hint}</div>
           </Popover>
-        ))}
+        ))} */}
         <div className={styles.blank} />
       </div>
     </div>
   );
 };
 export default Answer;
+
+// setAnswerList([
+//   {
+//     hint: "Hint1",
+//     name: res2.questionInfo.answers.a,
+//     msg: "Hint1",
+//   },
+//   {
+//     hint: "Hint2",
+//     name: res2.questionInfo.answers.b,
+//     msg: "Hint2",
+//   },
+//   {
+//     hint: "Hint3",
+//     name: res2.questionInfo.answers.c,
+//     msg: "Hint3",
+//   },
+//   {
+//     hint: "Hint4",
+//     name: res2.questionInfo.answers.d,
+//     msg: "Hint4",
+//   },
+// ]);
