@@ -45,6 +45,15 @@ const API = {
     });
     return res;
   },
+  async getLobbyPlayers(lobbyId) {
+    let res = await fetchJSON(`${URL}/api/lobby/getLobbyPlayers`, {
+      method: "POST",
+      body: {
+        lobbyId,
+      },
+    });
+    return res;
+  },
   //   GAME LOGIC API
   async updateSettings(lobbyId, playerId, settings) {
     let res = await fetchJSON(`${URL}/api/quiz/host/settings/`, {

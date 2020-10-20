@@ -2,11 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 15vw;
 }
 
 .label {
-  font-size: 26px;
-  padding-right: 10px;
+  font-size: 1.6vw;
 }
 
 .checkBox {
