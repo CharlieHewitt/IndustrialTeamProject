@@ -1,4 +1,5 @@
 const express = require('express');
+const player = require('../player/player');
 const router = express.Router();
 
 // @route   POST /host/settings/
@@ -198,52 +199,54 @@ router.post('/leaderboard/', (req, res) => {
   res.json(responseObject);
 });
 
-// @route   POST /skip
-// @desc    A client can use the hint to skip the question and automatically get the right answer
-router.post('/skip', async (req, res) => {
+// @route   GET /skip
+// @desc    A client can use the get hint to skip the question and automatically get the right answer
+router.get('/skip', async (req, res) => {
+
   var lobbies = req.app.locals.allLobbies;
 
   //request values
   var lobbyId = req.body.lobbyId;
   var playerId = req.body.playerId;
 
-  var lobby = lobbies.getLobby(lobbyId)
+  //lobby and player values needed
+  var lobby = lobbies.getLobby(lobbyId);
+  var players = lobby.players;
+  var correctA = lobby.answer;
+  var player = players[playerId];
+  var skipUsed = true;
 
-  //get currentQuestion and CorrectAnswer from lobby
-  currentQ = lobby.currentQ;
-  correctA = lobby.answer;
+  //check if skip has been used.
+  if (player.skipUsed == false){
+    skipUsed = false;
+  }
 
-  var skipUsed = false;
-  var success = false
+  //if skip has been used then dont send correct answer and instead send back dummy data
+  if (player.skipUsed == true){
+    correctA = "Skip has been used";
+  }
 
-  //check if hint has been used, if not then success, send correct answer. 
+  //response json structure
+  const skip = {
+    skipUsed: skipUsed,   
+    correctAnswer: correctA
+  }
 
+  res.json(skip);
 
   /*
   Request:
   {
     lobbyId: string,
     playerId: string,
-
-    skip question logic: just automatically select correct answer and send back causing an essential skip, if wrong then
-    as false and empty string
   }
 
   Response:
   {
-    success: bool,
-    skipUsed, 
-    answer: string
+    skipUsed: bool
+    correctAnswer: string
   }
   */
-
-  const answer = {
-    success: success,
-    correctAnswer: correctA
-  }
-
-res.json(answer)
-
 
 });
 
