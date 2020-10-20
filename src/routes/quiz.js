@@ -198,4 +198,44 @@ router.post('/leaderboard/', (req, res) => {
   res.json(responseObject);
 });
 
+// @route   POST /skip
+// @desc    A client can use the hint to skip the question and automatically get the right answer
+router.post('/skip', async (req, res) => {
+  var lobbies = req.app.locals.allLobbies;
+
+  //request values
+  var lobbyId = req.body.lobbyId;
+  var playerId = req.body.playerId;
+
+  var lobby = lobbies.getLobby(lobbyId)
+
+  //get currentQuestion and CorrectAnswer from lobby
+  currentQ = lobby.currentQ;
+  correctA = lobby.answer;
+
+
+
+  //check if hint has been used, if not then success, send correct answer. 
+
+  /*
+  Request:
+  {
+    lobbyId: string,
+    playerId: string,
+
+    skip question logic: just automatically select correct answer and send back causing an essential skip, if wrong then
+    as false and empty string
+  }
+
+  Response:
+  {
+    success: bool,
+    answer: string
+  }
+  */
+
+
+});
+
+
 module.exports = router;
