@@ -213,9 +213,11 @@ router.post('/skip', async (req, res) => {
   currentQ = lobby.currentQ;
   correctA = lobby.answer;
 
-
+  var skipUsed = false;
+  var success = false
 
   //check if hint has been used, if not then success, send correct answer. 
+
 
   /*
   Request:
@@ -233,6 +235,14 @@ router.post('/skip', async (req, res) => {
     answer: string
   }
   */
+
+  const answer = {
+    success: success,
+    skipUsed: skipUsed,
+    correctAnswer: correctA
+  }
+
+res.json(answer)
 
 
 });
