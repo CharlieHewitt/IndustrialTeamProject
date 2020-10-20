@@ -6,7 +6,7 @@ describe('user class', () => {
   describe('updateScore method', () => {
     it('should update players score', () => {
       var initScore = user.score;
-      user.updateScore();
+      user.updateScore(10);
       var score = user.score;
       assert.equal(initScore+10, score);
     });

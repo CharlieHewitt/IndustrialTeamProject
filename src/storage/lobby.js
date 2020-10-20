@@ -18,6 +18,7 @@ class Lobby {
     this.currentQuestion = {};
     this.answer = {};
     this.gameStarted = false;
+    this.playersAnsweredCorrectly = [];
 
     this.settings = new LobbySettings();
     this.settings.updateCategories(categories);
@@ -121,9 +122,11 @@ class Lobby {
   checkPlayerAnswer(playerid, playerAnswer) {
     if (this.checkPlayerIsInLobby(playerid)) {
       if (playerAnswer == this.answer) {
-        this.players[playerid].updateScore();
+        this.playersAnsweredCorrectly.push(this.players[playerid]);
         return true;
       } else {return false;}
+    } else {
+      console.error("This player is not in the lobby");
     }
   }
 
@@ -132,6 +135,13 @@ class Lobby {
       return true;
     }
     return false;
+  }
+
+  updatePlayerScores() {
+    var highestScore = (this.playersAnsweredCorrectly.length * 5);
+    for (var i = 0; i < this.playersAnsweredCorrectly.length; i++) {
+      this.playersAnsweredCorrectly[i].updateScore(highestScore-(i*5));
+    }
   }
 }
 
