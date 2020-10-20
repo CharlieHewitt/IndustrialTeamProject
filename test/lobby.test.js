@@ -66,7 +66,7 @@ describe('lobby class', () => {
         lobby.addPlayer(thirdPlayer);
         lobby.checkPlayerAnswer(thirdPlayer.id, 'a');
         lobby.updatePlayerScores();
-        console.log(lobby);
+        assert.equal(lobby.players[firstPlayer.id].score, 15);
       });
     });
 });
