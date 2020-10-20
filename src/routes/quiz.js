@@ -232,13 +232,13 @@ router.post('/skip', async (req, res) => {
   Response:
   {
     success: bool,
+    skipUsed, 
     answer: string
   }
   */
 
   const answer = {
     success: success,
-    skipUsed: skipUsed,
     correctAnswer: correctA
   }
 
