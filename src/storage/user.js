@@ -5,6 +5,11 @@ class User {
     this.id = id;
     this.score = score;
   }
+
+  updateScore() {
+    this.score += 10;
+    return this.score;
+  }
 }
 
 module.exports = User;
