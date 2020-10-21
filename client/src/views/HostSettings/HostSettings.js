@@ -17,6 +17,9 @@ const HostSettings = ({ location: { search }, history }) => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const data = parse(search.split("?")[1]);
+    setHostName(data.hostName);
+
     async function init() {
       try {
         const categories = await API.getCategories();
@@ -73,7 +76,7 @@ const HostSettings = ({ location: { search }, history }) => {
             borderRadius: 30,
             textAlign: "center",
           }}
-          onClick={() => history.push(`/waiting?hostName=${hostName.hostName}`)} //sends to waiting/lobby page
+          onClick={() => history.push(`/waiting?hostName=${hostName}&timer=${timer}$numQ=${roundCount}`)} //sends to waiting/lobby page
         />
       </div>
     </div>

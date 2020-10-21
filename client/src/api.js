@@ -5,6 +5,12 @@ const URL =
     : "https://team10-industrialteamproject.herokuapp.com";
 
 const fetchJSON = async (url, reqData = {}) => {
+  if (reqData)
+    reqData.headers = {
+      "Content-Type": "application/json",
+    };
+  if (reqData.body) 
+    reqData.body = JSON.stringify(reqData.body);
   let res = await fetch(url, reqData);
   res = await res.json();
   return res;
