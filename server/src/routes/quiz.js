@@ -216,27 +216,34 @@ router.get('/fiftyFifty/', (req, res) => {
   
   var wantedLobby = lobbies.getLobby(lobbyId);
   var player = wantedLobby.players[userId];
-  var answer = wantedLobby.answer;
-
-  //check if they've use the 50/50 lifeline
-  if (player.fiftyFifty == false) {
-    available = true;
-  }
-
-  //if its a true or false Q they cant use it
-  var t = Object.keys(wantedLobby.currentQuestion.questionInfo.answers);
-  if (t.length == 2) {
-    available = false;
-  }
-
-  //remove the right answer so i can get another random one
-  const index = array.indexOf(answer);
-  if (index > -1) {
-    t.splice(index, 1);
-  }
   
-  //pick a random answer
-  var randomAnswer =  Math.floor(Math.random() * t.length);
+  var answer = "";
+  var randomAnswer = "";
+
+  //check if they've not used the 50/50 lifeline
+  if (player.fiftyFifty == false) {
+
+    //check if its a true or false Q, if not continue
+    var allAnswers = Object.keys(wantedLobby.currentQuestion.questionInfo.answers);
+    if (allAnswers.length != 2) { //available = false
+
+      //remove the right answer so i can get another random one
+      const index = allAnswers.indexOf(wantedLobby.answer);
+      if (index > -1) {
+        allAnswers.splice(index, 1);
+      }
+    
+    //set available and thats its been used for the player
+    available = true;
+    player.fiftyFifty = true;
+
+    //pick a random answer and answer
+    randomAnswer =  Math.floor(Math.random() * allAnswers.length);
+    answer = wantedLobby.answer;
+    }
+
+    
+  }
 
   var hint = {
     available: available, //if false shouldn't use it
