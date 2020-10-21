@@ -25,6 +25,7 @@ class Lobby {
     this.questions = [];
 
     this.settings = new LobbySettings();
+    this.timers = new TimeController();
 
     console.log(`Lobby created with id: ${this.lobbyID}`);
   }
@@ -243,6 +244,23 @@ class Lobby {
       this.playersAnsweredCorrectly[i].updateScore(highestScore - i * 5);
     }
     this.playersAnsweredCorrectly = [];
+  }
+
+  // Timer related code
+
+  startQuestionTimer() {
+    const name = 'questionTimer-addNUMBER HERE'; //+
+    this.timers.addTimer(name, this.settings.answerTime);
+  }
+
+  hasCurrentQuestionTimerExpired() {
+    const name = 'questionTimer-addNUMBER HERE';
+    return this.timers.getTimer(name).hasTargetTimePassed();
+  }
+
+  timeRemainingOnCurrentTimer() {
+    const name = 'questionTimer-addNUMBER HERE';
+    return this.timers.getTimer(name).timeToTarget();
   }
 }
 
