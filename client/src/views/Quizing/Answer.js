@@ -150,32 +150,3 @@ const Answer = ({ location: { search }, history }) => {
   );
 };
 export default Answer;
-
-// setAnswerList([
-//   {
-//     hint: "Hint1",
-//     name: res2.questionInfo.answers.a,
-//     msg: "Hint1",
-//   },
-//   {
-//     hint: "Hint2",
-//     name: res2.questionInfo.answers.b,
-//     msg: "Hint2",
-//   },
-//   {
-//     hint: "Hint3",
-//     name: res2.questionInfo.answers.c,
-//     msg: "Hint3",
-//   },
-//   {
-//     hint: "Hint4",
-//     name: res2.questionInfo.answers.d,
-//     msg: "Hint4",
-//   },
-// ]);
-
-        // {/* <AnswerList
-        //   answers={test.answers}
-        //   correctAnswer={test.correctAnswer}
-        //   getNextQuestion={()=>{getNextQuestion()}}
-        // /> */}
