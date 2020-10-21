@@ -10,8 +10,8 @@ router.post('/host/settings/', async (req, res) => {
   //request variables
   var lobbyId = req.body.lobbyId;
   var playerId = req.body.playerId;
-  
-  if (lobbies.checkLobbiesValid(lobbyId)){
+
+  if (lobbies.checkLobbiesValid(lobbyId)) {
     success = true;
   }
 
@@ -20,21 +20,18 @@ router.post('/host/settings/', async (req, res) => {
 
   //requested lobby settings
   var settings = {
-    categories     : req.body.settings.categories,
+    categories: req.body.settings.categories,
     timePerQuestion: req.body.settings.timePerQuestions,
-    numQuestion    : req.body.settings.numQuestion
-  }
-  
-  //update saved lobby settings with request values 
+    numQuestion: req.body.settings.numQuestion,
+  };
+
+  //update saved lobby settings with request values
   lobby.settings = settings;
 
   //response data
-  const person = {lobbyId : lobbyId,
-                  success: success,
-                  settings: settings
-  }
+  const person = { lobbyId: lobbyId, success: success, settings: settings };
 
-  res.json(person) 
+  res.json(person);
 });
 
 // @route   POST /host/start/
@@ -52,27 +49,26 @@ router.post('/host/start/', async (req, res) => {
 
   //assuming player[0] is always the host of the lobby.
   //check if playerid is firstid in given lobbyid, if correct then is host so start.
-  if (playerId == lobby.players[0].id){
-    console.log("Player is Host of Lobby. Starting...")
+  if (playerId == lobby.players[0].id) {
+    console.log('Player is Host of Lobby. Starting...');
     success = true;
     const ready = {
       success: success,
-      lobbyId: lobbyId
-    }
+      lobbyId: lobbyId,
+    };
   }
 
   //if doesnt match then not host of lobby. respond with false for success with lobbyid
-  else{
-    console.log("Player is not Host of Lobby. Fail...")
+  else {
+    console.log('Player is not Host of Lobby. Fail...');
     const ready = {
       success: success,
-      lobbyId: lobbyId
-    }
+      lobbyId: lobbyId,
+    };
   }
 
   //send response object
-  res.json(ready)
-
+  res.json(ready);
 });
 
 // @route   POST /start/
@@ -88,18 +84,18 @@ router.post('/start/', (req, res) => {
   }
   */
 
- const gameSettings = {
+  const gameSettings = {
     started: success,
     settings: {
       timePerQuestion: 10,
-      numQuestions: 10
-    } //add this } to charlies file
-  }
+      numQuestions: 10,
+    }, //add this } to charlies file
+  };
 
-  res.json(gameSettings) 
+  res.json(gameSettings);
 });
 
-// @route   POST /nextQuestion/ 
+// @route   POST /nextQuestion/
 // @desc    A client can request information on the next question by sending a request here
 router.post('/nextQuestion/', (req, res) => {
   const success = true;
@@ -113,25 +109,15 @@ router.post('/nextQuestion/', (req, res) => {
   }
   */
 
- const nextQ = {
-  questionInfo: {           //charlies file missing :
-    question: "who's the best team member",
-    category: 'general knowledge',
-    answers: {
-     a: "John",
-     b: "John",
-     c: "John",
-     d: "John",
-    }
-  },
-  success: success,
-  questionNumber: 1,       //charlies file missing ,
-  //?error: string,
-  time: 10              // time question countdown started on server
-  // time allowed per question?
-}
+  var lobbies = req.app.locals.allLobbies;
+  //request variables
+  var lobbyId = req.body.lobbyId;
+  //find matching lobby to lobby id
+  var lobby = lobbies.getLobby(lobbyId);
 
-  res.json(nextQ) 
+  const nextQ = lobby.getCurrentQuestion();
+
+  res.json(nextQ);
 });
 
 // @route   POST /answer/
@@ -150,20 +136,20 @@ router.post('/answer/', (req, res) => {
   }
   */
 
- const answer = {
-  success: success,
-  //?error: string,
-  correctAnswer: "a",
-  questionNumber: 1
-}
+  var lobbies = req.app.locals.allLobbies;
+  //request variables
+  var lobbyId = req.body.lobbyId;
+  //find matching lobby to lobby id
+  var lobby = lobbies.getLobby(lobbyId);
 
-  res.json(answer) 
+  const answer = lobby.getCurrentAnswer();
+
+  res.json(answer);
 });
 
 // @route   POST /leaderboard/
 // @desc    A client can request the leaderboard for a quiz by sending a request here.
 router.post('/leaderboard/', (req, res) => {
-
   var lobbies = req.app.locals.allLobbies;
   var wantedID = req.body.id;
   var wantedLobby = lobbies.getLobby(wantedID);
@@ -171,25 +157,29 @@ router.post('/leaderboard/', (req, res) => {
   var id = [];
 
   //change obj to array so i can sort
-  for (key in wantedLobby.players){
-      inOrder.push([key.toString(), wantedLobby.players[key].username, wantedLobby.players[key].score])
+  for (key in wantedLobby.players) {
+    inOrder.push([
+      key.toString(),
+      wantedLobby.players[key].username,
+      wantedLobby.players[key].score,
+    ]);
   }
 
   //sort array DEC
-  inOrder.sort(function(a, b) {
-      return b[2] - a[2];
+  inOrder.sort(function (a, b) {
+    return b[2] - a[2];
   });
 
   for (i in inOrder) {
-      var test2 = inOrder[i];
-      test2.toString();
-      var fields = test2.toString().split(',');
-      id.push(fields[0]);
+    var test2 = inOrder[i];
+    test2.toString();
+    var fields = test2.toString().split(',');
+    id.push(fields[0]);
   }
 
   const responseObject = {};
-  responseObject["playersRanked"] = id;
-  responseObject["users"] = wantedLobby.players;
+  responseObject['playersRanked'] = id;
+  responseObject['users'] = wantedLobby.players;
 
   res.json(responseObject);
 });
