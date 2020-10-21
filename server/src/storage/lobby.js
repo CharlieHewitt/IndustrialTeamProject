@@ -1,5 +1,5 @@
 const User = require('../storage/user');
-const Player = require('../player/player');
+const Player = require('../player/player.js');
 const LobbySettings = require('./LobbySettings');
 const {
   getRandomBooleanQuestions,
@@ -173,7 +173,6 @@ class Lobby {
         newUsername = Player.generatePlayerName();
       }
       let duplicate = this.checkForDuplicates(player, newUsername);
-
       if (duplicate == false) {
         this.players[player.id] = player;
       } else {
@@ -196,7 +195,7 @@ class Lobby {
   }
 
   checkForDuplicates(player, newUsername) {
-    let duplicate = false;
+    var duplicate = false;
     for (let key in this.players) {
       if (this.players[key].username == player.username) {
         duplicate = true;
@@ -207,10 +206,10 @@ class Lobby {
           newUsername = Player.generatePlayerName();
           duplicate = checkForDuplicates(player, newUsername);
         }
-        if (duplicate == false) {
-          player.username = newUsername;
-        }
       }
+    }
+    if (duplicate == false) {
+      player.username = newUsername;
     }
     return duplicate;
   }
