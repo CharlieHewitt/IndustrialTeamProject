@@ -29,13 +29,6 @@ const API = {
     });
     return res;
   },
-  async getLobbyPlayers(lobbyId){
-    let res = await fetchJSON(`${URL}/api/lobby/getLobbyPlayers`,{
-      method: "POST",
-      body: { lobbyId },
-    });
-    return res;
-  },
   async joinLobby(lobbyId, playerName) {
     let res = await fetchJSON(`${URL}/api/lobby/join/`, {
       method: 'POST',

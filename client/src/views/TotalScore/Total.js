@@ -1,13 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { parse, stringify } from "querystring";
 import { Link } from "react-router-dom";
 import styles from "./Total.less";
+import API from "../../api";
 
-const Total = () => {
+const Total = ({ location: { search }, history }) => {
   const [list, setList] = useState([]);
+  const [lobbyId, setLobbyId] = useState("");
+  const [playerId, setPlayerId] = useState("");
 
   // Retrive the final score
   // Need to push the data of the last question before getting this leaderboard
   useEffect(() => {
+    const data = parse(search.split("?")[1]);
+    setLobbyId(data.lobbyId);
+    setPlayerId(data.playerId);
+    
+    async function getLeaderboard(lobbyId, playerId){
+      const res = API.getLeaderboard(lobbyId, playerId);
+    }
+
+    getLeaderboard(lobbyId, playerId);
+
     setList([
       {
         name: "nickname1",
@@ -26,7 +40,7 @@ const Total = () => {
         score: 60,
       },
     ]);
-  }, []);
+  }, [search, history]);
   return (
     <div className={styles.total}>
       <div className={styles.header}>

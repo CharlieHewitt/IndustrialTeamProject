@@ -27,6 +27,7 @@ const HostSettings = ({ location: { search }, history }) => {
   useEffect(() => {
     const data = parse(search.split("?")[1]);
     setHostName(data.hostName);
+    console.log(hostName);
 
     async function init() {
       try {
@@ -40,24 +41,31 @@ const HostSettings = ({ location: { search }, history }) => {
     }
     async function createLobby(hostName){
       const res1 = await API.createLobby(hostName);
+      console.log(res1);
       setLobbyId(res1.lobbyId);
       setHostId(res1.hostId);
     }
-    async function updateSetting(lobbyId, playerId, settings){
-      const res = await API.updateSettings(lobbyId, playerId, settings);
-          
-    }
 
     init();
-    createLobby(hostName);
+    createLobby(data.hostName);
+    
     setSettings({
-      categories: parse(categories),
+      categories: categories,//don't know how to set the format of categories
       timePerQuestion: timer,
       numQuestions: roundCount
     })
     console.log(settings);
+  }, [search, history]);
+
+  async function updateSetting(lobbyId, playerId, settings){
+    const res = await API.updateSettings(lobbyId, playerId, settings);
+    console.log(res);
+  }
+
+  const handleClick = () => {
     updateSetting(lobbyId, hostId, settings);
-  }, []);
+    history.push(`/waiting?hostName=${hostName}&timer=${timer}&numQ=${roundCount}&lobbyId=${lobbyId}&hostId=${hostId}`)
+  }
 
   return (
     <div>
@@ -101,7 +109,7 @@ const HostSettings = ({ location: { search }, history }) => {
             borderRadius: 30,
             textAlign: "center",
           }}
-          onClick={() => history.push(`/waiting?hostName=${hostName}&timer=${timer}&numQ=${roundCount}&categories=${[categories]}`)} //sends to waiting/lobby page
+          onClick={() => handleClick()} //sends to waiting/lobby page
         />
       </div>
     </div>

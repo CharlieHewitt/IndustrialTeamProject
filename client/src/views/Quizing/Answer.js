@@ -37,10 +37,11 @@ const Answer = ({ location: { search }, history }) => {
     async function getQuestion(lobbyId, playerId, questionNum){
       const res2 = await API.getNextQuestion(lobbyId, playerId, questionNum);
       console.log(res2);
+      setQuestionNum(res2.questionNum);
       setCategory(res2.questionInfo.category);
       setQuestion(res2.questionInfo.question);
       setAnswerList([
-           "a",
+           res2.questionInfo.answers.a,
            res2.questionInfo.answers.b,
            res2.questionInfo.answers.c,
            res2.questionInfo.answers.d,

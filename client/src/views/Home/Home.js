@@ -16,7 +16,6 @@ const Home = ({ location: { search }, history }) => {
 
   const handleHost = (e) => {
     // e.preventDefault;
-    console.log(inputValue.value);
     history.push(`/host-settings?hostName=${inputValue.value}`);
   }
 
