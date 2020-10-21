@@ -219,10 +219,11 @@ router.get('/skip', async (req, res) => {
   //check if skip has been used.
   if (player.skipUsed == false){
     skipUsed = false;
+    player.skipUsed = true; //hint will now be used so set player used to true
   }
-
+  
   //if skip has been used then dont send correct answer and instead send back dummy data
-  if (player.skipUsed == true){
+  if (skipUsed == true){
     correctA = "Skip has been used";
   }
 
