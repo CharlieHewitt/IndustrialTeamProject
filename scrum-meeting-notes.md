@@ -375,4 +375,40 @@ Apologies:
   - Plan for Today: game logic and linking frontend to backend
 - Teodora
   - looked into how to use API wrapper
-  - Plan for Today: to be decided after frontend team meeting
+  - Plan for Today: to be decided after frontend team meeting  
+  
+  ---
+
+## Tuesday 20/10/2020
+Present: Neilson, John, Kamila, Charlie, Afzal, Gregor, Tingjie, Peter, Teodora, Justas
+Apologies: 
+- Neilson
+  - Game logic work
+  - Plan for Today: Continue game logic + connecting it 
+- John
+  - Client route finished + user evaluation
+  - Plan for Today: 
+- Kamila
+  - player score updating + tests
+  - Plan for Today: working on score or more urgents tasks based on meeting
+- Charlie
+  - Deployed backend server + worked on game timing
+  - Plan for Today: finishing up timing
+- Afzal
+  - report 
+  - Plan for Today: need work assigned
+- Gregor
+  - working on scaling website
+  - Plan for Today: finishing scaling
+- Peter
+  - settings 
+  - Plan for Today: finishing settings
+- Tingjie
+  - implementing join lobby
+  - Plan for Today: finishing join lobby and linking other routes
+- Teodora
+  - questionnaire form for testing, logos, waiting page (lobby) showing score and names of people in lobby
+  - Plan for Today: finishing showing score and names of people in lobby
+- Justas
+  - added endpoints to API wrapper, added backend link for categories, implemented random button
+  - Plan for Today: linking with backend, sharing states throughout app

@@ -10,7 +10,7 @@ router.post('/host/settings/', async (req, res) => {
   //request variables
   var lobbyId = req.body.lobbyId;
   var playerId = req.body.playerId;
-  
+
   if (lobbies.checkLobbiesValid(lobbyId)){
     success = true;
   }
@@ -24,8 +24,8 @@ router.post('/host/settings/', async (req, res) => {
     timePerQuestion: req.body.settings.timePerQuestions,
     numQuestion    : req.body.settings.numQuestion
   }
-  
-  //update saved lobby settings with request values 
+
+  //update saved lobby settings with request values
   lobby.settings = settings;
 
   //response data
@@ -108,10 +108,10 @@ router.post('/start/', (req, res) => {
     gameSettings.settings.numQuestion = lobby.settings.numTime;
   }
 
-  res.json(gameSettings) 
+  res.json(gameSettings)
 });
 
-// @route   POST /nextQuestion/ 
+// @route   POST /nextQuestion/
 // @desc    A client can request information on the next question by sending a request here
 router.post('/nextQuestion/', (req, res) => {
   const success = true;
@@ -143,7 +143,7 @@ router.post('/nextQuestion/', (req, res) => {
   // time allowed per question?
 }
 
-  res.json(nextQ) 
+  res.json(nextQ)
 });
 
 // @route   POST /answer/
@@ -169,7 +169,7 @@ router.post('/answer/', (req, res) => {
   questionNumber: 1
 }
 
-  res.json(answer) 
+  res.json(answer)
 });
 
 // @route   POST /leaderboard/
@@ -205,6 +205,7 @@ router.post('/leaderboard/', (req, res) => {
 
   res.json(responseObject);
 });
+
 
 // @route   GET /fiftyFifty/
 // @desc    A client can request to use the 50/50 lifeline, return 2 answers with one being correct
