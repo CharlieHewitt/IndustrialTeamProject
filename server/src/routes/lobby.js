@@ -31,11 +31,10 @@ router.post('/join', (req, res) => {
 router.post('/create', (req, res) => {
   var lobbies = req.app.locals.allLobbies;
   var hostUsername = req.body.hostName;
-  var categories = req.body.categories;
   var id = createID();
 
   var user = new User(hostUsername, id, 0);
-  var lobby = new Lobby(user, categories);
+  var lobby = new Lobby(user);
 
   var lobbyid = lobby.lobbyID;
 
