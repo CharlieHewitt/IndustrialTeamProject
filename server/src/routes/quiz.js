@@ -4,37 +4,39 @@ const router = express.Router();
 // @route   POST /host/settings/
 // @desc    Get settings details and send them back successful
 router.post('/host/settings/', async (req, res) => {
-  const success = false;
-  var lobbies = req.app.locals.allLobbies;
+  let success = false;
+  const lobbies = req.app.locals.allLobbies;
 
   //request variables
-  var lobbyId = req.body.lobbyId;
-  var playerId = req.body.playerId;
+  const { lobbyId, playerId, settings } = req.body;
 
-  if (lobbies.checkLobbiesValid(lobbyId)) {
+  if (lobbies.checkLobbyValid(lobbyId)) {
     success = true;
   }
 
   //lobby to update
-  var lobby = lobbies.getLobby(lobbyId);
+  const lobby = lobbies.getLobby(lobbyId);
 
-  //requested lobby settings
-  var settings = {
-    categories: req.body.settings.categories,
-    timePerQuestion: req.body.settings.timePerQuestions,
-    numQuestion: req.body.settings.numQuestion,
+  if (success) {
+    success = lobby.settings.updateAnswerTime(settings.answerTime);
+  }
+
+  if (success) {
+    success = lobby.settings.updateNumQuestions(settings.numQuestions);
+  }
+
+  if (success) {
+    success = lobby.settings.updateCategories(settings.categories);
+  }
+
+  const response = {
+    success: success,
+    lobbyId: lobbyId,
+    settings: lobby.settings.getObject(),
   };
 
-  //update saved lobby settings with request values
-  lobby.settings = settings;
-
-  //response data
-  const person = { lobbyId: lobbyId, success: success, settings: settings };
-
-  //do start code to start lobby for everyone
-
   //send response
-  res.json(person);
+  res.json(response);
 });
 
 // @route   POST /host/start/
@@ -70,8 +72,6 @@ router.post('/host/start/', async (req, res) => {
       lobbyId: lobbyId,
     };
   }
-
-  lobby.settings.updateCategories(['animals', 'geography']);
 
   await lobby.getQuestions();
 
