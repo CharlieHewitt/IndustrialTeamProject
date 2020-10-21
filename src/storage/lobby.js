@@ -240,6 +240,7 @@ class Lobby {
     for (let i = 0; i < this.playersAnsweredCorrectly.length; i++) {
       this.playersAnsweredCorrectly[i].updateScore(highestScore - i * 5);
     }
+    this.playersAnsweredCorrectly = [];
   }
 }
 
