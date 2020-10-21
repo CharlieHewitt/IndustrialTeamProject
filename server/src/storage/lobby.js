@@ -36,9 +36,13 @@ class Lobby {
     this.questions.forEach((questionsPerCategory) => {
       // counter will track and represent question number
       let counter = 1;
-      questionsPerCategory.forEach((question, counter) => {
-        this.currentQuestion = this.parseQuestion(question, counter);
-        this.answer = this.parseAnswer(question);
+      questionsPerCategory.forEach((question) => {
+        this.resetPlayerAnswers();
+
+        if (question !== null) {
+          this.currentQuestion = this.parseQuestion(question, counter);
+          this.currentAnswer = this.parseAnswer(question, counter);
+        }
         // wait this.settings.answerTime
 
         counter++;
@@ -46,6 +50,15 @@ class Lobby {
     });
 
     // end game
+  }
+
+  /**
+   * Resets the hasAnswered field for each player in the lobby to false.
+   */
+  resetPlayerAnswers() {
+    for (const playerID in this.players) {
+      this.players[playerID].hasAnswered = false;
+    }
   }
 
   /** Call lobbyManager logic to delete this instance of lobby
@@ -136,20 +149,20 @@ class Lobby {
   }
 
   createLobbyID() {
-    var ID = Math.random().toString(36).substring(7); //"testID" when testing
+    let ID = Math.random().toString(36).substring(7); //"testID" when testing
     return ID;
   }
 
   createGameLink() {
     // TODO: fix url
-    var url = 'localhost:4000 ' + '/joingame' + '/' + this.lobbyID;
+    let url = 'localhost:4000 ' + '/joingame' + '/' + this.lobbyID;
     return url;
   }
 
   addPlayer(newUserObject) {
-    var player = newUserObject;
-    var duplicate = false;
-    var newUsername = '';
+    let player = newUserObject;
+    let duplicate = false;
+    let newUsername = '';
 
     if (!newUserObject instanceof User) {
       console.log('error: not user object');
@@ -159,7 +172,7 @@ class Lobby {
       if (player.username == '') {
         newUsername = Player.generatePlayerName();
       }
-      var duplicate = this.checkForDuplicates(player, newUsername);
+      let duplicate = this.checkForDuplicates(player, newUsername);
 
       if (duplicate == false) {
         this.players[player.id] = player;
@@ -169,9 +182,22 @@ class Lobby {
     }
   }
 
+  /**
+   * Get a player from the lobby.
+   *
+   * @param {string} playerID - id of the player
+   */
+  getPlayer(playerID) {
+    if (checkPlayerIsInLobby(playerID)) {
+      return this.players[playerID];
+    } else {
+      return false;
+    }
+  }
+
   checkForDuplicates(player, newUsername) {
-    var duplicate = false;
-    for (var key in this.players) {
+    let duplicate = false;
+    for (let key in this.players) {
       if (this.players[key].username == player.username) {
         duplicate = true;
         // TODO: : handle error - ask user to choose new username
@@ -194,23 +220,25 @@ class Lobby {
       if (playerAnswer == this.answer) {
         this.playersAnsweredCorrectly.push(this.players[playerid]);
         return true;
-      } else {return false;}
+      } else {
+        return false;
+      }
     } else {
-      console.error("This player is not in the lobby");
+      console.error('This player is not in the lobby');
     }
   }
 
   checkPlayerIsInLobby(playerid) {
-    if(this.players[playerid]){
+    if (this.players[playerid]) {
       return true;
     }
     return false;
   }
 
   updatePlayerScores() {
-    var highestScore = (this.playersAnsweredCorrectly.length * 5);
-    for (var i = 0; i < this.playersAnsweredCorrectly.length; i++) {
-      this.playersAnsweredCorrectly[i].updateScore(highestScore-(i*5));
+    let highestScore = this.playersAnsweredCorrectly.length * 5;
+    for (let i = 0; i < this.playersAnsweredCorrectly.length; i++) {
+      this.playersAnsweredCorrectly[i].updateScore(highestScore - i * 5);
     }
   }
 }
