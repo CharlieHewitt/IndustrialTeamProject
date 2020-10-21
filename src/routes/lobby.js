@@ -3,7 +3,7 @@ const router = express.Router();
 
 const LobbyManager = require('../storage/lobbyManager');
 const Lobby = require('../storage/lobby');
-const User = require('../storage/newUser');
+const User = require('../storage/user');
 
 // @route   POST /api/lobby/join
 // @desc    A player can 'join' a lobby by using this link

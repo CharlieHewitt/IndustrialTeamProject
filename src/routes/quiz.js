@@ -11,7 +11,7 @@ router.post('/host/settings/', async (req, res) => {
   //request variables
   var lobbyId = req.body.lobbyId;
   var playerId = req.body.playerId;
-  
+
   if (lobbies.checkLobbiesValid(lobbyId)){
     success = true;
   }
@@ -25,8 +25,8 @@ router.post('/host/settings/', async (req, res) => {
     timePerQuestion: req.body.settings.timePerQuestions,
     numQuestion    : req.body.settings.numQuestion
   }
-  
-  //update saved lobby settings with request values 
+
+  //update saved lobby settings with request values
   lobby.settings = settings;
 
   //response data
@@ -83,28 +83,36 @@ router.post('/host/start/', async (req, res) => {
 // @route   POST /start/
 // @desc    A client can ask the server if the quiz has started by sending a request here.
 router.post('/start/', (req, res) => {
-  const success = true;
+  var lobbies = req.app.locals.allLobbies;
 
-  /*
-  Request:
-  {
-    lobbyId: string,
-    playerId: string
-  }
-  */
-
- const gameSettings = {
-    started: success,
+  var gameSettings = {
+    started: Boolean,
     settings: {
       timePerQuestion: 10,
-      numQuestions: 10
-    } //add this } to charlies file
+      numQuestions: 20
+    }
   }
 
-  res.json(gameSettings) 
+  //request variables
+  var lobbyId = req.body.lobbyId;
+
+  //find matching lobby to lobby id
+  var lobby = lobbies.getLobby(lobbyId);
+
+  //check if the game has started. NO - set to false YES - set to true and set to the lobby settings
+  if (lobby.isGameStarted() == false) {
+    gameSettings.started = false;
+
+  } else if (lobby.isGameStarted() == true) {
+    gameSettings.started = true;
+    gameSettings.settings.timePerQuestion = lobby.settings.answerTime;
+    gameSettings.settings.numQuestion = lobby.settings.numTime;
+  }
+
+  res.json(gameSettings)
 });
 
-// @route   POST /nextQuestion/ 
+// @route   POST /nextQuestion/
 // @desc    A client can request information on the next question by sending a request here
 router.post('/nextQuestion/', (req, res) => {
   const success = true;
@@ -136,7 +144,7 @@ router.post('/nextQuestion/', (req, res) => {
   // time allowed per question?
 }
 
-  res.json(nextQ) 
+  res.json(nextQ)
 });
 
 // @route   POST /answer/
@@ -162,7 +170,7 @@ router.post('/answer/', (req, res) => {
   questionNumber: 1
 }
 
-  res.json(answer) 
+  res.json(answer)
 });
 
 // @route   POST /leaderboard/
@@ -198,6 +206,7 @@ router.post('/leaderboard/', (req, res) => {
 
   res.json(responseObject);
 });
+
 
 // @route   GET /skip
 // @desc    A client can use the get hint to skip the question and automatically get the right answer
