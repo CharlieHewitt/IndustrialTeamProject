@@ -5,6 +5,7 @@ class User {
     this.id = id;
     this.score = score;
     this.hasAnswered = false;
+    this.fiftyFifty = false;
   }
 
   updateScore(points) {
