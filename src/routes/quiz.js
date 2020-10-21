@@ -206,9 +206,9 @@ router.post('/leaderboard/', (req, res) => {
   res.json(responseObject);
 });
 
-// @route   GET /fiftyFifty/
+// @route   POST /fiftyFifty/
 // @desc    A client can request to use the 50/50 lifeline, return 2 answers with one being correct
-router.get('/fiftyFifty/', (req, res) => {
+router.post('/fiftyFifty/', (req, res) => {
   var userId = req.body.playerId;
   var lobbyId = req.body.lobbyId;
   //var currentQuestion = req.body.currentQuestion;
