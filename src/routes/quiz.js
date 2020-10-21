@@ -1,4 +1,5 @@
 const express = require('express');
+const player = require('../player/player');
 const router = express.Router();
 
 // @route   POST /host/settings/
@@ -206,6 +207,55 @@ router.post('/leaderboard/', (req, res) => {
   res.json(responseObject);
 });
 
+// @route   POST /skip
+// @desc    A client can use the get hint to skip the question and automatically get the right answer
+router.post('/skip', async (req, res) => {
+
+  var lobbies = req.app.locals.allLobbies;
+
+  //request values
+  var lobbyId = req.body.lobbyId;
+  var playerId = req.body.playerId;
+
+  //lobby and player values needed
+  var lobby = lobbies.getLobby(lobbyId);
+  var players = lobby.players;
+  var correctA = lobby.getCurrentAnswer();
+  var player = players[playerId];
+  var skipUsed = true;
+
+  //check if skip has been used.
+  if (player.skipUsed == false){
+    skipUsed = false;
+    player.skipUsed = true; //hint will now be used so set player used to true
+  }
+  
+  //if skip has been used then dont send correct answer and instead send back dummy data
+  if (skipUsed == true){
+    correctA = "Skip has been used";
+  }
+
+  //response json structure
+  const skip = {
+    skipUsed: skipUsed,   
+    correctAnswer: correctA
+  }
+
+  res.json(skip);
+
+  /*
+  Request:
+  {
+    lobbyId: string,
+    playerId: string,
+  }
+
+  Response:
+  {
+    skipUsed: bool
+    correctAnswer: string
+  }
+  */
 
 // @route   POST /fiftyFifty/
 // @desc    A client can request to use the 50/50 lifeline, return 2 answers with one being correct
@@ -253,6 +303,7 @@ router.post('/fiftyFifty/', (req, res) => {
   }
 
   res.json(hint);
+
 });
 
 

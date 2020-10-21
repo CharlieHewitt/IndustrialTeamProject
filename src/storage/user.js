@@ -4,6 +4,7 @@ class User {
     this.username = username;
     this.id = id;
     this.score = score;
+    this.skipUsed = false;
     this.hasAnswered = false;
   }
 
