@@ -11,11 +11,7 @@ router.post('/host/settings/', async (req, res) => {
   var lobbyId = req.body.lobbyId;
   var playerId = req.body.playerId;
 
-<<<<<<< HEAD
   if (lobbies.checkLobbiesValid(lobbyId)) {
-=======
-  if (lobbies.checkLobbiesValid(lobbyId)){
->>>>>>> dev
     success = true;
   }
 
@@ -26,13 +22,8 @@ router.post('/host/settings/', async (req, res) => {
   var settings = {
     categories: req.body.settings.categories,
     timePerQuestion: req.body.settings.timePerQuestions,
-<<<<<<< HEAD
     numQuestion: req.body.settings.numQuestion,
   };
-=======
-    numQuestion    : req.body.settings.numQuestion
-  }
->>>>>>> dev
 
   //update saved lobby settings with request values
   lobby.settings = settings;
@@ -40,22 +31,18 @@ router.post('/host/settings/', async (req, res) => {
   //response data
   const person = { lobbyId: lobbyId, success: success, settings: settings };
 
-<<<<<<< HEAD
-  res.json(person);
-=======
   //do start code to start lobby for everyone
-  lobby.startGame();
 
   //send response
-  res.json(person) 
->>>>>>> dev
+  res.json(person);
 });
 
 // @route   POST /host/start/
 // @desc    A host can start the quiz on the server for all the connected players by sending a request here.
 router.post('/host/start/', async (req, res) => {
-  const success = false;
+  let success = false;
   var lobbies = req.app.locals.allLobbies;
+  let ready = {};
 
   //request variables
   var lobbyId = req.body.lobbyId;
@@ -66,10 +53,10 @@ router.post('/host/start/', async (req, res) => {
 
   //assuming player[0] is always the host of the lobby.
   //check if playerid is firstid in given lobbyid, if correct then is host so start.
-  if (playerId == lobby.players[0].id) {
+  if (playerId == lobby.players[playerId].id) {
     console.log('Player is Host of Lobby. Starting...');
     success = true;
-    const ready = {
+    ready = {
       success: success,
       lobbyId: lobbyId,
     };
@@ -78,11 +65,18 @@ router.post('/host/start/', async (req, res) => {
   //if doesnt match then not host of lobby. respond with false for success with lobbyid
   else {
     console.log('Player is not Host of Lobby. Fail...');
-    const ready = {
+    ready = {
       success: success,
       lobbyId: lobbyId,
     };
   }
+
+  lobby.settings.updateCategories(['animals', 'geography']);
+
+  await lobby.getQuestions();
+
+  console.log('starting game for lobby: ', lobby.lobbyID);
+  lobby.startGame();
 
   //send response object
   res.json(ready);
@@ -93,24 +87,13 @@ router.post('/host/start/', async (req, res) => {
 router.post('/start/', (req, res) => {
   var lobbies = req.app.locals.allLobbies;
 
-<<<<<<< HEAD
-  const gameSettings = {
-    started: success,
-    settings: {
-      timePerQuestion: 10,
-      numQuestions: 10,
-    }, //add this } to charlies file
-  };
-
-  res.json(gameSettings);
-=======
   var gameSettings = {
     started: Boolean,
     settings: {
       timePerQuestion: 10,
-      numQuestions: 20
-    }
-  }
+      numQuestions: 20,
+    },
+  };
 
   //request variables
   var lobbyId = req.body.lobbyId;
@@ -121,22 +104,18 @@ router.post('/start/', (req, res) => {
   //check if the game has started. NO - set to false YES - set to true and set to the lobby settings
   if (lobby.isGameStarted() == false) {
     gameSettings.started = false;
-
   } else if (lobby.isGameStarted() == true) {
     gameSettings.started = true;
     gameSettings.settings.timePerQuestion = lobby.settings.answerTime;
     gameSettings.settings.numQuestion = lobby.settings.numTime;
   }
 
-  res.json(gameSettings)
->>>>>>> dev
+  res.json(gameSettings);
 });
 
 // @route   POST /nextQuestion/
 // @desc    A client can request information on the next question by sending a request here
 router.post('/nextQuestion/', (req, res) => {
-  const success = true;
-
   /*
   Request:
   {
@@ -146,7 +125,6 @@ router.post('/nextQuestion/', (req, res) => {
   }
   */
 
-<<<<<<< HEAD
   var lobbies = req.app.locals.allLobbies;
   //request variables
   var lobbyId = req.body.lobbyId;
@@ -156,34 +134,11 @@ router.post('/nextQuestion/', (req, res) => {
   const nextQ = lobby.getCurrentQuestion();
 
   res.json(nextQ);
-=======
- const nextQ = {
-  questionInfo: {           //charlies file missing :
-    question: "who's the best team member",
-    category: 'general knowledge',
-    answers: {
-     a: "John",
-     b: "John",
-     c: "John",
-     d: "John",
-    }
-  },
-  success: success,
-  questionNumber: 1,       //charlies file missing ,
-  //?error: string,
-  time: 10              // time question countdown started on server
-  // time allowed per question?
-}
-
-  res.json(nextQ)
->>>>>>> dev
 });
 
 // @route   POST /answer/
 // @desc    A client can send its answer to the server by sending a request here. The server will check if it is correct and send an appropriate response.
 router.post('/answer/', (req, res) => {
-  const success = true;
-
   /*
   Request:
   {
@@ -195,19 +150,20 @@ router.post('/answer/', (req, res) => {
   }
   */
 
-  var lobbies = req.app.locals.allLobbies;
+  let lobbies = req.app.locals.allLobbies;
   //request variables
-  var lobbyId = req.body.lobbyId;
+  let { playerId, lobbyId } = req.body;
   //find matching lobby to lobby id
-  var lobby = lobbies.getLobby(lobbyId);
+  let lobby = lobbies.getLobby(lobbyId);
+
+  let player = lobby.getPlayer(playerId);
+  if (player && player.hasAnswered !== true) {
+    player.hasAnswered = true;
+  }
 
   const answer = lobby.getCurrentAnswer();
 
-<<<<<<< HEAD
   res.json(answer);
-=======
-  res.json(answer)
->>>>>>> dev
 });
 
 // @route   POST /leaderboard/
