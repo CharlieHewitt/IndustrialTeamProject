@@ -58,6 +58,14 @@ class LobbySettings {
     return true;
   }
 
+  getObject() {
+    return {
+      answerTime: this.answerTime,
+      numQuestions: this.numQuestions,
+      categories: this.categories,
+    };
+  }
+
   // may add below function in the future
 
   // takes in a settings object containing the following:
