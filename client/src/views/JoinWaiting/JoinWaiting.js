@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from "react";
 import styles from "./JoinWaiting.less";
 import Modal from "../../components/Modal/Modal";
+import { parse } from "querystring";
+import API from "../../api";
 
-const JoinWaiting = ({ history }) => {
-  const [data, setData] = useState({});
+const JoinWaiting = ({ location: { search }, history }) => {
+  const [data, setData] = useState([]);
+  const [lobbyId, setLobbyId] = useState("");
+  const [playerName, setPlayerName] = useState("");
+  const [playerId, setPlayerId] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [playerList, setPlayerList] = useState({});
+  const [timePQ, setTimePQ] = useState(0);
+  const [numQ, setNumQ] = useState(0);
 
   const modalRef = React.useRef();
 
@@ -11,10 +20,49 @@ const JoinWaiting = ({ history }) => {
     modalRef.current.openModal()
   };
 
-
   useEffect(() => {
+    const data = parse(search.split("?")[1]);
+    setLobbyId(data.lobbyId);
+    setPlayerName(data.username);
+
+    console.log(data.username);
+    joinLobby(data.lobbyId, data.username);
+    // console.log(joinRes);
+    // getCategories(lobbyId);
+    // getPlayers(data.lobbyId);
+    getSettings(lobbyId, playerId);
+
+    async function joinLobby(lobbyId, playerName){
+      const res1 = await API.joinLobby(lobbyId, playerName);
+      console.log(res1);
+      if(!res1.success){
+        alert("Lobby doesn't exist! Please check your game code again")
+        history.push("/home");
+      }else{
+        setPlayerId(res1.playerId);
+
+      }
+    }
+
+    // async function getCategories(lobbyId){
+    //   const res2 = await API.getChosenCategories(lobbyId);
+    //   console.log(res2);
+    // }
+
+    // async function getPlayers(lobbyId){
+    //   const res3 = await API.getLobbyPlayers(lobbyId);
+    //   console.log(res3);
+    // }
+
+    async function getSettings(lobbyId, playerId){
+      const res4 = await API.checkQuizStatus(lobbyId, playerId);
+      console.log(res4);
+      setTimePQ(res4.settings.timePerQuestion);
+      setNumQ(res4.settings.numQuestions);
+    }
+
     setData({
-      title: "******",
+      title: "GAME CODE: ",
       competitors: "COMPETITORS",
       topics: "CATEGORIES",
       time: "TIME PER QUESTION",
@@ -26,14 +74,13 @@ const JoinWaiting = ({ history }) => {
     <div className={styles.joinwaiting}>
       <div className={styles.header}>
         <div className={styles.container}>
-          <div className={styles.logo} />
-            <div className={styles.msg}>GAME CODE：{data.title}</div>
-          <div className={styles.setting}>Settings</div>
+            <div className={styles.msg}>{data.title}{lobbyId}</div>
+          {/* <div className={styles.setting}>Settings</div> */}
         </div>
       </div>
       <div className={styles.content}>
         <div className={styles.blank} />
-        <div className={`${styles.left} ${styles.box}`}>{data.competitors}</div>
+        <div className={`${styles.left} ${styles.box}`}>{playerName}</div>
         <div className={`${styles.left} ${styles.box}`}>{data.topics}</div>
         <div className={styles.right}>
           <div className={`${styles.top} ${styles.box}`}>{data.time}</div>
