@@ -208,9 +208,9 @@ router.post('/leaderboard/', (req, res) => {
 });
 
 
-// @route   GET /skip
+// @route   POST /skip
 // @desc    A client can use the get hint to skip the question and automatically get the right answer
-router.get('/skip', async (req, res) => {
+router.post('/skip', async (req, res) => {
 
   var lobbies = req.app.locals.allLobbies;
 
@@ -221,7 +221,7 @@ router.get('/skip', async (req, res) => {
   //lobby and player values needed
   var lobby = lobbies.getLobby(lobbyId);
   var players = lobby.players;
-  var correctA = lobby.answer;
+  var correctA = lobby.getCurrentAnswer();
   var player = players[playerId];
   var skipUsed = true;
 
