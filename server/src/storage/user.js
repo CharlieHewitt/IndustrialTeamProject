@@ -4,6 +4,12 @@ class User {
     this.username = username;
     this.id = id;
     this.score = score;
+    this.hasAnswered = false;
+  }
+
+  updateScore(points) {
+    this.score += parseInt(points);
+    return this.score;
   }
 }
 
