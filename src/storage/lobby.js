@@ -1,4 +1,4 @@
-const User = require('../storage/newUser');
+const User = require('../storage/user');
 const Player = require('../player/player');
 const LobbySettings = require('./LobbySettings');
 const {
@@ -22,6 +22,7 @@ class Lobby {
     this.currentQuestion = {};
     this.currentAnswer = {};
     this.gameStarted = false;
+    this.playersAnsweredCorrectly = [];
 
     this.questions = [];
 
@@ -186,6 +187,31 @@ class Lobby {
       }
     }
     return duplicate;
+  }
+
+  checkPlayerAnswer(playerid, playerAnswer) {
+    if (this.checkPlayerIsInLobby(playerid)) {
+      if (playerAnswer == this.answer) {
+        this.playersAnsweredCorrectly.push(this.players[playerid]);
+        return true;
+      } else {return false;}
+    } else {
+      console.error("This player is not in the lobby");
+    }
+  }
+
+  checkPlayerIsInLobby(playerid) {
+    if(this.players[playerid]){
+      return true;
+    }
+    return false;
+  }
+
+  updatePlayerScores() {
+    var highestScore = (this.playersAnsweredCorrectly.length * 5);
+    for (var i = 0; i < this.playersAnsweredCorrectly.length; i++) {
+      this.playersAnsweredCorrectly[i].updateScore(highestScore-(i*5));
+    }
   }
 }
 

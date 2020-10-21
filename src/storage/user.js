@@ -5,6 +5,11 @@ class User {
     this.id = id;
     this.score = score;
   }
+
+  updateScore(points) {
+    this.score += parseInt(points); 
+    return this.score;
+  }
 }
 
 module.exports = User;
