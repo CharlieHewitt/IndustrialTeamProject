@@ -226,7 +226,7 @@ router.post('/fiftyFifty/', (req, res) => {
     if (allAnswers.length != 2) { //available = false
 
       //remove the right answer so i can get another random one
-      const index = allAnswers.indexOf(wantedLobby.answer);
+      const index = allAnswers.indexOf(wantedLobby.currentAnswer);
       if (index > -1) {
         allAnswers.splice(index, 1);
       }
