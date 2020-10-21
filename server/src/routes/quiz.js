@@ -11,7 +11,11 @@ router.post('/host/settings/', async (req, res) => {
   var lobbyId = req.body.lobbyId;
   var playerId = req.body.playerId;
 
+<<<<<<< HEAD
   if (lobbies.checkLobbiesValid(lobbyId)) {
+=======
+  if (lobbies.checkLobbiesValid(lobbyId)){
+>>>>>>> dev
     success = true;
   }
 
@@ -22,8 +26,13 @@ router.post('/host/settings/', async (req, res) => {
   var settings = {
     categories: req.body.settings.categories,
     timePerQuestion: req.body.settings.timePerQuestions,
+<<<<<<< HEAD
     numQuestion: req.body.settings.numQuestion,
   };
+=======
+    numQuestion    : req.body.settings.numQuestion
+  }
+>>>>>>> dev
 
   //update saved lobby settings with request values
   lobby.settings = settings;
@@ -31,7 +40,15 @@ router.post('/host/settings/', async (req, res) => {
   //response data
   const person = { lobbyId: lobbyId, success: success, settings: settings };
 
+<<<<<<< HEAD
   res.json(person);
+=======
+  //do start code to start lobby for everyone
+  lobby.startGame();
+
+  //send response
+  res.json(person) 
+>>>>>>> dev
 });
 
 // @route   POST /host/start/
@@ -74,16 +91,9 @@ router.post('/host/start/', async (req, res) => {
 // @route   POST /start/
 // @desc    A client can ask the server if the quiz has started by sending a request here.
 router.post('/start/', (req, res) => {
-  const success = true;
+  var lobbies = req.app.locals.allLobbies;
 
-  /*
-  Request:
-  {
-    lobbyId: string,
-    playerId: string
-  }
-  */
-
+<<<<<<< HEAD
   const gameSettings = {
     started: success,
     settings: {
@@ -93,6 +103,33 @@ router.post('/start/', (req, res) => {
   };
 
   res.json(gameSettings);
+=======
+  var gameSettings = {
+    started: Boolean,
+    settings: {
+      timePerQuestion: 10,
+      numQuestions: 20
+    }
+  }
+
+  //request variables
+  var lobbyId = req.body.lobbyId;
+
+  //find matching lobby to lobby id
+  var lobby = lobbies.getLobby(lobbyId);
+
+  //check if the game has started. NO - set to false YES - set to true and set to the lobby settings
+  if (lobby.isGameStarted() == false) {
+    gameSettings.started = false;
+
+  } else if (lobby.isGameStarted() == true) {
+    gameSettings.started = true;
+    gameSettings.settings.timePerQuestion = lobby.settings.answerTime;
+    gameSettings.settings.numQuestion = lobby.settings.numTime;
+  }
+
+  res.json(gameSettings)
+>>>>>>> dev
 });
 
 // @route   POST /nextQuestion/
@@ -109,6 +146,7 @@ router.post('/nextQuestion/', (req, res) => {
   }
   */
 
+<<<<<<< HEAD
   var lobbies = req.app.locals.allLobbies;
   //request variables
   var lobbyId = req.body.lobbyId;
@@ -118,6 +156,27 @@ router.post('/nextQuestion/', (req, res) => {
   const nextQ = lobby.getCurrentQuestion();
 
   res.json(nextQ);
+=======
+ const nextQ = {
+  questionInfo: {           //charlies file missing :
+    question: "who's the best team member",
+    category: 'general knowledge',
+    answers: {
+     a: "John",
+     b: "John",
+     c: "John",
+     d: "John",
+    }
+  },
+  success: success,
+  questionNumber: 1,       //charlies file missing ,
+  //?error: string,
+  time: 10              // time question countdown started on server
+  // time allowed per question?
+}
+
+  res.json(nextQ)
+>>>>>>> dev
 });
 
 // @route   POST /answer/
@@ -144,7 +203,11 @@ router.post('/answer/', (req, res) => {
 
   const answer = lobby.getCurrentAnswer();
 
+<<<<<<< HEAD
   res.json(answer);
+=======
+  res.json(answer)
+>>>>>>> dev
 });
 
 // @route   POST /leaderboard/

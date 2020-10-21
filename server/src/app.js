@@ -2,8 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const connectToDatabase = require('./database/db_connection.js');
 const LobbyManager = require('./storage/lobbyManager');
+<<<<<<< HEAD
 const Lobby = require('./storage/lobby.js');
 const User = require('./storage/newUser');
+=======
+const TimeController = require('./storage/timeController.js');
+>>>>>>> dev
 
 // import env variables
 // Create .env file if you haven't!
@@ -17,6 +21,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.locals.allLobbies = new LobbyManager();
+app.locals.timers = new TimeController();
 
 connectToDatabase(MONGODB_CONNECTIONSTRING);
 
@@ -27,6 +32,7 @@ app.use('/api/lobby/categories', require('./routes/category.js'));
 app.use('/api/databasetest', require('./routes/exampleAsyncRequest.js'));
 app.use('/api/quiz', require('./routes/quiz.js'));
 app.use('/api/categories', require('./routes/categories_list.js'));
+app.use('/time', require('./routes/timeTesting.js'));
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
