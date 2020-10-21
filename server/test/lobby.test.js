@@ -59,4 +59,14 @@ describe('lobby class', () => {
         assert.equal(lobby.checkPlayerIsInLobby('5678'), false);
       });
     });
+    describe('updatePlayerScores method', () => {
+      it('should call method to update scores of all players who answered correctly with the correct no. of points', () => {
+        lobby.checkPlayerAnswer(secondPlayer.id, 'a');
+        const thirdPlayer = new User("user3", "5678", 0);
+        lobby.addPlayer(thirdPlayer);
+        lobby.checkPlayerAnswer(thirdPlayer.id, 'a');
+        lobby.updatePlayerScores();
+        assert.equal(lobby.players[firstPlayer.id].score, 15);
+      });
+    });
 });
