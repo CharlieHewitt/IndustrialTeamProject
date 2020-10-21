@@ -8,8 +8,13 @@ import { parse, stringify } from "querystring";
 import "./index.css";
 import API from "../../api";
 import { create } from "domain";
+import { useHistory } from "react-router-dom";
 
-const HostSettings = ({ location: { search }, history }) => {
+const HostSettings = ({ gameState, gameUpdate }) => {
+  const history = useHistory();
+
+  console.log(gameState);
+
   const [categories, setCategories] = useState();
   const [roundCount, setRoundCount] = useState(7);
   const [timer, setTimer] = useState(7);
@@ -21,12 +26,12 @@ const HostSettings = ({ location: { search }, history }) => {
   const [settings, setSettings] = useState({
     categories: [],
     timePerQuestion: 5,
-    numQuestions: 3
-  })
+    numQuestions: 3,
+  });
 
   useEffect(() => {
-    const data = parse(search.split("?")[1]);
-    setHostName(data.hostName);
+    // const data = parse(search.split("?")[1]);
+    setHostName(gameState.userName);
 
     async function init() {
       try {
@@ -38,14 +43,13 @@ const HostSettings = ({ location: { search }, history }) => {
         setError(err.message);
       }
     }
-    async function createLobby(hostName){
+    async function createLobby(hostName) {
       const res1 = await API.createLobby(hostName);
       setLobbyId(res1.lobbyId);
       setHostId(res1.hostId);
     }
-    async function updateSetting(lobbyId, playerId, settings){
+    async function updateSetting(lobbyId, playerId, settings) {
       const res = await API.updateSettings(lobbyId, playerId, settings);
-          
     }
 
     init();
@@ -53,8 +57,8 @@ const HostSettings = ({ location: { search }, history }) => {
     setSettings({
       categories: parse(categories),
       timePerQuestion: timer,
-      numQuestions: roundCount
-    })
+      numQuestions: roundCount,
+    });
     console.log(settings);
     updateSetting(lobbyId, hostId, settings);
   }, []);
@@ -101,7 +105,13 @@ const HostSettings = ({ location: { search }, history }) => {
             borderRadius: 30,
             textAlign: "center",
           }}
-          onClick={() => history.push(`/waiting?hostName=${hostName}&timer=${timer}&numQ=${roundCount}&categories=${[categories]}`)} //sends to waiting/lobby page
+          onClick={() =>
+            history.push(
+              `/waiting?hostName=${hostName}&timer=${timer}&numQ=${roundCount}&categories=${[
+                categories,
+              ]}`
+            )
+          } //sends to waiting/lobby page
         />
       </div>
     </div>
