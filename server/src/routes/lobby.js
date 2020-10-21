@@ -48,15 +48,27 @@ router.post('/create', (req, res) => {
   res.json(responseObject);
 });
 
-// @route   GET /api/lobby/getLobbyPlayers
+// @route   POST /api/lobby/getLobbyPlayers
 // @desc    return everyone in the lobby
-router.get('/getLobbyPlayers', (req, res) => {
+router.post('/getLobbyPlayers', (req, res) => {
   var lobbies = req.app.locals.allLobbies;
-  var wantedID = req.body.id;
+  const { lobbyId } = req.body;
 
-  var wantedLobby = lobbies.getLobby(wantedID);
+  let resObject = {};
+  let arr = [];
 
-  res.json(wantedLobby.players);
+  var wantedLobby = lobbies.getLobby(lobbyId);
+
+  for (const playerId in wantedLobby.players) {
+    const { username, id } = wantedLobby.players[playerId];
+    const playerObject = { playerName: username, playerId: id };
+    arr.push(playerObject);
+    console.log(playerObject, '  pushing');
+  }
+
+  resObject.players = arr;
+  console.log(resObject);
+  res.json(resObject);
 });
 
 //create a random ID for new user
