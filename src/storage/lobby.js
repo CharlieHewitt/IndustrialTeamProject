@@ -11,14 +11,12 @@ class Lobby {
    * Constructor - new user object
    *
    * @param {*} firstPlayer
-   * @param {*} categories
    */
-  constructor(firstPlayer, categories) {
+  constructor(firstPlayer) {
     // may add more things to this in the future
     this.lobbyID = this.createLobbyID();
     this.players = {};
     this.addPlayer(firstPlayer);
-    this.categories = categories;
     this.currentQuestion = {};
     this.currentAnswer = {};
     this.gameStarted = false;
@@ -27,7 +25,8 @@ class Lobby {
     this.questions = [];
 
     this.settings = new LobbySettings();
-    this.settings.updateCategories(categories);
+
+    console.log(`Lobby created with id: ${this.lobbyID}`);
   }
 
   startGame() {
@@ -176,6 +175,9 @@ class Lobby {
 
       if (duplicate == false) {
         this.players[player.id] = player;
+        console.log(
+          `Player ${player.username} successfully added to Lobby ${this.lobbyID}`
+        );
       } else {
         console.log('user entered duplicate name');
       }
