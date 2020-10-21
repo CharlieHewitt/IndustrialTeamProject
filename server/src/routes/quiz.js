@@ -160,6 +160,7 @@ router.post('/answer/', (req, res) => {
   if (player && player.hasAnswered !== true) {
     player.hasAnswered = true;
   }
+  lobby.checkPlayerAnswer(playerid, req.body.answer);
 
   const answer = lobby.getCurrentAnswer();
 
@@ -174,6 +175,8 @@ router.post('/leaderboard/', (req, res) => {
   var wantedLobby = lobbies.getLobby(wantedID);
   var inOrder = [];
   var id = [];
+
+  wantedLobby.updatePlayerScore();
 
   //change obj to array so i can sort
   for (key in wantedLobby.players) {
