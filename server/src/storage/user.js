@@ -6,6 +6,7 @@ class User {
     this.score = score;
     this.skipUsed = false;
     this.hasAnswered = false;
+    this.fiftyFifty = false;
   }
 
   updateScore(points) {
