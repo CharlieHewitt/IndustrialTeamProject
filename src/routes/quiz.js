@@ -227,6 +227,7 @@ router.post('/skip', async (req, res) => {
   if (player.skipUsed == false) {
     skipUsed = false;
     player.skipUsed = true; //hint will now be used so set player used to true
+    lobby.playersAnsweredCorrectly.push(players[playerId]);
   }
 
   //if skip has been used then dont send correct answer and instead send back dummy data
