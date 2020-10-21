@@ -1,6 +1,6 @@
 const { assert } = require('chai');
 const Lobby = require('../src/storage/lobby');
-const User = require('../src/storage/newUser');
+const User = require('../src/storage/user');
 
 
 // chai assertion library docs : https://www.chaijs.com/api/assert/
@@ -41,5 +41,32 @@ describe('lobby class', () => {
           assert.isNotNull(url);
         });
         // TODO: Actual tests testing for url need written
+    });
+    describe('checkPlayerAnswer method', () => {
+      it ('should return true if player entered correct answer', () => {
+        lobby.answer = 'a';
+        assert.equal(lobby.checkPlayerAnswer(firstPlayer.id, 'a'), true);
+      });
+      it('should return false if player entered incorrect answer', () => {
+        assert.equal(lobby.checkPlayerAnswer(firstPlayer.id, 'b'), false);
+      });
+    });
+    describe('checkPlayerIsInLobby function', () => {
+      it('should return true if player is in lobby', () => {
+        assert.equal(lobby.checkPlayerIsInLobby(firstPlayer.id), true);
+      });
+      it('should fail if passed incorrect id', () => {
+        assert.equal(lobby.checkPlayerIsInLobby('5678'), false);
+      });
+    });
+    describe('updatePlayerScores method', () => {
+      it('should call method to update scores of all players who answered correctly with the correct no. of points', () => {
+        lobby.checkPlayerAnswer(secondPlayer.id, 'a');
+        const thirdPlayer = new User("user3", "5678", 0);
+        lobby.addPlayer(thirdPlayer);
+        lobby.checkPlayerAnswer(thirdPlayer.id, 'a');
+        lobby.updatePlayerScores();
+        assert.equal(lobby.players[firstPlayer.id].score, 15);
+      });
     });
 });
