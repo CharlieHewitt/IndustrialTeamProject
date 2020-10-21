@@ -4,6 +4,11 @@ import RoundedBtn from "../RoundedBtn/RoundedBtn";
 import styles from "./CategoryList.module.css";
 import "./index.css";
 
+const randomKey = function (obj) {
+  var keys = Object.keys(obj);
+  return keys[(keys.length * Math.random()) << 0];
+};
+
 const CategoryList = ({ categories, setCategories }) => {
   let catSize = 3; // how many categories per row
   let rows = Object.keys(categories)
@@ -28,7 +33,12 @@ const CategoryList = ({ categories, setCategories }) => {
   return (
     <div className={styles.wrap}>
       <div className={styles.row}>
-        <RoundedBtn title="Random" />
+        <RoundedBtn
+          title="Random"
+          onClick={() =>
+            setCategories({ ...categories, [randomKey(categories)]: true })
+          }
+        />
         <h1 className={styles.title}>Categories</h1>
         <RoundedBtn title="Random" style={{ visibility: "hidden" }} />
       </div>
