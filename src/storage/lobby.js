@@ -1,6 +1,7 @@
 const User = require('../storage/user');
 const Player = require('../player/player');
 const LobbySettings = require('./LobbySettings');
+const TimeController = require('./timeController');
 const {
   getRandomBooleanQuestions,
   getRandomMultiChoiceQuestions,
