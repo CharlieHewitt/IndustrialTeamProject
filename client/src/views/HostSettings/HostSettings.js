@@ -4,9 +4,10 @@ import HostSettingRow from "../../components/HostSettingRow";
 import RoundedBtn from "../../components/RoundedBtn/RoundedBtn";
 import SettingsBtn from "../../components/SettingsBtn";
 import styles from "./HostSettings.module.css";
-import { parse } from "querystring";
+import { parse, stringify } from "querystring";
 import "./index.css";
 import API from "../../api";
+import { create } from "domain";
 
 const HostSettings = ({ location: { search }, history }) => {
   const [categories, setCategories] = useState();
@@ -14,7 +15,14 @@ const HostSettings = ({ location: { search }, history }) => {
   const [timer, setTimer] = useState(7);
   const [playerCount, setPlayerCount] = useState(7);
   const [hostName, setHostName] = useState("");
+  const [lobbyId, setLobbyId] = useState("");
+  const [hostId, setHostId] = useState("");
   const [error, setError] = useState("");
+  const [settings, setSettings] = useState({
+    categories: [],
+    timePerQuestion: 5,
+    numQuestions: 3
+  })
 
   useEffect(() => {
     const data = parse(search.split("?")[1]);
@@ -30,8 +38,25 @@ const HostSettings = ({ location: { search }, history }) => {
         setError(err.message);
       }
     }
+    async function createLobby(hostName){
+      const res1 = await API.createLobby(hostName);
+      setLobbyId(res1.lobbyId);
+      setHostId(res1.hostId);
+    }
+    async function updateSetting(lobbyId, playerId, settings){
+      const res = await API.updateSettings(lobbyId, playerId, settings);
+          
+    }
 
     init();
+    createLobby(hostName);
+    setSettings({
+      categories: parse(categories),
+      timePerQuestion: timer,
+      numQuestions: roundCount
+    })
+    console.log(settings);
+    updateSetting(lobbyId, hostId, settings);
   }, []);
 
   return (
@@ -76,7 +101,7 @@ const HostSettings = ({ location: { search }, history }) => {
             borderRadius: 30,
             textAlign: "center",
           }}
-          onClick={() => history.push(`/waiting?hostName=${hostName}&timer=${timer}$numQ=${roundCount}`)} //sends to waiting/lobby page
+          onClick={() => history.push(`/waiting?hostName=${hostName}&timer=${timer}&numQ=${roundCount}&categories=${[categories]}`)} //sends to waiting/lobby page
         />
       </div>
     </div>

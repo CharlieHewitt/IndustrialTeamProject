@@ -12,7 +12,7 @@ const JoinWaiting = ({ location: { search }, history }) => {
   const [categories, setCategories] = useState([]);
   const [playerList, setPlayerList] = useState({});
   const [timePQ, setTimePQ] = useState(0);
-  const [num, setNum] = useState(0);
+  const [numQ, setNumQ] = useState(0);
 
   const modalRef = React.useRef();
 
@@ -35,7 +35,13 @@ const JoinWaiting = ({ location: { search }, history }) => {
     async function joinLobby(lobbyId, playerName){
       const res1 = await API.joinLobby(lobbyId, playerName);
       console.log(res1);
-      setPlayerId(res1.playerId);
+      if(!res1.success){
+        alert("Lobby doesn't exist! Please check your game code again")
+        history.push("/home");
+      }else{
+        setPlayerId(res1.playerId);
+
+      }
     }
 
     // async function getCategories(lobbyId){
@@ -49,8 +55,10 @@ const JoinWaiting = ({ location: { search }, history }) => {
     // }
 
     async function getSettings(lobbyId, playerId){
-      const res4 = await API.startQuiz(lobbyId, playerId);
+      const res4 = await API.checkQuizStatus(lobbyId, playerId);
       console.log(res4);
+      setTimePQ(res4.settings.timePerQuestion);
+      setNumQ(res4.settings.numQuestions);
     }
 
     setData({

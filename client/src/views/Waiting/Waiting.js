@@ -17,8 +17,7 @@ const Waiting = ({ location: { search }, history }) => {
 
   // Get data from api
   const handleStart = () => {
-    history.push(`/quizing?num=3&time=20&active=1&lobbyId=${lobbyId}&playerId=${hostId}`); //Push data when click the "Start" button
-    // history.push(`/quizing?num=${numQ}&time=${timePQ}&active=1&lobbyId=${lobbyId}&playerId=${hostId}`);
+    history.push(`/quizing?num=${numQ}&time=${timePQ}&active=1&lobbyId=${lobbyId}&playerId=${hostId}`); //Push data when click the "Start" button
   };
 
   const modalRef = React.useRef();
@@ -32,8 +31,8 @@ const Waiting = ({ location: { search }, history }) => {
     const dataPassed = parse(search.split("?")[1]);
     setHostname(dataPassed.hostName);
     setTimePQ(dataPassed.timer);
-    setNumQ(dataPassed.roundCount);
-    console.log(dataPassed.hostName);
+    setNumQ(dataPassed.numQ);
+    console.log(dataPassed.categories);
 
     getAPIData(hostname);
     

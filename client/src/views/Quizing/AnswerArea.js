@@ -14,7 +14,7 @@ const AnswerArea = (props) => {
     const handleChose = (answer) => {
         sendAnswer(lobbyId, playerId, questionNum, answer);
         setIsChosen(true);
-        getNextQuestion();
+        // getNextQuestion();
     }
 
     const handleIsChosen = () => {

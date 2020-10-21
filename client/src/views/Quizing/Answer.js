@@ -21,7 +21,7 @@ const Answer = ({ location: { search }, history }) => {
     correctAnswer:"a",
     answers:["a","b","c","d"]
   })
-
+  
   // Get data from url
   useEffect(() => {
     const data = parse(search.split("?")[1]);
@@ -40,7 +40,7 @@ const Answer = ({ location: { search }, history }) => {
       setCategory(res2.questionInfo.category);
       setQuestion(res2.questionInfo.question);
       setAnswerList([
-           res2.questionInfo.answers.a,
+           "a",
            res2.questionInfo.answers.b,
            res2.questionInfo.answers.c,
            res2.questionInfo.answers.d,

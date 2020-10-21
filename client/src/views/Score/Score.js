@@ -1,33 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { parse, stringify } from "querystring";
 import styles from "./Score.less";
+import API from "../../api";
 
 const Score = ({ location: { search }, history }) => {
   const [list, setList] = useState([]);
   const [score, setScore] = useState(0);
+  const [lobbyId, setLobbyId] = useState("");
+  const [playerId, setPlayerId] = useState("");
 
   // Retrive the score and back to the next question after 3s
 
   useEffect(() => {
     const data = parse(search.split("?")[1]);
-    setList([
-      {
-        name: "nickname1",
-        score: 90,
-      },
-      {
-        name: "nickname2",
-        score: 80,
-      },
-      {
-        name: "nickname3",
-        score: 70,
-      },
-      {
-        name: "nickname4",
-        score: 60,
-      },
-    ]);
+    setLobbyId(data.lobbyId);
+    setPlayerId(data.playerId);
+    
+    async function getLeaderboard(lobbyId, playerId){
+      const res = API.getLeaderboard(lobbyId, playerId);
+      setList([
+        {
+          name: "nickname1",
+          score: 90,
+        },
+        {
+          name: "nickname2",
+          score: 80,
+        },
+        {
+          name: "nickname3",
+          score: 70,
+        },
+        {
+          name: "nickname4",
+          score: 60,
+        },
+      ]);
+    }
+
+    getLeaderboard(lobbyId, playerId);
+
     setScore(90);
     const timer = setTimeout(() => {
       history.push(
