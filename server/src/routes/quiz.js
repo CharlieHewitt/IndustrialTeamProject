@@ -385,15 +385,24 @@ router.post('/leaderboard/', async (req, res) => {
 router.post('/skip/', async (req, res) => {
   var lobbies = req.app.locals.allLobbies;
 
-  // TODO: check if in question phase
-
   //request values
   var lobbyId = req.body.lobbyId;
   var playerId = req.body.playerId;
+  var lobby = lobbies.getLobby(lobbyId);
+
+  // check if in question phase
+  const currPhase = lobby.currentPhase.getPhase();
 
   if (!lobbies.checkLobbyValid(lobbyId)) {
     res.json({
       error: 'Invalid lobbyID entered',
+    });
+    return;
+  }
+
+  if (!(currPhase === 'question')) {
+    res.json({
+      error: `Error: wrong state: currently in ${currPhase} (should be question).`,
     });
     return;
   }
@@ -434,7 +443,10 @@ router.post('/fiftyFifty/', async (req, res) => {
   let lobbies = req.app.locals.allLobbies;
   var available = false;
 
-  // TODO: check if in question phase
+  var lobby = lobbies.getLobby(lobbyId);
+
+  // check if in question phase
+  const currPhase = lobby.currentPhase.getPhase();
 
   if (!req.app.locals.allLobbies.checkLobbyValid(lobbyId)) {
     res.json({
@@ -442,6 +454,14 @@ router.post('/fiftyFifty/', async (req, res) => {
     });
     return;
   }
+
+  if (!(currPhase === 'question')) {
+    res.json({
+      error: `Error: wrong state: currently in ${currPhase} (should be question).`,
+    });
+    return;
+  }
+
 
   var wantedLobby = lobbies.getLobby(lobbyId);
   var player = wantedLobby.players[userId];
@@ -453,7 +473,6 @@ router.post('/fiftyFifty/', async (req, res) => {
   if (player.fiftyFifty == false) {
     //check if its a true or false Q, if not continue
     var allAnswers = Object.keys(
-
       wantedLobby.currentQuestion.answers
     );
     if (allAnswers.length != 2) {
@@ -461,7 +480,6 @@ router.post('/fiftyFifty/', async (req, res) => {
 
       //remove the right answer so i can get another random one
       const index = allAnswers.indexOf(wantedLobby.currentAnswer);
-      console.log(index);
       if (index > -1) {
         allAnswers.splice(index, 1);
       }
