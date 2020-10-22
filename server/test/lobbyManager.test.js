@@ -5,9 +5,8 @@ const User = require('../src/storage/user');
 
 describe('lobbyManager class', () => {
   var lobbyManager = new LobbyManager();
-  var host = new User("host", "111", 0);
-  const categs = ["general knowledge", "abc"];
-  var lobby = new Lobby(host, categs);
+  var host = new User('host', '111', 0);
+  var lobby = new Lobby(host);
 
   describe('addLobby method', () => {
     it('should add lobby to lobbyManager', () => {
@@ -25,7 +24,7 @@ describe('lobbyManager class', () => {
     it('should add player to lobby', () => {
       var lobId = lobby.lobbyID;
       lobbyManager.addLobby(lobby);
-      var player = new User("player1", "112", 0);
+      var player = new User('player1', '112', 0);
       lobbyManager.joinLobby(lobId, player);
       assert.containsAllKeys(lobby.players, player.id);
     });
@@ -36,5 +35,4 @@ describe('lobbyManager class', () => {
       assert.equal(result, lobby);
     });
   });
-
 });

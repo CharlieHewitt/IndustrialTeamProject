@@ -1,5 +1,4 @@
 const express = require('express');
-const player = require('../player/player');
 const router = express.Router();
 
 // @route   POST /host/settings/
@@ -11,12 +10,27 @@ router.post('/host/settings/', async (req, res) => {
   //request variables
   const { lobbyId, playerId, settings } = req.body;
 
+  // allow request if lobby is valid
   if (lobbies.checkLobbyValid(lobbyId)) {
     success = true;
   }
 
   //lobby to update
   const lobby = lobbies.getLobby(lobbyId);
+
+  // TODO: check if request is coming from host
+
+  // allow request if currently in forming/ settings phase
+  if (success) {
+    const currPhase = lobby.currentPhase.getPhase();
+
+    if (!(currPhase === 'forming' || currPhase === 'settings')) {
+      res.json({
+        error: `Error: wrong state: currently in ${currPhase} (should be forming or settings).`,
+      });
+      return;
+    }
+  }
 
   if (success) {
     success = lobby.settings.updateAnswerTime(settings.answerTime);
@@ -30,12 +44,21 @@ router.post('/host/settings/', async (req, res) => {
     success = lobby.settings.updateCategories(settings.categories);
   }
 
+  if (!success) {
+    res.json({ error: 'Bad Request' });
+    return;
+  }
+
   const response = {
     success: success,
     lobbyId: lobbyId,
     settings: lobby.settings.getObject(),
   };
 
+  console.log('settings updated');
+
+  // move to settings phase
+  lobby.currentPhase.setSettings();
   //send response
   res.json(response);
 });
@@ -51,8 +74,27 @@ router.post('/host/start/', async (req, res) => {
   var lobbyId = req.body.lobbyId;
   var playerId = req.body.playerId;
 
+  // TODO: check if request is coming from host
+
   //find matching lobby to lobby id
   var lobby = lobbies.getLobby(lobbyId);
+
+  // check if lobby exists
+  if (!lobby) {
+    res.json({
+      error: `Error: no lobby found for given lobbyId.`,
+    });
+    return;
+  }
+
+  // check if in settings phase
+  const currPhase = lobby.currentPhase.getPhase();
+  if (!(currPhase === 'settings')) {
+    res.json({
+      error: `Error: wrong state: currently in ${currPhase} (should be settings).`,
+    });
+    return;
+  }
 
   //assuming player[0] is always the host of the lobby.
   //check if playerid is firstid in given lobbyid, if correct then is host so start.
@@ -77,6 +119,9 @@ router.post('/host/start/', async (req, res) => {
   await lobby.getQuestions();
 
   console.log('starting game for lobby: ', lobby.lobbyID);
+
+  // move quiz to started state.
+  lobby.currentPhase.quizStarted();
   lobby.startGame();
 
   //send response object
@@ -86,32 +131,25 @@ router.post('/host/start/', async (req, res) => {
 // @route   POST /start/
 // @desc    A client can ask the server if the quiz has started by sending a request here.
 router.post('/start/', (req, res) => {
-  var lobbies = req.app.locals.allLobbies;
+  const lobbies = req.app.locals.allLobbies;
+  const { lobbyId, playerId } = req.body;
 
-  var gameSettings = {
-    started: Boolean,
-    settings: {
-      timePerQuestion: 10,
-      numQuestions: 20,
-    },
-  };
+  // TODO: check if playerId & lobby are valid
+  // TODO: check if in  forming, settings, started, question phase
 
-  //request variables
-  var lobbyId = req.body.lobbyId;
+  const responseObject = {};
 
   //find matching lobby to lobby id
-  var lobby = lobbies.getLobby(lobbyId);
+  const lobby = lobbies.getLobby(lobbyId);
 
-  //check if the game has started. NO - set to false YES - set to true and set to the lobby settings
-  if (lobby.isGameStarted() == false) {
-    gameSettings.started = false;
-  } else if (lobby.isGameStarted() == true) {
-    gameSettings.started = true;
-    gameSettings.settings.timePerQuestion = lobby.settings.answerTime;
-    gameSettings.settings.numQuestion = lobby.settings.numTime;
+  //check if the game has started. NO - respond false YES - respond with true & lobby settings
+  responseObject.started = lobby.isGameStarted();
+
+  if (responseObject.started) {
+    responseObject.settings = lobby.settings.getObject();
   }
 
-  res.json(gameSettings);
+  res.json(responseObject);
 });
 
 // @route   POST /nextQuestion/
@@ -125,6 +163,8 @@ router.post('/nextQuestion/', (req, res) => {
     questionNumber: number
   }
   */
+
+  // TODO: check if in question phase
 
   var lobbies = req.app.locals.allLobbies;
   //request variables
@@ -150,6 +190,9 @@ router.post('/answer/', (req, res) => {
     time: number // time question was answered
   }
   */
+
+  // TODO: check if in question phase
+  // TODO: check questionNumber! & Time request came in (Date.now() -> compare to timer)
 
   let lobbies = req.app.locals.allLobbies;
   //request variables
@@ -178,6 +221,9 @@ router.post('/leaderboard/', (req, res) => {
   var id = [];
 
   wantedLobby.updatePlayerScore();
+
+  // TODO: check if in leaderboard or end phase
+  // TODO: move leaderboard logic to Lobby.moveToLeaderboard -> updating scores etc
 
   //change obj to array so i can sort
   for (key in wantedLobby.players) {
@@ -211,6 +257,8 @@ router.post('/leaderboard/', (req, res) => {
 // @desc    A client can use the get hint to skip the question and automatically get the right answer
 router.post('/skip', async (req, res) => {
   var lobbies = req.app.locals.allLobbies;
+
+  // TODO: check if in question phase
 
   //request values
   var lobbyId = req.body.lobbyId;
@@ -265,6 +313,8 @@ router.post('/fiftyFifty/', (req, res) => {
   var lobbyId = req.body.lobbyId;
   //var currentQuestion = req.body.currentQuestion;
   var available = false;
+
+  // TODO: check if in question phase
 
   var wantedLobby = lobbies.getLobby(lobbyId);
   var player = wantedLobby.players[userId];
