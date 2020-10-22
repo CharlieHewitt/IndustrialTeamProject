@@ -12,7 +12,7 @@ const Answer = ({ location: { search }, history }) => {
   const [time, setTime] = useState(0);
 
   const [lobbyId, setLobbyId] = useState("");
-  const [playerId, setPlayerId] = useState("");
+  const [playerId, setPlayerId] = useState(0);
   const [category, setCategory] = useState("");
   const [question, setQuestion] = useState("");
   const [questionNum, setQuestionNum] = useState(1);
@@ -32,20 +32,20 @@ const Answer = ({ location: { search }, history }) => {
     setPlayerId(data.playerId);
     setLobbyId(data.lobbyId);
 
-    getQuestion(lobbyId, playerId, questionNum);
+    getQuestion(data.lobbyId, data.playerId, questionNum);
 
     async function getQuestion(lobbyId, playerId, questionNum){
       const res2 = await API.getNextQuestion(lobbyId, playerId, questionNum);
       console.log(res2);
-      setQuestionNum(res2.questionNum);
-      setCategory(res2.questionInfo.category);
-      setQuestion(res2.questionInfo.question);
-      setAnswerList([
-           res2.questionInfo.answers.a,
-           res2.questionInfo.answers.b,
-           res2.questionInfo.answers.c,
-           res2.questionInfo.answers.d,
-      ]);
+      // setQuestionNum(res2.questionNumber);
+      // setCategory(res2.category);
+      // setQuestion(res2.question);
+      // setAnswerList([
+      //      res2.answers.a,
+      //      res2.answers.b,
+      //      res2.answers.c,
+      //      res2.answers.d,
+      // ]);                        uncomment these after this function is fixed
 
     }
 

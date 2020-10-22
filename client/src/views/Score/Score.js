@@ -15,9 +15,12 @@ const Score = ({ location: { search }, history }) => {
     const data = parse(search.split("?")[1]);
     setLobbyId(data.lobbyId);
     setPlayerId(data.playerId);
-    
+
+    getLeaderboard(lobbyId, playerId);
+
     async function getLeaderboard(lobbyId, playerId){
       const res = API.getLeaderboard(lobbyId, playerId);
+      console.log(res);
       setList([
         {
           name: "nickname1",
@@ -37,8 +40,6 @@ const Score = ({ location: { search }, history }) => {
         },
       ]);
     }
-
-    getLeaderboard(lobbyId, playerId);
 
     setScore(90);
     const timer = setTimeout(() => {

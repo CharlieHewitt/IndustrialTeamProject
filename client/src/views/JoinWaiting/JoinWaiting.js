@@ -27,10 +27,11 @@ const JoinWaiting = ({ location: { search }, history }) => {
 
     console.log(data.username);
     joinLobby(data.lobbyId, data.username);
-    // console.log(joinRes);
-    getCategories(lobbyId);
+    
+    // getCategories(lobbyId);
     getPlayers(data.lobbyId);
-    getSettings(lobbyId, playerId);
+    console.log(playerId);
+    getSettings(data.lobbyId, playerId);
 
     async function joinLobby(lobbyId, playerName){
       const res1 = await API.joinLobby(lobbyId, playerName);
@@ -40,13 +41,7 @@ const JoinWaiting = ({ location: { search }, history }) => {
         history.push("/home");
       }else{
         setPlayerId(res1.playerId);
-
       }
-    }
-
-    async function getCategories(lobbyId){
-      const res2 = await API.getChosenCategories(lobbyId);
-      console.log(res2);
     }
 
     async function getPlayers(lobbyId){
@@ -58,12 +53,14 @@ const JoinWaiting = ({ location: { search }, history }) => {
     async function getSettings(lobbyId, playerId){
       const res4 = await API.checkQuizStatus(lobbyId, playerId);
       console.log(res4);
-      setTimePQ(res4.settings.timePerQuestion);
+      setTimePQ(res4.settings.answerTime);
       setNumQ(res4.settings.numQuestions);
+      setCategories(res4.categories);//seems the categories are not coming back from backend
     }
 
     async function checkIfStart(lobbyId, playerId){
       const res = await API.checkQuizStatus(lobbyId, playerId);
+      console.log(res)
       return (res.started)
     }
 
@@ -77,22 +74,23 @@ const JoinWaiting = ({ location: { search }, history }) => {
 
     const timer = setInterval(() => {
       const ifStarted = checkIfStart(lobbyId, playerId);
+      console.log(ifStarted)
       if(ifStarted){
-          history.push(`/quizing?num=${numQ}&time=${timePQ}&active=1&lobbyId=${lobbyId}&playerId=${playerId}`);
+          // history.push(`/quizing?num=${numQ}&time=${timePQ}&active=1&lobbyId=${lobbyId}&playerId=${playerId}`);
       }
-    }, 500);
+    }, 2000);
 
     return () => {
       clearInterval(timer);
     }
   }, [search, history]);
 
-  async function checkIfStart(lobbyId, playerId){
-    const res = await API.checkQuizStatus(lobbyId, playerId);
-    if(res.started){
-      history.push(`/quizing?num=${numQ}&time=${timePQ}&active=1&lobbyId=${lobbyId}&playerId=${playerId}`);
-    }
-  }
+  // async function checkIfStart(lobbyId, playerId){
+  //   const res = await API.checkQuizStatus(lobbyId, playerId);
+  //   if(res.started){
+  //     history.push(`/quizing?num=${numQ}&time=${timePQ}&active=1&lobbyId=${lobbyId}&playerId=${playerId}`);
+  //   }
+  // }
 
   return (
     <div className={styles.joinwaiting}>

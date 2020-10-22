@@ -15,31 +15,31 @@ const Total = ({ location: { search }, history }) => {
     const data = parse(search.split("?")[1]);
     setLobbyId(data.lobbyId);
     setPlayerId(data.playerId);
-    
-    async function getLeaderboard(lobbyId, playerId){
-      const res = API.getLeaderboard(lobbyId, playerId);
-    }
 
     getLeaderboard(lobbyId, playerId);
 
-    setList([
-      {
-        name: "nickname1",
-        score: 90,
-      },
-      {
-        name: "nickname2",
-        score: 80,
-      },
-      {
-        name: "nickname3",
-        score: 70,
-      },
-      {
-        name: "nickname4",
-        score: 60,
-      },
-    ]);
+    async function getLeaderboard(lobbyId, playerId){
+      const res = API.getLeaderboard(lobbyId, playerId);
+      setList([
+        {
+          name: "nickname1",
+          score: 90,
+        },
+        {
+          name: "nickname2",
+          score: 80,
+        },
+        {
+          name: "nickname3",
+          score: 70,
+        },
+        {
+          name: "nickname4",
+          score: 60,
+        },
+      ]);
+    }
+    
   }, [search, history]);
   return (
     <div className={styles.total}>

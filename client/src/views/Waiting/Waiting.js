@@ -14,8 +14,15 @@ const Waiting = ({ location: { search }, history }) => {
   const [timePQ, setTimePQ] = useState(0);
   const [numQ, setNumQ] = useState(0);
 
+
+  async function startGame(lobbyId, playerId){
+    const res = await API.startQuiz(lobbyId, playerId);
+    console.log(res);
+  }
+
   // Get data from api
   const handleStart = () => {
+    startGame(lobbyId, hostId);
     history.push(`/quizing?num=${numQ}&time=${timePQ}&active=1&lobbyId=${lobbyId}&playerId=${hostId}`); //Push data when click the "Start" button
   };
 
@@ -36,15 +43,10 @@ const Waiting = ({ location: { search }, history }) => {
 
     getPlayers(dataPassed.lobbyId);
     console.log(playerList);
-    
-    // async function getAPIData(lobbyId){
-    //   const res1 = await API.getChosenCategories(lobbyId);
-    //   setCategories(res1);
-    // }
 
     async function getPlayers(lobbyId){
       const res2 = await API.getLobbyPlayers(lobbyId);
-      console.log(res2.players);
+      console.log(res2.players[0]);
       setPlayerList(res2.players);
     }
   
