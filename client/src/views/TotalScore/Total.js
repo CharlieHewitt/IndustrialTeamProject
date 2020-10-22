@@ -33,7 +33,6 @@ const Total = () => {
         <div className={styles.container}>
           <div className={styles.left} />
           <div className={styles.msg}>
-            <div>THE GAME HAS ENDED</div>
             <div>YOU PLACED NTH</div>
           </div>
           {/*<div className={styles.setting}>Settings</div>*/}
@@ -52,7 +51,7 @@ const Total = () => {
         ))}
       </div>
       <Link to="/" className={styles.back}>
-        EXIT TO MAIN MENU
+        EXIT
       </Link>
     </div>
   );

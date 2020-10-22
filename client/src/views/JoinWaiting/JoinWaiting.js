@@ -80,8 +80,8 @@ const JoinWaiting = ({ location: { search }, history }) => {
       </div>
       <div className={styles.content}>
         <div className={styles.blank} />
-        <div className={`${styles.left} ${styles.box}`}>{playerName}</div>
-        <div className={`${styles.left} ${styles.box}`}>{data.topics}</div>
+        <div className={`${styles.left1} ${styles.box}`}>{playerName}</div>
+        <div className={`${styles.left2} ${styles.box}`}>{data.topics}</div>
         <div className={styles.right}>
           <div className={`${styles.top} ${styles.box}`}>{data.time}</div>
           <div className={`${styles.bottom} ${styles.box}`}>{data.num}</div>
