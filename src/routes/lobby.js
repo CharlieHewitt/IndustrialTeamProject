@@ -59,6 +59,12 @@ router.post('/getLobbyPlayers', (req, res) => {
   let resObject = {};
   let arr = [];
 
+  if (!lobbies.checkLobbyValid(lobbyId)) {
+    res.json({
+      error: 'Invalid lobbyID entered',
+    });
+    return;
+  }
   var wantedLobby = lobbies.getLobby(lobbyId);
 
   // TODO: check game phase -> only allow gettingLobbyPlayers in forming, settings
