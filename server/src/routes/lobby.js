@@ -7,7 +7,7 @@ const User = require('../storage/user');
 
 // @route   POST /api/lobby/join
 // @desc    A player can 'join' a lobby by using this link
-router.post('/join', (req, res) => {
+router.post('/join', async (req, res) => {
   const username = req.body.playerName;
 
   id = createID();
@@ -31,7 +31,7 @@ router.post('/join', (req, res) => {
 
 // @route   POST /api/lobby/create
 // @desc    create lobby and add host
-router.post('/create', (req, res) => {
+router.post('/create', async (req, res) => {
   var lobbies = req.app.locals.allLobbies;
   var hostUsername = req.body.hostName;
   var id = createID();
@@ -52,13 +52,19 @@ router.post('/create', (req, res) => {
 
 // @route   POST /api/lobby/getLobbyPlayers
 // @desc    return everyone in the lobby
-router.post('/getLobbyPlayers', (req, res) => {
+router.post('/getLobbyPlayers', async (req, res) => {
   var lobbies = req.app.locals.allLobbies;
   const { lobbyId } = req.body;
 
   let resObject = {};
   let arr = [];
 
+  if (!lobbies.checkLobbyValid(lobbyId)) {
+    res.json({
+      error: 'Invalid lobbyID entered',
+    });
+    return;
+  }
   var wantedLobby = lobbies.getLobby(lobbyId);
 
   // TODO: check game phase -> only allow gettingLobbyPlayers in forming, settings
