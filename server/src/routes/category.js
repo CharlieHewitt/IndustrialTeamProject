@@ -3,7 +3,7 @@ const router = express.Router();
 
 // @route   GET /api/lobby/categories
 // @desc    recieve lobby id and send categories back for lobby
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     //get list of categories from server for lobbyID requesting
     //take lobby id from request, find req lobbyid in lobbymanager, take categories, send categories.
 

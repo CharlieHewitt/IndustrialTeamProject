@@ -146,7 +146,7 @@ router.post('/host/start/', async (req, res) => {
 
 // @route   POST /start/
 // @desc    A client can ask the server if the quiz has started by sending a request here.
-router.post('/start/', (req, res) => {
+router.post('/start/', async (req, res) => {
   const lobbies = req.app.locals.allLobbies;
   const { lobbyId, playerId } = req.body;
 
@@ -170,7 +170,7 @@ router.post('/start/', (req, res) => {
 
 // @route   POST /nextQuestion/
 // @desc    A client can request information on the next question by sending a request here
-router.post('/nextQuestion/', (req, res) => {
+router.post('/nextQuestion/', async (req, res) => {
   /*
   Request:
   {
@@ -195,7 +195,7 @@ router.post('/nextQuestion/', (req, res) => {
 
 // @route   POST /answer/
 // @desc    A client can send its answer to the server by sending a request here. The server will check if it is correct and send an appropriate response.
-router.post('/answer/', (req, res) => {
+router.post('/answer/', async (req, res) => {
   /*
   Request:
   {
@@ -229,7 +229,7 @@ router.post('/answer/', (req, res) => {
 
 // @route   POST /leaderboard/
 // @desc    A client can request the leaderboard for a quiz by sending a request here.
-router.post('/leaderboard/', (req, res) => {
+router.post('/leaderboard/', async (req, res) => {
   var lobbies = req.app.locals.allLobbies;
   var wantedID = req.body.id;
   var wantedLobby = lobbies.getLobby(wantedID);
@@ -324,7 +324,7 @@ router.post('/skip', async (req, res) => {
 
 // @route   POST /fiftyFifty/
 // @desc    A client can request to use the 50/50 lifeline, return 2 answers with one being correct
-router.post('/fiftyFifty/', (req, res) => {
+router.post('/fiftyFifty/', async (req, res) => {
   var userId = req.body.playerId;
   var lobbyId = req.body.lobbyId;
   //var currentQuestion = req.body.currentQuestion;
