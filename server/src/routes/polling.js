@@ -97,7 +97,7 @@ router.post('/leaderboardOver', async (req, res) => {
   }
 
   const currPhase = lobby.currentPhase.getPhase();
-  const quizFinished = false;
+  let quizFinished = false;
 
   if (currPhase === 'end') {
     quizFinished = true;
