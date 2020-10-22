@@ -1,7 +1,7 @@
 class QuizTimer {
   constructor(secondsFromNow) {
     this.target = QuizTimer.getTargetTime(secondsFromNow);
-    console.log(`created QuizTimer with target = ${this.target}`);
+    console.log(`created timer with target = ${this.target}`);
   }
 
   hasTargetTimePassed = (time = Date.now()) => {
@@ -12,7 +12,7 @@ class QuizTimer {
     return this.target - time;
   };
 
-  static getTargetTime = secondsFromNow => {
+  static getTargetTime = (secondsFromNow) => {
     // if (secondsFromNow && typeof secondsFromNow === 'number' && secondsFromNow > 0)
     return Date.now() + secondsFromNow * 1000;
   };
