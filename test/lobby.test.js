@@ -43,7 +43,7 @@ describe('lobby class', () => {
   });
   describe('checkPlayerAnswer method', () => {
     it('should return true if player entered correct answer', () => {
-      lobby.answer = { correctAnswer: 'a' };
+      lobby.currentAnswer = { correctAnswer: 'a' };
       assert.equal(lobby.checkPlayerAnswer(firstPlayer.id, 'a'), true);
     });
     it('should return false if player entered incorrect answer', () => {
@@ -60,7 +60,6 @@ describe('lobby class', () => {
   });
   describe('updatePlayerScores method', () => {
     it('should call method to update scores of all players who answered correctly with the correct no. of points', () => {
-      lobby.checkPlayerAnswer(firstPlayer.id, 'a');
       lobby.checkPlayerAnswer(secondPlayer.id, 'a');
       const thirdPlayer = new User('user3', '5678', 0);
       lobby.addPlayer(thirdPlayer);
