@@ -16,6 +16,9 @@ router.post('/join', (req, res) => {
   userStats = new User(username, id, score);
   lobbyId = req.body.lobbyId;
   lobbyManager = req.app.locals.allLobbies;
+
+  // TODO: check game phase -> only allow joining in forming, settings
+
   var success = lobbyManager.joinLobby(lobbyId, userStats);
 
   const responseObject = {};
@@ -31,11 +34,10 @@ router.post('/join', (req, res) => {
 router.post('/create', (req, res) => {
   var lobbies = req.app.locals.allLobbies;
   var hostUsername = req.body.hostName;
-  var categories = req.body.categories;
   var id = createID();
 
   var user = new User(hostUsername, id, 0);
-  var lobby = new Lobby(user, categories);
+  var lobby = new Lobby(user);
 
   var lobbyid = lobby.lobbyID;
 
@@ -58,6 +60,8 @@ router.post('/getLobbyPlayers', (req, res) => {
   let arr = [];
 
   var wantedLobby = lobbies.getLobby(lobbyId);
+
+  // TODO: check game phase -> only allow gettingLobbyPlayers in forming, settings
 
   for (const playerId in wantedLobby.players) {
     const { username, id } = wantedLobby.players[playerId];
