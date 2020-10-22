@@ -7,9 +7,9 @@
     top: 56px;
     height: 200px;
     background: #0e1c42;
-    width: 100vw;
+    width: 100%;
     .container {
-      width: 1280px;
+      width: 66.7%;
       display: flex;
       color: #fff;
       margin: 0 auto;
@@ -17,7 +17,7 @@
       .msg {
         flex: 1;
         line-height: 200px;
-        font-size: 80px;
+        font-size: 50px;
         font-weight: bolder;
       }
       .setting {
@@ -32,6 +32,43 @@
       }
     }
   }
+  @media only screen and (max-width: 600px)  {
+    .header {
+    position: absolute;
+    left: 0;
+    top: 56px;
+    height: 80px;
+    background: #0e1c42;
+    width: 100%;
+    .container {
+      width: 66.7%;
+      display: flex;
+      color: #fff;
+      margin: 0 auto;
+      .left {
+        height: 80px;
+        width: 4.16%;
+      }
+      .msg {
+        flex: 1;
+        line-height: 80px;
+        font-size: 30px;
+        font-weight: bolder;
+      }
+      .setting {
+        background: #fff;
+        height: 80px;
+        width: 80px;
+        border-radius: 50%;
+        margin-top: 10px;
+        line-height: 80px;
+        font-size: 12px;
+        color: #3d5884;
+      }
+    }
+  }
+  }
+
   .content {
     display: flex;
     padding-top: 200px;
@@ -42,43 +79,135 @@
       background: rgb(164, 179, 201);
       border-radius: 60px;
       font-size: 25px;
+      .player{
+        font-weight: lighter;
+      }
     }
-    .left {
+    .left1 {
       width: 400px;
       height: 489px;
-      line-height: 220px;
-      margin-right: 88px;
+      line-height: 100px;
+      margin-right: 1.5%;
+      margin-left: 10px;
     }
+    .left2 {
+        width: 400px;
+        height: 489px;
+        line-height: 220px;
+        margin-right: 1.5%;
+        margin-left: 10px;
+      }
     .right {
       .top {
         width: 400px;
         height: 245px;
         line-height: 110px;
         margin-bottom: 10px;
+        margin-right: 10px
       }
       .bottom {
         width: 400px;
         height: 245px;
         line-height: 100px;
+        margin-right: 10px;
       }
     }
   }
+  @media only screen and (max-width: 600px)  {
+    .content {
+      display: flex;
+      padding-top: 50px;
+      .blank {
+        flex: 1;
+      }
+      .box {
+        background: rgb(164, 179, 201);
+        border-radius: 60px;
+        font-size: 15px;
+      }
+      .left1 {
+        position: absolute;
+        width: 47%;
+        height: 200px;
+        line-height: 200px;
+      }
+      .left2 {
+        position: absolute;
+        width: 47%;
+        height: 200px;
+        line-height: 200px;
+        left: 49%;
+      }
+      .right {
+        .top {
+          position: absolute;
+          width: 47%;
+          height: 200px;
+          line-height: 110px;
+          left: 2%;
+          top: 365px;
+        }
+        .bottom {
+          position: absolute;
+          width: 47%;
+          height: 200px;
+          line-height: 100px;
+          left: 51%;
+          top: 365px;
+        }
+      }
+    }
+  }
+
   .footer {
     display: flex;
     padding-top: 20px;
     .blank {
       flex: 1;
     }
-    .btn {
+    .btn1 {
       background: #fff;
-      width: 666px;
+      width: 34.7%;
       height: 75px;
       line-height: 75px;
-      border-radius: 50px;
+      border-radius: 60px;
       margin: 0 5px;
       font-weight: bolder;
       font-size: 30px;
       cursor: pointer;
+    }
+    .btn2 {
+      background: #fff;
+      width: 34.7%;
+      height: 75px;
+      line-height: 75px;
+      border-radius: 60px;
+      margin: 0 5px;
+      font-weight: bolder;
+      font-size: 30px;
+      cursor: pointer;
+    }
+  }
+  @media only screen and (max-width: 600px)  {
+    .footer {
+      display: flex;
+      .blank {
+        flex: 1;
+      }
+      .btn {
+        position: absolute;
+        top: 577px;
+        left: 1%;
+        background: #fff;
+        width: 96%;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 60px;
+        margin: 0 5px;
+        font-weight: bolder;
+        font-size: 20px;
+        cursor: pointer;
+      }
     }
   }
 }

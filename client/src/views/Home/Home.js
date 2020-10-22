@@ -13,9 +13,9 @@ const Home = ({ location: { search }, gameState, gameUpdate }) => {
 
   const handleHost = (e) => {
     // e.preventDefault;
-
     history.push(`/host-settings`);
   };
+
 
   const openModal = (e) => {
     // e.preventDefault;
@@ -51,6 +51,7 @@ const Home = ({ location: { search }, gameState, gameUpdate }) => {
           }}
           value={gameState.hostName}
           onChange={(ev) => gameUpdate({ hostName: ev.target.value })}
+          className="inputbox"
         />
         <div onClick={handleHost} className="hostbtn" type="submit">
           Host Game

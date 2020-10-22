@@ -1,25 +1,41 @@
 .score {
   padding-top: 100px;
   text-align: center;
+
   .header {
     position: absolute;
     left: 0;
     top: 56px;
     height: 200px;
     background: #0e1c42;
-    width: 100vw;
+    width: 100%;
     color: #fff;
     line-height: 200px;
     font-size: 80px;
     font-weight: bolder;
   }
+  @media only screen and (max-width: 600px)  {
+    .header {
+      position: absolute;
+      left: 0;
+      top: 56px;
+      height: 136px;
+      background: #0e1c42;
+      width: 100%;
+      color: #fff;
+      line-height: 136px;
+      font-size: 40px;
+      font-weight: bolder;
+    }
+  }
+
   .content {
     padding-top: 45px;
     .item {
       display: flex;
       text-align: center;
       background: #fff;
-      width: 1021px;
+      width: 53.2%;
       height: 66px;
       line-height: 66px;
       border-radius: 60px;
@@ -31,13 +47,42 @@
       }
     }
     .first {
-      width: 1390px;
+      width: 72.4%;
       height: 120px;
       line-height: 120px;
-      border-radius: 30px;
+      border-radius: 60px;
       font-size: 30px;
       padding: 0 20px;
       margin-top: 150px;
+    }
+  }
+  @media only screen and (max-width: 600px)  {
+    .content {
+      padding-top: 45px;
+      .item {
+        display: flex;
+        text-align: center;
+        background: #fff;
+        width: 53.2%;
+        height: 55px;
+        line-height: 55px;
+        border-radius: 60px;
+        font-weight: bolder;
+        margin: 20px auto;
+        padding: 0 50px;
+        .name {
+          flex: 1;
+        }
+      }
+      .first {
+        width: 72.4%;
+        height: 60px;
+        line-height: 60px;
+        border-radius: 60px;
+        font-size: 30px;
+        padding: 0 20px;
+        margin-top: 150px;
+      }
     }
   }
 }
