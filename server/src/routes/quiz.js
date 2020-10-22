@@ -13,12 +13,17 @@ router.post('/host/settings/', async (req, res) => {
   // allow request if lobby is valid
   if (lobbies.checkLobbyValid(lobbyId)) {
     success = true;
+  } else {
+    res.json({
+      error: 'Invalid lobbyID entered',
+    });
+    return;
   }
 
   //lobby to update
-  const lobby = lobbies.getLobby(lobbyId)  
+  const lobby = lobbies.getLobby(lobbyId)
   var hostId = lobby.hostID;
-  
+
   //check if host
   if (playerId != hostId){
     console.log('NOT HOST');
@@ -82,10 +87,17 @@ router.post('/host/start/', async (req, res) => {
   var lobbyId = req.body.lobbyId;
   var playerId = req.body.playerId;
 
+  if (!lobbies.checkLobbyValid(lobbyId)) {
+    res.json({
+      error: 'Invalid lobbyID entered',
+    });
+    return;
+  }
+
   //find matching lobby to lobby id
   var lobby = lobbies.getLobby(lobbyId);
   var hostId = lobby.hostID;
-  
+
   //check if host
   if (playerId != hostId){
     console.log('NOT HOST');
@@ -155,6 +167,13 @@ router.post('/start/', async (req, res) => {
 
   const responseObject = {};
 
+  if (!lobbies.checkLobbyValid(lobbyId)) {
+    res.json({
+      error: 'Invalid lobbyID entered',
+    });
+    return;
+  }
+
   //find matching lobby to lobby id
   const lobby = lobbies.getLobby(lobbyId);
 
@@ -185,6 +204,14 @@ router.post('/nextQuestion/', async (req, res) => {
   var lobbies = req.app.locals.allLobbies;
   //request variables
   var lobbyId = req.body.lobbyId;
+
+  if (!lobbies.checkLobbyValid(lobbyId)) {
+    res.json({
+      error: 'Invalid lobbyID entered',
+    });
+    return;
+  }
+
   //find matching lobby to lobby id
   var lobby = lobbies.getLobby(lobbyId);
 
@@ -213,6 +240,14 @@ router.post('/answer/', async (req, res) => {
   let lobbies = req.app.locals.allLobbies;
   //request variables
   let { playerId, lobbyId } = req.body;
+
+  if (!lobbies.checkLobbyValid(lobbyId)) {
+    res.json({
+      error: 'Invalid lobbyID entered',
+    });
+    return;
+  }
+
   //find matching lobby to lobby id
   let lobby = lobbies.getLobby(lobbyId);
 
@@ -232,6 +267,14 @@ router.post('/answer/', async (req, res) => {
 router.post('/leaderboard/', async (req, res) => {
   var lobbies = req.app.locals.allLobbies;
   var wantedID = req.body.id;
+
+  if (!lobbies.checkLobbyValid(wantedID)) {
+    res.json({
+      error: 'Invalid lobbyID entered',
+    });
+    return;
+  }
+
   var wantedLobby = lobbies.getLobby(wantedID);
   var inOrder = [];
   var id = [];
@@ -279,6 +322,13 @@ router.post('/skip', async (req, res) => {
   //request values
   var lobbyId = req.body.lobbyId;
   var playerId = req.body.playerId;
+
+  if (!lobbies.checkLobbyValid(lobbyId)) {
+    res.json({
+      error: 'Invalid lobbyID entered',
+    });
+    return;
+  }
 
   //lobby and player values needed
   var lobby = lobbies.getLobby(lobbyId);
@@ -331,6 +381,13 @@ router.post('/fiftyFifty/', async (req, res) => {
   var available = false;
 
   // TODO: check if in question phase
+
+  if (!req.app.locals.allLobbies.checkLobbyValid(lobbyId)) {
+    res.json({
+      error: 'Invalid lobbyID entered',
+    });
+    return;
+  }
 
   var wantedLobby = lobbies.getLobby(lobbyId);
   var player = wantedLobby.players[userId];

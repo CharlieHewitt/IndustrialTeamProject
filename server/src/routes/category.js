@@ -8,11 +8,18 @@ router.get('/', async (req, res) => {
     //take lobby id from request, find req lobbyid in lobbymanager, take categories, send categories.
 
     console.log("Request for Lobby Categories. Sending Response...");
-    
+
     //get request lobbies to check
     var lobbies = req.app.locals.allLobbies;
     //get request lobby ID
     var lobbyId =  req.body.lobbyID;
+
+    if (!lobbies.checkLobbyValid(lobbyId)) {
+      res.json({
+        error: 'Invalid lobbyID entered',
+      });
+      return;
+    }
 
     //find matching lobby to lobby id
     var lobby = lobbies.getLobby(lobbyId);
