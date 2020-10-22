@@ -12,16 +12,23 @@ class TimeController {
     }
 
     this.timers[name] = new QuizTimer(secondsFromNow);
+    console.log(`${name} created.`);
     return true;
   }
 
   getTimer(name) {
     if (!this.timers[name]) {
-      console.log('error getting timer - undefined');
+      //console.log('error getting timer - undefined');
       return undefined;
     }
 
     return this.timers[name];
+  }
+
+  removeTimer(name) {
+    if (this.timers[name]) {
+      delete this.timers[name];
+    }
   }
 }
 
