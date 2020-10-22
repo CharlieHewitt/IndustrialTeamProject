@@ -9,13 +9,14 @@ const Home = ({ location: { search }, gameState, gameUpdate }) => {
   const modalRef = React.useRef();
   const history = useHistory();
 
-  useEffect(() => {}, [search, history]);
+  useEffect(() => {
+    localStorage.setItem("gameState", JSON.stringify({ currentQuestion: 1 }));
+  }, []);
 
   const handleHost = (e) => {
     // e.preventDefault;
     history.push(`/host-settings`);
   };
-
 
   const openModal = (e) => {
     // e.preventDefault;
