@@ -7,16 +7,17 @@ import { parse } from "querystring";
 const Waiting = ({ location: { search }, history }) => {
   const [data, setData] = useState({});
 
-  const [hostname] = useState("User1");
   const [lobbyId, setLobbyId] = useState("");
-  const [res2, setRes2] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [test, setTest] = useState([]);
+  const [hostname, setHostname] = useState([]);
+  const [hostId, setHostId] = useState("");
   // const [categories, setCategories] = useState([]);
+  const [timePQ, setTimePQ] = useState(0);
+  const [numQ, setNumQ] = useState(0);
 
   // Get data from api
   const handleStart = () => {
-    history.push(`/quizing?num=3&time=20&active=1`); //Push data when click the "Start" button
+    history.push(`/quizing?num=${numQ}&time=${timePQ}&active=1&lobbyId=${lobbyId}&playerId=${hostId}`); //Push data when click the "Start" button
   };
 
   const modalRef = React.useRef();
@@ -27,33 +28,36 @@ const Waiting = ({ location: { search }, history }) => {
   console.log(lobbyId);
 
   useEffect(() => {
-    const data1 = parse(search.split("?")[1]);
-    setTest(data1.hostName);
-    console.log(data1.hostName);
-    
-    async function getAPIData(test){
-      const res = await API.createLobby(test);
-      const res2 = await API.getNextQuestion(res.lobbyId, res.hostId, "2");
-      setRes2(res2);
-      setCategories(res2.questionInfo.category);
+    const dataPassed = parse(search.split("?")[1]);
+    setHostname(dataPassed.hostName);
+    setTimePQ(dataPassed.timer);
+    setNumQ(dataPassed.numQ);
+    console.log(dataPassed.categories);
 
-      console.log(res2);
+    getAPIData(hostname);
+    
+    async function getAPIData(hostname){
+      const res = await API.createLobby(hostname);
+      console.log(res);
       setLobbyId(res.lobbyId);
+      setHostId(res.hostId);
 
       // const res2 = await API.getChosenCategories(lobbyId);
       // setCategories(res2);
-    
-      setData({
-        title: "GAME CODE：",
-        competitors: "",
-        categories: "",
-        time: "TIME PER QUESTION: 20s",
-        num: "NUMBER OF QUESTIONS: 3",
-      });
+
+      const res3 = await API.checkQuizStatus(lobbyId, hostId);
+      setTimePQ(res3.settings.timePerQuestion);
+      setNumQ(res3.settings.numQuestions);
     }
-    
-    getAPIData(hostname);
   
+    setData({
+      title: "GAME CODE：",
+      competitors: "",
+      categories: "",
+      time: "TIME PER QUESTION: ",
+      num: "NUMBER OF QUESTIONS: ",
+    });
+
   }, [search, history]);
 
   return (
@@ -66,11 +70,11 @@ const Waiting = ({ location: { search }, history }) => {
       </div>
       <div className={styles.content}>
         <div className={styles.blank} />
-  <div className={`${styles.left} ${styles.box}`}>{data.competitors}{test}</div>
+  <div className={`${styles.left} ${styles.box}`}>{data.competitors}{hostname}</div>
         <div className={`${styles.left} ${styles.box}`}>{data.categories}{categories}</div>
         <div className={styles.right}>
-          <div className={`${styles.top} ${styles.box}`}>{data.time}</div>
-          <div className={`${styles.bottom} ${styles.box}`}>{data.num}</div>
+          <div className={`${styles.top} ${styles.box}`}>{data.time}{timePQ}s</div>
+          <div className={`${styles.bottom} ${styles.box}`}>{data.num}{numQ}</div>
         </div>
         <div className={styles.blank} />
       </div>

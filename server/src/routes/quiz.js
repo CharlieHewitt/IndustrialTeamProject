@@ -1,51 +1,51 @@
 const express = require('express');
+const player = require('../player/player');
 const router = express.Router();
 
 // @route   POST /host/settings/
 // @desc    Get settings details and send them back successful
 router.post('/host/settings/', async (req, res) => {
-  const success = false;
-  var lobbies = req.app.locals.allLobbies;
+  let success = false;
+  const lobbies = req.app.locals.allLobbies;
 
   //request variables
-  var lobbyId = req.body.lobbyId;
-  var playerId = req.body.playerId;
+  const { lobbyId, playerId, settings } = req.body;
 
-  if (lobbies.checkLobbiesValid(lobbyId)){
+  if (lobbies.checkLobbyValid(lobbyId)) {
     success = true;
   }
 
   //lobby to update
-  var lobby = lobbies.getLobby(lobbyId);
+  const lobby = lobbies.getLobby(lobbyId);
 
-  //requested lobby settings
-  var settings = {
-    categories     : req.body.settings.categories,
-    timePerQuestion: req.body.settings.timePerQuestions,
-    numQuestion    : req.body.settings.numQuestion
+  if (success) {
+    success = lobby.settings.updateAnswerTime(settings.answerTime);
   }
 
-  //update saved lobby settings with request values
-  lobby.settings = settings;
-
-  //response data
-  const person = {lobbyId : lobbyId,
-                  success: success,
-                  settings: settings
+  if (success) {
+    success = lobby.settings.updateNumQuestions(settings.numQuestions);
   }
 
-  //do start code to start lobby for everyone
-  lobby.startGame();
+  if (success) {
+    success = lobby.settings.updateCategories(settings.categories);
+  }
+
+  const response = {
+    success: success,
+    lobbyId: lobbyId,
+    settings: lobby.settings.getObject(),
+  };
 
   //send response
-  res.json(person) 
+  res.json(response);
 });
 
 // @route   POST /host/start/
 // @desc    A host can start the quiz on the server for all the connected players by sending a request here.
 router.post('/host/start/', async (req, res) => {
-  const success = false;
+  let success = false;
   var lobbies = req.app.locals.allLobbies;
+  let ready = {};
 
   //request variables
   var lobbyId = req.body.lobbyId;
@@ -56,27 +56,31 @@ router.post('/host/start/', async (req, res) => {
 
   //assuming player[0] is always the host of the lobby.
   //check if playerid is firstid in given lobbyid, if correct then is host so start.
-  if (playerId == lobby.players[0].id){
-    console.log("Player is Host of Lobby. Starting...")
+  if (playerId == lobby.players[playerId].id) {
+    console.log('Player is Host of Lobby. Starting...');
     success = true;
-    const ready = {
+    ready = {
       success: success,
-      lobbyId: lobbyId
-    }
+      lobbyId: lobbyId,
+    };
   }
 
   //if doesnt match then not host of lobby. respond with false for success with lobbyid
-  else{
-    console.log("Player is not Host of Lobby. Fail...")
-    const ready = {
+  else {
+    console.log('Player is not Host of Lobby. Fail...');
+    ready = {
       success: success,
-      lobbyId: lobbyId
-    }
+      lobbyId: lobbyId,
+    };
   }
 
-  //send response object
-  res.json(ready)
+  await lobby.getQuestions();
 
+  console.log('starting game for lobby: ', lobby.lobbyID);
+  lobby.startGame();
+
+  //send response object
+  res.json(ready);
 });
 
 // @route   POST /start/
@@ -88,9 +92,9 @@ router.post('/start/', (req, res) => {
     started: Boolean,
     settings: {
       timePerQuestion: 10,
-      numQuestions: 20
-    }
-  }
+      numQuestions: 20,
+    },
+  };
 
   //request variables
   var lobbyId = req.body.lobbyId;
@@ -101,21 +105,18 @@ router.post('/start/', (req, res) => {
   //check if the game has started. NO - set to false YES - set to true and set to the lobby settings
   if (lobby.isGameStarted() == false) {
     gameSettings.started = false;
-
   } else if (lobby.isGameStarted() == true) {
     gameSettings.started = true;
     gameSettings.settings.timePerQuestion = lobby.settings.answerTime;
     gameSettings.settings.numQuestion = lobby.settings.numTime;
   }
 
-  res.json(gameSettings)
+  res.json(gameSettings);
 });
 
 // @route   POST /nextQuestion/
 // @desc    A client can request information on the next question by sending a request here
 router.post('/nextQuestion/', (req, res) => {
-  const success = true;
-
   /*
   Request:
   {
@@ -125,32 +126,20 @@ router.post('/nextQuestion/', (req, res) => {
   }
   */
 
- const nextQ = {
-  questionInfo: {           //charlies file missing :
-    question: "who's the best team member",
-    category: 'general knowledge',
-    answers: {
-     a: "John",
-     b: "John",
-     c: "John",
-     d: "John",
-    }
-  },
-  success: success,
-  questionNumber: 1,       //charlies file missing ,
-  //?error: string,
-  time: 10              // time question countdown started on server
-  // time allowed per question?
-}
+  var lobbies = req.app.locals.allLobbies;
+  //request variables
+  var lobbyId = req.body.lobbyId;
+  //find matching lobby to lobby id
+  var lobby = lobbies.getLobby(lobbyId);
 
-  res.json(nextQ)
+  const nextQ = lobby.getCurrentQuestion();
+
+  res.json(nextQ);
 });
 
 // @route   POST /answer/
 // @desc    A client can send its answer to the server by sending a request here. The server will check if it is correct and send an appropriate response.
 router.post('/answer/', (req, res) => {
-  const success = true;
-
   /*
   Request:
   {
@@ -162,48 +151,159 @@ router.post('/answer/', (req, res) => {
   }
   */
 
- const answer = {
-  success: success,
-  //?error: string,
-  correctAnswer: "a",
-  questionNumber: 1
-}
+  let lobbies = req.app.locals.allLobbies;
+  //request variables
+  let { playerId, lobbyId } = req.body;
+  //find matching lobby to lobby id
+  let lobby = lobbies.getLobby(lobbyId);
 
-  res.json(answer)
+  let player = lobby.getPlayer(playerId);
+  if (player && player.hasAnswered !== true) {
+    player.hasAnswered = true;
+  }
+  lobby.checkPlayerAnswer(playerid, req.body.answer);
+
+  const answer = lobby.getCurrentAnswer();
+
+  res.json(answer);
 });
 
 // @route   POST /leaderboard/
 // @desc    A client can request the leaderboard for a quiz by sending a request here.
 router.post('/leaderboard/', (req, res) => {
-
   var lobbies = req.app.locals.allLobbies;
   var wantedID = req.body.id;
   var wantedLobby = lobbies.getLobby(wantedID);
   var inOrder = [];
   var id = [];
 
+  wantedLobby.updatePlayerScore();
+
   //change obj to array so i can sort
-  for (key in wantedLobby.players){
-      inOrder.push([key.toString(), wantedLobby.players[key].username, wantedLobby.players[key].score])
+  for (key in wantedLobby.players) {
+    inOrder.push([
+      key.toString(),
+      wantedLobby.players[key].username,
+      wantedLobby.players[key].score,
+    ]);
   }
 
   //sort array DEC
-  inOrder.sort(function(a, b) {
-      return b[2] - a[2];
+  inOrder.sort(function (a, b) {
+    return b[2] - a[2];
   });
 
   for (i in inOrder) {
-      var test2 = inOrder[i];
-      test2.toString();
-      var fields = test2.toString().split(',');
-      id.push(fields[0]);
+    var test2 = inOrder[i];
+    test2.toString();
+    var fields = test2.toString().split(',');
+    id.push(fields[0]);
   }
 
   const responseObject = {};
-  responseObject["playersRanked"] = id;
-  responseObject["users"] = wantedLobby.players;
+  responseObject['playersRanked'] = id;
+  responseObject['users'] = wantedLobby.players;
 
   res.json(responseObject);
+});
+
+// @route   POST /skip
+// @desc    A client can use the get hint to skip the question and automatically get the right answer
+router.post('/skip', async (req, res) => {
+  var lobbies = req.app.locals.allLobbies;
+
+  //request values
+  var lobbyId = req.body.lobbyId;
+  var playerId = req.body.playerId;
+
+  //lobby and player values needed
+  var lobby = lobbies.getLobby(lobbyId);
+  var players = lobby.players;
+  var correctA = lobby.getCurrentAnswer();
+  var player = players[playerId];
+  var skipUsed = true;
+
+  //check if skip has been used.
+  if (player.skipUsed == false) {
+    skipUsed = false;
+    player.skipUsed = true; //hint will now be used so set player used to true
+    lobby.playersAnsweredCorrectly.push(players[playerId]);
+  }
+
+  //if skip has been used then dont send correct answer and instead send back dummy data
+  if (skipUsed == true) {
+    correctA = 'Skip has been used';
+  }
+
+  //response json structure
+  const skip = {
+    skipUsed: skipUsed,
+    correctAnswer: correctA,
+  };
+
+  res.json(skip);
+});
+
+/*
+  Request:
+  {
+    lobbyId: string,
+    playerId: string,
+  }
+
+  Response:
+  {
+    skipUsed: bool
+    correctAnswer: string
+  }
+  */
+
+// @route   POST /fiftyFifty/
+// @desc    A client can request to use the 50/50 lifeline, return 2 answers with one being correct
+router.post('/fiftyFifty/', (req, res) => {
+  var userId = req.body.playerId;
+  var lobbyId = req.body.lobbyId;
+  //var currentQuestion = req.body.currentQuestion;
+  var available = false;
+
+  var wantedLobby = lobbies.getLobby(lobbyId);
+  var player = wantedLobby.players[userId];
+
+  var answer = '';
+  var randomAnswer = '';
+
+  //check if they've not used the 50/50 lifeline
+  if (player.fiftyFifty == false) {
+    //check if its a true or false Q, if not continue
+    var allAnswers = Object.keys(
+      wantedLobby.currentQuestion.questionInfo.answers
+    );
+    if (allAnswers.length != 2) {
+      //available = false
+
+      //remove the right answer so i can get another random one
+      const index = allAnswers.indexOf(wantedLobby.currentAnswer);
+      if (index > -1) {
+        allAnswers.splice(index, 1);
+      }
+
+      //set available and thats its been used for the player
+      available = true;
+      player.fiftyFifty = true;
+
+      //pick a random answer and answer
+      randomAnswer = Math.floor(Math.random() * allAnswers.length);
+      answer = wantedLobby.answer;
+    }
+  }
+
+  var hint = {
+    available: available, //if false shouldn't use it
+    answer1: answer,
+    answer2: randomAnswer,
+  };
+
+  res.json(hint);
 });
 
 module.exports = router;
