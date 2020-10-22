@@ -1,8 +1,9 @@
 // back-end URL to use (switches depending on whether app is in dev or prod environment)
 const URL =
-  !process.env.NODE_ENV || process.env.NODE_ENV === "development"
-    ? "http://localhost:4000"
-    : "https://team10-industrialteamproject.herokuapp.com";
+  // !process.env.NODE_ENV || process.env.NODE_ENV === "development"
+  //   ? "http://localhost:4000"
+  //   :
+  "https://team10-industrialteamproject.herokuapp.com";
 
 const fetchJSON = async (url, reqData = {}) => {
   if (reqData)

@@ -15,7 +15,7 @@ const HostSettings = ({ gameState, gameUpdate }) => {
   console.log(gameState);
 
   const [categories, setCategories] = useState();
-  const [roundCount, setRoundCount] = useState(7);
+  const [numQuestions, setNumQuestions] = useState(7);
   const [timer, setTimer] = useState(7);
   const [playerCount, setPlayerCount] = useState(7);
   const [error, setError] = useState("");
@@ -49,16 +49,20 @@ const HostSettings = ({ gameState, gameUpdate }) => {
       <div className={styles.mainWrap}>
         <div className={styles.wrap}>
           <HostSettingRow
-            value={roundCount}
-            setValue={setRoundCount}
-            title="Number of Rounds"
+            value={numQuestions}
+            setValue={setNumQuestions}
+            title="Number of Questions"
           />
-          <HostSettingRow value={timer} setValue={setTimer} title="Timer" />
           <HostSettingRow
-            value={playerCount}
-            setValue={setPlayerCount}
-            title="Number of Players"
+            value={timer}
+            setValue={setTimer}
+            title="Answer Time"
           />
+          {/* <HostSettingRow
+              value={playerCount}
+              setValue={setPlayerCount}
+              title="Number of Players"
+            /> */}
           {categories && (
             <CategoryList
               categories={categories}
@@ -85,7 +89,16 @@ const HostSettings = ({ gameState, gameUpdate }) => {
               let { lobbyId, hostId, hostName } = await API.createLobby(
                 gameState.hostName
               );
-              gameUpdate({ lobbyId, hostId, hostName });
+              gameUpdate({
+                lobbyId,
+                hostId,
+                hostName,
+                categories: Object.keys(categories).filter(
+                  (cat) => categories[cat]
+                ),
+                numQuestions,
+                answerTime: timer,
+              });
 
               console.log(gameState);
               // update settings
@@ -93,7 +106,7 @@ const HostSettings = ({ gameState, gameUpdate }) => {
                 categories: Object.keys(categories).filter(
                   (cat) => categories[cat]
                 ),
-                numQuestions: roundCount,
+                numQuestions: numQuestions,
                 answerTime: timer,
               });
               if (!success) throw Error("Failed to update settings");
