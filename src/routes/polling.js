@@ -4,6 +4,13 @@ const router = express.Router();
 router.post('/questionOver', async (req, res) => {
   const { lobbyId, playerId, questionNumber } = req.body;
 
+  if (!lobbies.checkLobbyValid(lobbyId)) {
+    res.json({
+      error: 'Invalid lobbyID entered',
+    });
+    return;
+  }
+
   const lobby = req.app.locals.allLobbies.getLobby(lobbyId);
 
   if (!lobby) {
@@ -70,6 +77,13 @@ router.post('/questionOver', async (req, res) => {
 
 router.post('/leaderboardOver', async (req, res) => {
   const { lobbyId, playerId, questionNumber } = req.body;
+
+  if (!lobbies.checkLobbyValid(lobbyId)) {
+    res.json({
+      error: 'Invalid lobbyID entered',
+    });
+    return;
+  }
 
   const lobby = req.app.locals.allLobbies.getLobby(lobbyId);
 
