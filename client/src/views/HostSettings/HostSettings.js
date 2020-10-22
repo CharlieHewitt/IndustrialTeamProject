@@ -19,11 +19,11 @@ const HostSettings = ({ location: { search }, history }) => {
   const [hostId, setHostId] = useState("");
   const [error, setError] = useState("");
   const [settings, setSettings] = useState({
-    categories: [],
-    timePerQuestion: 5,
+    categories: ["animals", "music", "movies"],
+    answerTime: 5,
     numQuestions: 3
   })
-
+  let array =[];
   useEffect(() => {
     const data = parse(search.split("?")[1]);
     setHostName(data.hostName);
@@ -33,6 +33,7 @@ const HostSettings = ({ location: { search }, history }) => {
         const categories = await API.getCategories();
         let catObj = {};
         categories.categories.forEach((cat) => (catObj[cat] = false));
+        console.log(catObj);
         setCategories(catObj);
       } catch (err) {
         setError(err.message);
@@ -40,24 +41,39 @@ const HostSettings = ({ location: { search }, history }) => {
     }
     async function createLobby(hostName){
       const res1 = await API.createLobby(hostName);
+      console.log(res1);
       setLobbyId(res1.lobbyId);
       setHostId(res1.hostId);
     }
-    async function updateSetting(lobbyId, playerId, settings){
-      const res = await API.updateSettings(lobbyId, playerId, settings);
-          
-    }
 
     init();
-    createLobby(hostName);
-    setSettings({
-      categories: parse(categories),
-      timePerQuestion: timer,
-      numQuestions: roundCount
-    })
+
+    createLobby(data.hostName);
+    console.log(categories);
+    
     console.log(settings);
-    updateSetting(lobbyId, hostId, settings);
-  }, []);
+  }, [search, history]);
+
+  const handleClick = () => {
+    for (const cat in categories){
+      { 
+        if (categories[cat] === true) 
+        { 
+          array.push(cat) 
+        }
+      }
+    }
+    updateSetting(lobbyId, hostId, 
+      { categories: array,
+        answerTime: timer,
+        numQuestions: roundCount});
+      history.push(`/waiting?hostName=${hostName}&timer=${timer}&numQ=${roundCount}&lobbyId=${lobbyId}&hostId=${hostId}&categories=${array}`)
+    }
+
+  async function updateSetting(lobbyId, playerId, settings){
+    const res3 = await API.updateSettings(lobbyId, playerId, settings);
+    console.log(res3);
+  }
 
   return (
     <div>
@@ -94,7 +110,7 @@ const HostSettings = ({ location: { search }, history }) => {
             borderRadius: 30,
             textAlign: "center",
           }}
-          onClick={() => history.push(`/waiting?hostName=${hostName}&timer=${timer}&numQ=${roundCount}&categories=${[categories]}`)} //sends to waiting/lobby page
+          onClick={() => handleClick()} //sends to waiting/lobby page
         />
       </div>
     </div>
@@ -102,3 +118,12 @@ const HostSettings = ({ location: { search }, history }) => {
 };
 
 export default HostSettings;
+
+
+// for (const cat in catObj){
+//   { if (catObj[cat] === true) 
+//     { array.push(cat) 
+//       console.log(cat)
+//     }
+//   }
+// }

@@ -9,14 +9,20 @@ const Waiting = ({ location: { search }, history }) => {
 
   const [lobbyId, setLobbyId] = useState("");
   const [categories, setCategories] = useState([]);
-  const [hostname, setHostname] = useState([]);
   const [hostId, setHostId] = useState("");
-  // const [categories, setCategories] = useState([]);
+  const [playerList, setPlayerList] = useState([]);
   const [timePQ, setTimePQ] = useState(0);
   const [numQ, setNumQ] = useState(0);
 
+
+  async function startGame(lobbyId, playerId){
+    const res = await API.startQuiz(lobbyId, playerId);
+    console.log(res);
+  }
+
   // Get data from api
   const handleStart = () => {
+    startGame(lobbyId, hostId);
     history.push(`/quizing?num=${numQ}&time=${timePQ}&active=1&lobbyId=${lobbyId}&playerId=${hostId}`); //Push data when click the "Start" button
   };
 
@@ -25,35 +31,28 @@ const Waiting = ({ location: { search }, history }) => {
   const openModal = () => {
     modalRef.current.openModal()
   };
-  console.log(lobbyId);
 
   useEffect(() => {
     const dataPassed = parse(search.split("?")[1]);
-    setHostname(dataPassed.hostName);
     setTimePQ(dataPassed.timer);
     setNumQ(dataPassed.numQ);
-    console.log(dataPassed.categories);
+    setLobbyId(dataPassed.lobbyId);
+    setHostId(dataPassed.hostId);
+    console.log(dataPassed);
+    setCategories(dataPassed.categories);
 
-    getAPIData(hostname);
-    
-    async function getAPIData(hostname){
-      const res = await API.createLobby(hostname);
-      console.log(res);
-      setLobbyId(res.lobbyId);
-      setHostId(res.hostId);
+    getPlayers(dataPassed.lobbyId);
+    console.log(playerList);
 
-      // const res2 = await API.getChosenCategories(lobbyId);
-      // setCategories(res2);
-
-      const res3 = await API.checkQuizStatus(lobbyId, hostId);
-      setTimePQ(res3.settings.timePerQuestion);
-      setNumQ(res3.settings.numQuestions);
+    async function getPlayers(lobbyId){
+      const res2 = await API.getLobbyPlayers(lobbyId);
+      console.log(res2.players[0]);
+      setPlayerList(res2.players);
     }
   
     setData({
       title: "GAME CODE：",
-      competitors: "",
-      categories: "",
+      categories:"CATEGORIES: ",
       time: "TIME PER QUESTION: ",
       num: "NUMBER OF QUESTIONS: ",
     });
@@ -70,6 +69,7 @@ const Waiting = ({ location: { search }, history }) => {
       </div>
       <div className={styles.content}>
         <div className={styles.blank} />
+
   <div className={`${styles.left1} ${styles.box}`}>{data.competitors}{hostname}</div>
         <div className={`${styles.left2} ${styles.box}`}>{data.categories}{categories}</div>
         <div className={styles.right}>

@@ -1,0 +1,24 @@
+Home.js:
+    history.push(`/host-settings?hostName=${inputValue.value}`);
+    history.push(`/joinwaiting?username=${userName}&lobbyId=${inputValue.value}`);
+
+JoinWaiting.js:
+
+
+HostSettings:
+   history.push(`/waiting?hostName=${hostName}&timer=${timer}&numQ=${roundCount}&lobbyId=${lobbyId}&hostId=${hostId}`)
+    (still need to be changed)
+
+Waiting.js:
+    history.push(`/quizing?num=${numQ}&time=${timePQ}&active=1&lobbyId=${lobbyId}&playerId=${hostId}`); 
+
+Answer.js:
+    (every round)history.push(`/score?${stringify({ ...query, name })}&lobbyId=${lobbyId}&playerId=${playerId}`);
+    (after the last question)history.push(`/totalscore?${stringify({ ...query, name })}&lobbyId=${lobbyId}&playerId=${playerId}`);
+
+Score.js:
+    const timer = setTimeout(() => {
+      history.push(
+        `/quizing?${stringify({ ...data, active: Number(data.active) + 1 })}`
+      );
+    }, 3000);
