@@ -192,6 +192,7 @@ router.post('/answer/', (req, res) => {
   */
 
   // TODO: check if in question phase
+  // TODO: check questionNumber! & Time request came in (Date.now() -> compare to timer)
 
   let lobbies = req.app.locals.allLobbies;
   //request variables
