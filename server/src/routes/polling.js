@@ -97,6 +97,11 @@ router.post('/leaderboardOver', async (req, res) => {
   }
 
   const currPhase = lobby.currentPhase.getPhase();
+  const quizFinished = false;
+
+  if (currPhase === 'end') {
+    quizFinished = true;
+  }
 
   // check phase
   if (
@@ -134,13 +139,13 @@ router.post('/leaderboardOver', async (req, res) => {
       console.log('leaderboardTimer expired, moving to nextQuestion');
     }
     // send response -> move to question phase
-    res.json({ leaderboardOver: true });
+    res.json({ leaderboardOver: true, quizFinished });
   } else {
     const timeRemaining = lobby.timeRemainingOnLeaderboardTimer();
     console.log(
       `leaderboardTimer checked, but not yet expired: ${timeRemaining} ms to go`
     );
-    res.json({ leaderboardOver: false, timeRemaining });
+    res.json({ leaderboardOver: false, timeRemaining, quizFinished });
   }
 });
 
