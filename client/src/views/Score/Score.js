@@ -38,9 +38,7 @@ const Score = ({ gameState, gameUpdate }) => {
       if (quizFinished) {
         gameUpdate({ currentQuestion: (gameState.currentQuestion || 1) + 1 });
         history.push("/totalscore");
-      }
-
-      if (leaderboardOver) {
+      } else if (leaderboardOver) {
         gameUpdate({ currentQuestion: (gameState.currentQuestion || 1) + 1 });
         history.push("/quizing");
       }

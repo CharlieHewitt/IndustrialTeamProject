@@ -4,62 +4,53 @@ import { Link } from "react-router-dom";
 import styles from "./Total.less";
 import API from "../../api";
 
-const Total = ({ location: { search }, history }) => {
-  const [list, setList] = useState([]);
-  const [lobbyId, setLobbyId] = useState("");
-  const [playerId, setPlayerId] = useState("");
+const Total = ({ gameState, gameUpdate }) => {
+  // Retrive the score and back to the next question after 3s
+  const [scores, setScores] = useState([]);
+  const [selfScore, setSelfScore] = useState("1");
 
-  // Retrive the final score
-  // Need to push the data of the last question before getting this leaderboard
   useEffect(() => {
-    const data = parse(search.split("?")[1]);
-    setLobbyId(data.lobbyId);
-    setPlayerId(data.playerId);
+    async function getLeaderboard() {
+      const { playersRanked, users } = await API.getLeaderboard(
+        gameState.lobbyId,
+        gameState.playerId
+      );
 
-    getLeaderboard(lobbyId, playerId);
+      for (let i = 0; i < playersRanked.length; i += 1) {
+        playersRanked[i] = users[playersRanked[i]];
+        if (playersRanked[i] === gameState.playerId) {
+          setSelfScore(i + 1);
+        }
+      }
 
-    async function getLeaderboard(lobbyId, playerId){
-      const res = API.getLeaderboard(lobbyId, playerId);
-      setList([
-        {
-          name: "nickname1",
-          score: 90,
-        },
-        {
-          name: "nickname2",
-          score: 80,
-        },
-        {
-          name: "nickname3",
-          score: 70,
-        },
-        {
-          name: "nickname4",
-          score: 60,
-        },
-      ]);
+      setScores(playersRanked);
     }
-    
-  }, [search, history]);
+
+    getLeaderboard();
+  }, []);
+
   return (
     <div className={styles.total}>
       <div className={styles.header}>
         <div className={styles.container}>
           <div className={styles.left} />
           <div className={styles.msg}>
-            <div>YOU PLACED NTH</div>
+            <div>
+              YOU PLACED {selfScore}
+              {selfScore <= 1 ? "ST" : selfScore > 2 ? "TH" : "ND"}
+            </div>
           </div>
           {/*<div className={styles.setting}>Settings</div>*/}
         </div>
       </div>
       <div className={styles.content}>
-        {list.map((item, index) => (
+        {scores.map((item, index) => (
           <div
-            key={item.name}
+            key={item.username}
             className={`${styles.item} ${index === 0 ? styles.first : ""}`}
           >
             <div>{index + 1}st</div>
-            <div className={styles.name}>{item.name}</div>
+            <div className={styles.name}>{item.username}</div>
             <div>{item.score}</div>
           </div>
         ))}
