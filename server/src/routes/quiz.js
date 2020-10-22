@@ -229,20 +229,13 @@ router.post('/start/', async (req, res) => {
 // @route   POST /nextQuestion/
 // @desc    A client can request information on the next question by sending a request here
 router.post('/nextQuestion/', async (req, res) => {
-  /*
-  Request:
-  {
-    lobbyId: string,
-    playerId: string
-    questionNumber: number
-  }
-  */
 
   // TODO: check if in question phase
 
   var lobbies = req.app.locals.allLobbies;
   //request variables
   var lobbyId = req.body.lobbyId;
+  var questionNumber = req.body.questionNumber;
 
   if (!lobbies.checkLobbyValid(lobbyId)) {
     res.json({
@@ -253,6 +246,11 @@ router.post('/nextQuestion/', async (req, res) => {
 
   //find matching lobby to lobby id
   var lobby = lobbies.getLobby(lobbyId);
+
+  if (questionNumber !== lobby.getCurrentQuestionNumber()) {
+    res.json({error: 'question number passed in does not match the current question'})
+    return;
+  }
 
   const nextQ = lobby.getCurrentQuestion();
 

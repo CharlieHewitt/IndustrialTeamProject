@@ -219,6 +219,10 @@ class Lobby {
     return this.currentQuestion;
   }
 
+  getCurrentQuestionNumber() {
+    return this.currentQuestionNumber;
+  }
+
   getCurrentAnswer() {
     return this.currentAnswer;
   }
