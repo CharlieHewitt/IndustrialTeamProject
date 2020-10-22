@@ -48,8 +48,8 @@ const Home = ({ location: { search }, gameState, gameUpdate }) => {
             left: "515px",
             top: "393px",
           }}
-          value={gameState.userName}
-          onChange={(ev) => gameUpdate({ userName: ev.target.value })}
+          value={gameState.hostName}
+          onChange={(ev) => gameUpdate({ hostName: ev.target.value })}
         />
         <div onClick={handleHost} className="hostbtn" type="submit">
           Host Game

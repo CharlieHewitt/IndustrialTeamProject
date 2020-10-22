@@ -7,7 +7,6 @@ import styles from "./HostSettings.module.css";
 import { parse, stringify } from "querystring";
 import "./index.css";
 import API from "../../api";
-import { create } from "domain";
 import { useHistory } from "react-router-dom";
 
 const HostSettings = ({ gameState, gameUpdate }) => {
@@ -19,20 +18,10 @@ const HostSettings = ({ gameState, gameUpdate }) => {
   const [roundCount, setRoundCount] = useState(7);
   const [timer, setTimer] = useState(7);
   const [playerCount, setPlayerCount] = useState(7);
-  const [hostName, setHostName] = useState("");
-  const [lobbyId, setLobbyId] = useState("");
-  const [hostId, setHostId] = useState("");
   const [error, setError] = useState("");
-  const [settings, setSettings] = useState({
-    categories: [],
-    timePerQuestion: 5,
-    numQuestions: 3,
-  });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // const data = parse(search.split("?")[1]);
-    setHostName(gameState.userName);
-
     async function init() {
       try {
         const categories = await API.getCategories();
@@ -43,24 +32,8 @@ const HostSettings = ({ gameState, gameUpdate }) => {
         setError(err.message);
       }
     }
-    async function createLobby(hostName) {
-      const res1 = await API.createLobby(hostName);
-      setLobbyId(res1.lobbyId);
-      setHostId(res1.hostId);
-    }
-    async function updateSetting(lobbyId, playerId, settings) {
-      const res = await API.updateSettings(lobbyId, playerId, settings);
-    }
 
     init();
-    createLobby(hostName);
-    setSettings({
-      categories: parse(categories),
-      timePerQuestion: timer,
-      numQuestions: roundCount,
-    });
-    console.log(settings);
-    updateSetting(lobbyId, hostId, settings);
   }, []);
 
   return (
@@ -98,20 +71,40 @@ const HostSettings = ({ gameState, gameUpdate }) => {
           {error && <h1 style={{ textAlign: "center" }}>Error: {error}</h1>}
         </div>
         <RoundedBtn
-          title="Start Lobby"
+          title={loading ? "Loading..." : "Start Lobby"}
           style={{
             width: 125,
             height: 125,
             borderRadius: 30,
             textAlign: "center",
           }}
-          onClick={() =>
-            history.push(
-              `/waiting?hostName=${hostName}&timer=${timer}&numQ=${roundCount}&categories=${[
-                categories,
-              ]}`
-            )
-          } //sends to waiting/lobby page
+          disabled={loading}
+          onClick={async () => {
+            setLoading(true);
+            try {
+              let { lobbyId, hostId, hostName } = await API.createLobby(
+                gameState.hostName
+              );
+              gameUpdate({ lobbyId, hostId, hostName });
+
+              console.log(gameState);
+              // update settings
+              let { success } = await API.updateSettings(lobbyId, hostId, {
+                categories: Object.keys(categories).filter(
+                  (cat) => categories[cat]
+                ),
+                numQuestions: roundCount,
+                answerTime: timer,
+              });
+              if (!success) throw Error("Failed to update settings");
+              history.push("/waiting");
+            } catch (err) {
+              gameUpdate({});
+              console.log(err);
+              alert("Error starting game!");
+              history.push("/");
+            }
+          }} //sends to waiting/lobby page
         />
       </div>
     </div>
