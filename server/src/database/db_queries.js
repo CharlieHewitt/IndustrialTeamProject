@@ -17,18 +17,14 @@ async function getRandomMultiChoiceQuestions(
   const randomMultiChoiceQuestions = [];
 
   for (count; count < numOfQuestions; count++) {
-    const random = Math.floor(Math.random() * 41);
-    await getMCQuestion(requestedCategory, random)
-      .then((dbResponse) => {
-        if (randomMultiChoiceQuestions.includes(dbResponse)) {
-          count--;
-        } else {
-          randomMultiChoiceQuestions.push(dbResponse);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const randomLimit = await getMultiCategoryCount(requestedCategory);
+    const random = Math.floor(Math.random() * randomLimit);
+    const question = await getMCQuestion(requestedCategory, random);
+    if (randomMultiChoiceQuestions.includes(question) || question == null) {
+      count--;
+    } else {
+      randomMultiChoiceQuestions.push(question);
+    }
   }
 
   return randomMultiChoiceQuestions;
@@ -47,18 +43,14 @@ async function getRandomBooleanQuestions(requestedCategory, numOfQuestions) {
   const randomBooleanQuestions = [];
 
   for (count; count < numOfQuestions; count++) {
-    const random = Math.floor(Math.random() * 80);
-    await getBooleanQuestion(requestedCategory, random)
-      .then((dbResponse) => {
-        if (randomBooleanQuestions.includes(dbResponse)) {
-          count--;
-        } else {
-          randomBooleanQuestions.push(dbResponse);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const randomLimit = await getBooleanCategoryCount(requestedCategory);
+    const random = Math.floor(Math.random() * randomLimit);
+    const question = await getBooleanQuestion(requestedCategory, random);
+    if (randomBooleanQuestions.includes(question) || question === null) {
+      count--;
+    } else {
+      randomBooleanQuestions.push(question);
+    }
   }
 
   return randomBooleanQuestions;
@@ -97,6 +89,34 @@ async function getMCQuestion(requestedCategory, random) {
  */
 async function getListOfUniqueCategories() {
   return MultiChoiceQuestionModel.collection.distinct('category');
+}
+
+/**
+ * Gets total count of boolean questions in db with same category.
+ *
+ * @param {string} category - category of question
+ */
+async function getBooleanCategoryCount(category) {
+  return BooleanQuestionModel.countDocuments({ category: category }, function (
+    err,
+    count
+  ) {
+    return count;
+  });
+}
+
+/**
+ * Gets total count of multi-choice questions in db with same category.
+ *
+ * @param {string} category - category of question
+ */
+async function getMultiCategoryCount(category) {
+  return MultiChoiceQuestionModel.countDocuments(
+    { category: category },
+    function (err, count) {
+      return count;
+    }
+  );
 }
 
 module.exports = {
