@@ -7,35 +7,36 @@ router.post('/host/endLobby/', async (req, res) => {
   const lobbies = req.app.locals.allLobbies;
   const lobbyId = req.body.lobbyId;
   const playerId = req.body.playerId;
-  
+
   //check if lobby isn't in lobby manager
-  if (!(lobbies.checkLobbyValid(lobbyId))){
-      res.json({error: "error no lobby found", success: false})
-      return;
+  if (!lobbies.checkLobbyValid(lobbyId)) {
+    res.json({ error: 'error no lobby found', success: false });
+    return;
   }
 
   var wantedLobby = lobbies.getLobby(lobbyId);
   const currPhase = wantedLobby.currentPhase.getPhase();
 
   //check if host
-  if (playerId != lobby.hostId){
+  if (playerId != lobby.hostId) {
     console.log('NOT HOST');
     res.json({
-      error: 'Error: playerID does not match hostID, so not host making request', success: false,
+      error:
+        'Error: playerID does not match hostID, so not host making request',
+      success: false,
     });
     return;
   }
 
   //remove lobby if in end phase
   if (currPhase === 'end') {
-      const index = lobbies.lobbies.indexOf(wantedLobby);
-      if (index > -1) {
-          lobbies.lobbies.splice(index, 1);
-      }
-      res.json({error: "N/A", success: true})
+    const index = lobbies.lobbies.indexOf(wantedLobby);
+    if (index > -1) {
+      lobbies.lobbies.splice(index, 1);
+    }
+    res.json({ error: 'N/A', success: true });
   } else {
-      res.json({error: "not in end phase", success: false})
-
+    res.json({ error: 'not in end phase', success: false });
   }
 });
 
@@ -59,14 +60,15 @@ router.post('/host/settings/', async (req, res) => {
   }
 
   //lobby to update
-  const lobby = lobbies.getLobby(lobbyId)
+  const lobby = lobbies.getLobby(lobbyId);
   var hostId = lobby.hostID;
 
   //check if host
-  if (playerId != hostId){
+  if (playerId != hostId) {
     console.log('NOT HOST');
     res.json({
-      error: 'Error: playerID does not match hostID, so not host making request',
+      error:
+        'Error: playerID does not match hostID, so not host making request',
     });
     return;
   }
@@ -137,10 +139,11 @@ router.post('/host/start/', async (req, res) => {
   var hostId = lobby.hostID;
 
   //check if host
-  if (playerId != hostId){
+  if (playerId != hostId) {
     console.log('NOT HOST');
     res.json({
-      error: 'Error: playerID does not match hostID, so not host making request',
+      error:
+        'Error: playerID does not match hostID, so not host making request',
     });
     return;
   }
@@ -273,12 +276,11 @@ router.post('/answer/', async (req, res) => {
   }
   */
 
-  // TODO: check if in question phase
   // TODO: check questionNumber! & Time request came in (Date.now() -> compare to timer)
 
   let lobbies = req.app.locals.allLobbies;
   //request variables
-  let { playerId, lobbyId } = req.body;
+  let { playerId, lobbyId, answer, questionNumber } = req.body;
 
   if (!lobbies.checkLobbyValid(lobbyId)) {
     res.json({
@@ -288,41 +290,70 @@ router.post('/answer/', async (req, res) => {
   }
 
   //find matching lobby to lobby id
-  let lobby = lobbies.getLobby(lobbyId);
+  const lobby = lobbies.getLobby(lobbyId);
+  const currPhase = lobby.currentPhase.getPhase();
 
-  let player = lobby.getPlayer(playerId);
-  if (player && player.hasAnswered !== true) {
-    player.hasAnswered = true;
+  // check if in question phase
+  if (!(currPhase === 'question')) {
+    res.json({
+      error: 'not in question phase',
+    });
+    return;
   }
-  lobby.checkPlayerAnswer(playerid, req.body.answer);
 
-  const answer = lobby.getCurrentAnswer();
+  // checking correct question
+  if (questionNumber !== lobby.currentQuestionNumber) {
+    res.json({ error: 'wrong question number' });
+    return;
+  }
 
-  res.json(answer);
+  const player = lobby.getPlayer(playerId);
+  if (!player || player.hasAnswered === true) {
+    res.json({ error: 'you have already answered or invalid playerid' });
+    return;
+  }
+
+  player.hasAnswered = true;
+  const correct = lobby.checkPlayerAnswer(playerId, answer);
+
+  const correctAnswer = lobby.getCurrentAnswer();
+
+  console.log(
+    `correct: ${correct}; ${player.username} answered ${answer}, correct answer: ${correctAnswer}`
+  );
+
+  const responseObject = {
+    correct,
+    correctAnswer,
+    questionNumber: lobby.currentQuestionNumber,
+  };
+
+  res.json(responseObject);
 });
 
 // @route   POST /leaderboard/
 // @desc    A client can request the leaderboard for a quiz by sending a request here.
 router.post('/leaderboard/', async (req, res) => {
   var lobbies = req.app.locals.allLobbies;
-  var wantedID = req.body.id;
+  const { lobbyId } = req.body;
 
-  if (!lobbies.checkLobbyValid(wantedID)) {
+  if (!lobbies.checkLobbyValid(lobbyId)) {
     res.json({
       error: 'Invalid lobbyID entered',
     });
     return;
   }
 
-  var wantedLobby = lobbies.getLobby(wantedID);
+  var wantedLobby = lobbies.getLobby(lobbyId);
   var inOrder = [];
   var id = [];
 
-  wantedLobby.updatePlayerScore();
+  // wantedLobby.updatePlayerScore();
 
   // TODO: check if in leaderboard or end phase
   // TODO: move leaderboard logic to Lobby.moveToLeaderboard -> updating scores etc
 
+  console.log(wantedLobby.players);
   //change obj to array so i can sort
   for (key in wantedLobby.players) {
     inOrder.push([

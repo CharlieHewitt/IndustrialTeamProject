@@ -7,6 +7,7 @@ const {
   getRandomBooleanQuestions,
   getRandomMultiChoiceQuestions,
 } = require('../database/db_queries');
+const player = require('../player/player');
 // will create a lobby instance when the host starts a game?
 class Lobby {
   /**
@@ -105,6 +106,7 @@ class Lobby {
   moveToLeaderboard() {
     // update scores
     this.currentPhase.leaderboardPhase();
+    this.updatePlayerScores();
 
     // check if Quiz finished.
     if (this.currentQuestionNumber === this.questions.length) {
@@ -265,7 +267,7 @@ class Lobby {
    * @param {string} playerID - id of the player
    */
   getPlayer(playerID) {
-    if (checkPlayerIsInLobby(playerID)) {
+    if (this.checkPlayerIsInLobby(playerID)) {
       return this.players[playerID];
     } else {
       return false;
@@ -280,25 +282,26 @@ class Lobby {
         // TODO: : handle error - ask user to choose new username
       }
     }
-      if (newUsername != '') {
-        for (let key in this.players) {
-          if (this.players[key].username == newUsername) {
-            newUsername = Player.generatePlayerName();
-            duplicate = checkForDuplicates(player, newUsername);
-          }
-        }
-        if (duplicate == false) {
-          player.username = newUsername;
+    if (newUsername != '') {
+      for (let key in this.players) {
+        if (this.players[key].username == newUsername) {
+          newUsername = Player.generatePlayerName();
+          duplicate = checkForDuplicates(player, newUsername);
         }
       }
-  
+      if (duplicate == false) {
+        player.username = newUsername;
+      }
+    }
+
     return duplicate;
   }
 
   checkPlayerAnswer(playerid, playerAnswer) {
     if (this.checkPlayerIsInLobby(playerid)) {
-      if (playerAnswer == this.answer) {
+      if (playerAnswer == this.currentAnswer.correctAnswer) {
         this.playersAnsweredCorrectly.push(this.players[playerid]);
+        console.log(this.playersAnsweredCorrectly);
         return true;
       } else {
         return false;
@@ -316,9 +319,16 @@ class Lobby {
   }
 
   updatePlayerScores() {
-    let highestScore = this.playersAnsweredCorrectly.length * 5;
+    let highestScore = Object.keys(this.players).length * 5;
+    console.log(this.players.length);
     for (let i = 0; i < this.playersAnsweredCorrectly.length; i++) {
-      this.playersAnsweredCorrectly[i].updateScore(highestScore - i * 5);
+      const playerId = this.playersAnsweredCorrectly[i].id;
+      this.players[playerId].updateScore(highestScore - i * 5);
+      console.log(
+        `${playerId} being updated with ${highestScore - i * 5} points
+        highest score: ${highestScore}
+        i: ${i}`
+      );
     }
     this.playersAnsweredCorrectly = [];
   }
