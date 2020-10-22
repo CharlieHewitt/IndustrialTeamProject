@@ -34,16 +34,28 @@ const Answer = ({ location: { search }, history }) => {
 
     getQuestion(lobbyId, playerId, questionNum);
 
+    // async function getQuestion(lobbyId, playerId, questionNum){
+    //   const res2 = await API.getNextQuestion(lobbyId, playerId, questionNum);
+    //   console.log(res2);
+    //   setCategory(res2.questionInfo.category);
+    //   setQuestion(res2.questionInfo.question);
+    //   setAnswerList([
+    //        "a",
+    //        res2.questionInfo.answers.b,
+    //        res2.questionInfo.answers.c,
+    //        res2.questionInfo.answers.d,
+    //   ]);
+
+    // }
+
     async function getQuestion(lobbyId, playerId, questionNum){
-      const res2 = await API.getNextQuestion(lobbyId, playerId, questionNum);
-      console.log(res2);
-      setCategory(res2.questionInfo.category);
-      setQuestion(res2.questionInfo.question);
+      setCategory("Geography");
+      setQuestion("Hello the question is:");
       setAnswerList([
-           "a",
-           res2.questionInfo.answers.b,
-           res2.questionInfo.answers.c,
-           res2.questionInfo.answers.d,
+           "animal",
+           "beta",
+           "carol",
+           "dead",
       ]);
 
     }
@@ -56,11 +68,11 @@ const Answer = ({ location: { search }, history }) => {
       if (i === 0) {
         //Clear the timer when run out of time
         clearInterval(timer);
-        if (data.num === data.active) {
-          history.push(`/totalscore?${stringify({ ...data, name: "empty" })}&lobbyId=${lobbyId}&playerId=${playerId}`);
-        } else {
-          history.push(`/score?${stringify({ ...data, name: "empty" })}&lobbyId=${lobbyId}&playerId=${playerId}`);
-        }
+        // if (data.num === data.active) {
+        //   history.push(`/totalscore?${stringify({ ...data, name: "empty" })}&lobbyId=${lobbyId}&playerId=${playerId}`);
+        // } else {
+        //   history.push(`/score?${stringify({ ...data, name: "empty" })}&lobbyId=${lobbyId}&playerId=${playerId}`);
+        // }
       }
     }, 1000);
     return () => {
