@@ -16,6 +16,9 @@ router.post('/join', (req, res) => {
   userStats = new User(username, id, score);
   lobbyId = req.body.lobbyId;
   lobbyManager = req.app.locals.allLobbies;
+
+  // TODO: check game phase -> only allow joining in forming, settings
+
   var success = lobbyManager.joinLobby(lobbyId, userStats);
 
   const responseObject = {};
@@ -57,6 +60,8 @@ router.post('/getLobbyPlayers', (req, res) => {
   let arr = [];
 
   var wantedLobby = lobbies.getLobby(lobbyId);
+
+  // TODO: check game phase -> only allow gettingLobbyPlayers in forming, settings
 
   for (const playerId in wantedLobby.players) {
     const { username, id } = wantedLobby.players[playerId];
