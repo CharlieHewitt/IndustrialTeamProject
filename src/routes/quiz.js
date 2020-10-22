@@ -8,14 +8,21 @@ router.post('/host/endLobby/', async (req, res) => {
   const lobbies = req.app.locals.allLobbies;
   const lobbyId = req.body.lobbyId;
   const playerId = req.body.playerId;
-
+  const currPhase = lobby.currentPhase.getPhase();
   //check if lobby isn't in lobby manager
   if (!(lobbies.checkLobbyValid(lobbyId))){
       res.json({error: "error no lobby found", success: false})
       return;
   }
 
-  //check if request is coming from host (dependant on afzals bit i think)
+  //check if host
+  if (playerId != lobby.hostId){
+    console.log('NOT HOST');
+    res.json({
+      error: 'Error: playerID does not match hostID, so not host making request', success: false,
+    });
+    return;
+  }
 
   //remove lobby if in end phase
   if (currPhase === end) {
