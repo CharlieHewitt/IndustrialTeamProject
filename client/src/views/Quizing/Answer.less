@@ -3,16 +3,16 @@
   .header {
     position: absolute;
     left: 0;
-    top: 72px;
-    height: 387px;
+    top: 56px;
+    height: 300px;
     background: #0e1c42;
-    width: 100vw;
+    width: 100%;
     .container {
-      width: 1600px;
+      width: 83.3%;
       padding: 0 20px;
       margin: 0 auto;
       .title {
-        width: 536px;
+        width: 33.5%;
         height: 46px;
         line-height: 46px;
         color: #fff;
@@ -23,21 +23,54 @@
       }
       .msg {
         background: #fff;
-        height: 272px;
+        height: 200px;
         padding: 8px;
         font-size: 40px;
       }
     }
   }
+  @media only screen and (max-width: 600px)  {
+    .header {
+      position: absolute;
+      left: 0;
+      top: 0px;
+      height: 180px;
+      background: #0e1c42;
+      width: 100%;
+      .container {
+        width: 100%;
+        padding: 0 20px;
+        margin: 0 auto;
+        .title {
+          width: 80%;
+          height: 46px;
+          line-height: 46px;
+          color: #fff;
+          background: rgb(67, 91, 130);
+          margin: 10px 0;
+          padding-left: 10px;
+          font-size: 20px;
+        }
+        .msg {
+          background: #fff;
+          height: 100px;
+          padding: 8px;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
   .content {
     height: 300px;
     background: #fff;
     position: relative;
-    width: 1713px;
+    //width: 1713px;
+    width: 89.2%;
     margin: 0 auto;
     border-radius: 60px;
     // left: 108px;
-    top: 350px;
+    top: 250px;
     .btnBox {
       width: 50%;
       height: 100px;
@@ -45,7 +78,7 @@
       margin: 25px 0;
       cursor: pointer;
       .btn {
-        width: 674px;
+        width: 70.2%;
         height: 100px;
         background: rgb(176, 187, 209);
         border-radius: 40px;
@@ -55,7 +88,7 @@
         font-size: 30px;
       }
       .btnRight{
-        width: 674px;
+        width: 70.2%;
         height: 100px;
         background-color: rgb(190, 231, 178);
         border-width: 2px;
@@ -67,7 +100,7 @@
         font-size: 30px;
         }
       .btnWrong{
-        width: 674px;
+        width: 70.2%;
         height: 100px;
         background-color: rgb(247, 203, 203);
         border-width: 2px;
@@ -79,54 +112,137 @@
         font-size: 30px;
         }
     }
-    // .time {
-    //   position: absolute;
-    //   top: 80px;
-    //   left: 50%;
-    //   margin-left: -60px;
-    // }
   }
+  @media only screen and (max-width: 600px)  {
+    .content {
+      height: 300px;
+      background: #fff;
+      position: relative;
+      //width: 1713px;
+      width: 89.2%;
+      margin: 0 auto;
+      border-radius: 60px;
+      // left: 108px;
+      top: 50px;
+      .btnBox {
+        width: 100%;
+        height: 10px;
+
+        cursor: pointer;
+        .btn {
+          width: 95%;
+          height: 50px;
+          background: rgb(176, 187, 209);
+          border-radius: 40px;
+          text-align: center;
+          line-height: 50px;
+          font-size: 20px;
+        }
+        .btnRight{
+          width: 95%;
+          height: 50px;
+          background-color: cyan;
+          border-radius: 40px;
+          text-align: center;
+          line-height: 50px;
+          margin: 0 auto;
+          font-size: 20px;
+          }
+        .btnWrong{
+          width: 95%;
+          height: 50px;
+          background-color: fuchsia;
+          border-radius: 40px;
+          text-align: center;
+          line-height: 50px;
+          margin: 0 auto;
+          font-size: 20px;
+          }
+      }
+    }
+  }
+
   .hint {
     position: relative;
     // left: 715px;
-    top: 400px;
-    margin-top: 30px;
+    top: 275px;
+    margin-top: -20px;
     display: flex;
 
     .blank {
       flex: 1;
     }
     .btn {
-      margin: 0 10px;
-      width: 100px;
-      height: 50px;
-      margin-top: 2%;
-      margin-left: 35%;
+      width: 20.8%;
+      height: 75px;
+      margin-left: 20.8%;
       background: #0e1c42;
+      border-radius: 60px;
       text-align: center;
-      line-height: 50px;
+      line-height: 75px;
       color: #fff;
-      font-size: 12px;
+      font-size: 30px;
       cursor: pointer;
     }
     .time {
       position: absolute;
-      // top: 80px;
+      top: -20px;
       left: 50%;
       margin-left: -60px;
     }
     .skipBtn{
-      margin: 0 20%;
-      width: 100px;
-      height: 50px;
-      margin-top: 2%;
-      // margin-right: 15%;
+      width: 20.8%;
+      height: 75px;
+      margin-left: 16.7%;
       background: #0e1c42;
+      border-radius: 60px;
       text-align: center;
-      line-height: 50px;
+      line-height: 75px;
       color: #fff;
-      font-size: 12px;
+      font-size: 30px;
       cursor: pointer;
+    }
+  }
+  @media only screen and (max-width: 600px)  {
+    .hint {
+      position: relative;
+      // left: 715px;
+      top: 100px;
+      display: flex;
+  
+      .blank {
+        flex: 1;
+      }
+      .btn {
+        width: 20.8%;
+        height: 50px;
+        margin-left: 10.4%;
+        background: #0e1c42;
+        border-radius: 60px;
+        text-align: center;
+        line-height: 50px;
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+      }
+      .time {
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        margin-left: -60px;
+      }
+      .skipBtn{
+        width: 20.8%;
+        height: 50px;
+        margin-left: 38%;
+        background: #0e1c42;
+        border-radius: 60px;
+        text-align: center;
+        line-height: 50px;
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+      }
     }
   }
 }
