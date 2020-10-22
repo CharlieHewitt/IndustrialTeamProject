@@ -1,6 +1,8 @@
 const User = require('../storage/user');
 const Player = require('../player/player');
+const CurrentPhase = require('./currentPhase');
 const LobbySettings = require('./LobbySettings');
+const TimeController = require('./timeController');
 const {
   getRandomBooleanQuestions,
   getRandomMultiChoiceQuestions,
@@ -11,45 +13,118 @@ class Lobby {
    * Constructor - new user object
    *
    * @param {*} firstPlayer
-   * @param {*} categories
    */
-  constructor(firstPlayer, categories) {
+  constructor(firstPlayer) {
     // may add more things to this in the future
     this.lobbyID = this.createLobbyID();
     this.players = {};
     this.addPlayer(firstPlayer);
-    this.categories = categories;
     this.currentQuestion = {};
     this.currentAnswer = {};
     this.gameStarted = false;
     this.playersAnsweredCorrectly = [];
+    this.currentQuestionNumber = 0;
+    this.hostID = firstPlayer.id;
 
     this.questions = [];
 
     this.settings = new LobbySettings();
-    this.settings.updateCategories(categories);
+    this.timers = new TimeController();
+    this.currentPhase = new CurrentPhase();
+
+    console.log(`Lobby created with id: ${this.lobbyID}`);
   }
 
   startGame() {
     this.gameStarted = true;
 
+    // put questions in single array for easier access
+    const questionsInSingleArray = [];
+
     this.questions.forEach((questionsPerCategory) => {
-      // counter will track and represent question number
-      let counter = 1;
       questionsPerCategory.forEach((question) => {
-        this.resetPlayerAnswers();
-
         if (question !== null) {
-          this.currentQuestion = this.parseQuestion(question, counter);
-          this.currentAnswer = this.parseAnswer(question, counter);
+          questionsInSingleArray.push(question);
+        } else {
+          console.log('error question = null');
         }
-        // wait this.settings.answerTime
-
-        counter++;
       });
     });
 
+    this.questions = questionsInSingleArray;
+
+    console.log(this.questions);
+
+    this.moveToNextQuestion();
+    // this.questions.forEach((questionsPerCategory) => {
+    //   // counter will track and represent question number
+    //   let counter = 1;
+    //   questionsPerCategory.forEach((question) => {
+    //     this.resetPlayerAnswers();
+    //     if (question !== null) {
+    //       this.currentQuestion = this.parseQuestion(question, counter);
+    //       this.currentAnswer = this.parseAnswer(question, counter);
+    //     }
+    //     // wait this.settings.answerTime
+
+    //     counter++;
+    //   });
+    // });
+
     // end game
+  }
+
+  moveToNextQuestion() {
+    // get question before incrementing (starts from 0 => 'index 0 = question 1')
+    const question = this.questions[this.currentQuestionNumber];
+    this.currentQuestionNumber++;
+    console.log(`now on question ${this.currentQuestionNumber}`);
+    this.currentPhase.questionPhase();
+
+    // get next question
+    this.currentQuestion = this.parseQuestion(
+      question,
+      this.currentQuestionNumber
+    );
+
+    // get next answer
+    this.currentAnswer = this.parseAnswer(question, this.currentQuestionNumber);
+
+    // reset players their answers from previous question.
+    this.resetPlayerAnswers();
+    this.playersAnsweredCorrectly = [];
+
+    // start timer
+    if (this.questionTimerExists()) {
+      this.timers.removeTimer('questionTimer');
+    }
+
+    this.startQuestionTimer();
+  }
+
+  moveToLeaderboard() {
+    // update scores
+    this.currentPhase.leaderboardPhase();
+
+    // check if Quiz finished.
+    if (this.currentQuestionNumber === this.questions.length) {
+      // end of quiz
+      console.log('quiz finished');
+      this.currentPhase.gameEnded();
+      // Do end of quiz logic -> leaderboard route -> special response param for end of game screen? -> eventually destroys lobby
+      return;
+    }
+
+    // /leaderboard is available
+    console.log(
+      `doing leaderboard things that aren't yet implemented ... (leaderboard after question ${this.currentQuestionNumber})`
+    );
+
+    // start timer
+    if (this.leaderboardTimerExists()) {
+      this.timers.removeTimer('leaderboardTimer');
+    }
+    this.startLeaderboardTimer();
   }
 
   /**
@@ -173,9 +248,11 @@ class Lobby {
         newUsername = Player.generatePlayerName();
       }
       let duplicate = this.checkForDuplicates(player, newUsername);
-
       if (duplicate == false) {
         this.players[player.id] = player;
+        console.log(
+          `Player ${player.username} successfully added to Lobby ${this.lobbyID}`
+        );
       } else {
         console.log('user entered duplicate name');
       }
@@ -196,22 +273,25 @@ class Lobby {
   }
 
   checkForDuplicates(player, newUsername) {
-    let duplicate = false;
+    var duplicate = false;
     for (let key in this.players) {
       if (this.players[key].username == player.username) {
         duplicate = true;
         // TODO: : handle error - ask user to choose new username
       }
+    }
       if (newUsername != '') {
-        if (this.players[key].username == newUsername) {
-          newUsername = Player.generatePlayerName();
-          duplicate = checkForDuplicates(player, newUsername);
+        for (let key in this.players) {
+          if (this.players[key].username == newUsername) {
+            newUsername = Player.generatePlayerName();
+            duplicate = checkForDuplicates(player, newUsername);
+          }
         }
         if (duplicate == false) {
           player.username = newUsername;
         }
       }
-    }
+  
     return duplicate;
   }
 
@@ -241,6 +321,74 @@ class Lobby {
       this.playersAnsweredCorrectly[i].updateScore(highestScore - i * 5);
     }
     this.playersAnsweredCorrectly = [];
+  }
+
+  // Timer related code
+
+  // Question Timer
+
+  questionTimerExists() {
+    if (this.timers.getTimer('questionTimer')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  startQuestionTimer() {
+    this.timers.addTimer('questionTimer', this.settings.answerTime);
+  }
+
+  hasQuestionTimerExpired() {
+    if (this.timers.getTimer('questionTimer')) {
+      return this.timers.getTimer('questionTimer').hasTargetTimePassed();
+    }
+
+    // handle this if needed
+    console.log("error questionTimer didn't exist");
+  }
+
+  timeRemainingOnQuestionTimer() {
+    if (this.timers.getTimer('questionTimer')) {
+      return this.timers.getTimer('questionTimer').timeToTarget();
+    }
+
+    // handle if needed
+    console.log("error questionTimer didn't exist");
+  }
+
+  // Leaderboard Timer
+
+  leaderboardTimerExists() {
+    if (this.timers.getTimer('leaderboardTimer')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  startLeaderboardTimer() {
+    // hardcoded for now
+    const LEADERBOARD_DURATION = 10;
+    this.timers.addTimer('leaderboardTimer', LEADERBOARD_DURATION);
+  }
+
+  hasLeaderboardTimerExpired() {
+    if (this.timers.getTimer('leaderboardTimer')) {
+      return this.timers.getTimer('leaderboardTimer').hasTargetTimePassed();
+    }
+
+    // handle this if needed
+    console.log("error leaderboardTimer didn't exist");
+  }
+
+  timeRemainingOnLeaderboardTimer() {
+    if (this.timers.getTimer('leaderboardTimer')) {
+      return this.timers.getTimer('leaderboardTimer').timeToTarget();
+    }
+
+    // handle if needed
+    console.log("error leaderboardTimer didn't exist");
   }
 }
 
