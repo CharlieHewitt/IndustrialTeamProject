@@ -7,27 +7,21 @@ import styles from "./HostSettings.module.css";
 import { parse, stringify } from "querystring";
 import "./index.css";
 import API from "../../api";
-import { create } from "domain";
+import { useHistory } from "react-router-dom";
 
-const HostSettings = ({ location: { search }, history }) => {
+const HostSettings = ({ gameState, gameUpdate }) => {
+  const history = useHistory();
+
+  console.log(gameState);
+
   const [categories, setCategories] = useState();
-  const [roundCount, setRoundCount] = useState(7);
+  const [numQuestions, setNumQuestions] = useState(7);
   const [timer, setTimer] = useState(7);
   const [playerCount, setPlayerCount] = useState(7);
-  const [hostName, setHostName] = useState("");
-  const [lobbyId, setLobbyId] = useState("");
-  const [hostId, setHostId] = useState("");
   const [error, setError] = useState("");
-  const [settings, setSettings] = useState({
-    categories: ["animals", "music", "movies"],
-    answerTime: 5,
-    numQuestions: 3
-  })
-  let array =[];
-  useEffect(() => {
-    const data = parse(search.split("?")[1]);
-    setHostName(data.hostName);
+  const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
     async function init() {
       try {
         const categories = await API.getCategories();
@@ -39,41 +33,9 @@ const HostSettings = ({ location: { search }, history }) => {
         setError(err.message);
       }
     }
-    async function createLobby(hostName){
-      const res1 = await API.createLobby(hostName);
-      console.log(res1);
-      setLobbyId(res1.lobbyId);
-      setHostId(res1.hostId);
-    }
 
     init();
-
-    createLobby(data.hostName);
-    console.log(categories);
-    
-    console.log(settings);
-  }, [search, history]);
-
-  const handleClick = () => {
-    for (const cat in categories){
-      { 
-        if (categories[cat] === true) 
-        { 
-          array.push(cat) 
-        }
-      }
-    }
-    updateSetting(lobbyId, hostId, 
-      { categories: array,
-        answerTime: timer,
-        numQuestions: roundCount});
-      history.push(`/waiting?hostName=${hostName}&timer=${timer}&numQ=${roundCount}&lobbyId=${lobbyId}&hostId=${hostId}&categories=${array}`)
-    }
-
-  async function updateSetting(lobbyId, playerId, settings){
-    const res3 = await API.updateSettings(lobbyId, playerId, settings);
-    console.log(res3);
-  }
+  }, []);
 
   return (
     <div>
@@ -81,16 +43,20 @@ const HostSettings = ({ location: { search }, history }) => {
       <div className={styles.mainWrap}>
         <div className={styles.wrap}>
           <HostSettingRow
-            value={roundCount}
-            setValue={setRoundCount}
-            title="Number of Rounds"
+            value={numQuestions}
+            setValue={setNumQuestions}
+            title="Number of Questions"
           />
-          <HostSettingRow value={timer} setValue={setTimer} title="Timer" />
           <HostSettingRow
-            value={playerCount}
-            setValue={setPlayerCount}
-            title="Number of Players"
+            value={timer}
+            setValue={setTimer}
+            title="Answer Time"
           />
+          {/* <HostSettingRow
+              value={playerCount}
+              setValue={setPlayerCount}
+              title="Number of Players"
+            /> */}
           {categories && (
             <CategoryList
               categories={categories}
@@ -103,14 +69,49 @@ const HostSettings = ({ location: { search }, history }) => {
           {error && <h1 style={{ textAlign: "center" }}>Error: {error}</h1>}
         </div>
         <RoundedBtn
-          title="Start Lobby"
+          title={loading ? "Loading..." : "Start Lobby"}
           style={{
             width: 125,
             height: 125,
             borderRadius: 30,
             textAlign: "center",
           }}
-          onClick={() => handleClick()} //sends to waiting/lobby page
+          disabled={loading}
+          onClick={async () => {
+            setLoading(true);
+            try {
+              let { lobbyId, hostId, hostName } = await API.createLobby(
+                gameState.hostName
+              );
+              gameUpdate({
+                lobbyId,
+                hostId,
+                hostName,
+                categories: Object.keys(categories).filter(
+                  (cat) => categories[cat]
+                ),
+                numQuestions,
+                answerTime: timer,
+              });
+
+              console.log(gameState);
+              // update settings
+              let { success } = await API.updateSettings(lobbyId, hostId, {
+                categories: Object.keys(categories).filter(
+                  (cat) => categories[cat]
+                ),
+                numQuestions: numQuestions,
+                answerTime: timer,
+              });
+              if (!success) throw Error("Failed to update settings");
+              history.push("/waiting");
+            } catch (err) {
+              gameUpdate({});
+              console.log(err);
+              alert("Error starting game!");
+              history.push("/");
+            }
+          }} //sends to waiting/lobby page
         />
       </div>
     </div>

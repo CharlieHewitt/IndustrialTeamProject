@@ -11,27 +11,29 @@ import Total from "./views/TotalScore";
 import Waiting from "./views/Waiting";
 import JoinWaiting from "./views/JoinWaiting";
 
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Switch, Redirect } from "react-router-dom";
+import { GameProvider } from "./context/GameContext";
+import ContextRoute from "./ContextRoute";
 
 export const Routes = () => {
   return (
-    <>
+    <GameProvider>
       <Switch>
-        <Route exact path="/Home" component={Home} />
-        <Route exact path="/">
+        <ContextRoute exact path="/Home" component={Home} />
+        <ContextRoute exact path="/">
           <Redirect to="/Home" />
-        </Route>
-        <Route exact path="/HowTo" component={ HowTo }/>
-        <Route exact path="/host-settings" component={HostSettings} />
+        </ContextRoute>
+        <ContextRoute exact path="/HowTo" component={HowTo} />
+        <ContextRoute exact path="/host-settings" component={HostSettings} />
 
-        <Route path="/Quizing" component={Answer} />
-        <Route path="/Score" component={Score} />
-        <Route path="/Totalscore" component={Total} />
-        <Route path="/Waiting" component={Waiting} />
-        <Route path="/JoinWaiting" component={JoinWaiting} />
+        <ContextRoute path="/Quizing" component={Answer} />
+        <ContextRoute path="/Score" component={Score} />
+        <ContextRoute path="/Totalscore" component={Total} />
+        <ContextRoute path="/Waiting" component={Waiting} />
+        <ContextRoute path="/JoinWaiting" component={JoinWaiting} />
 
-        <Route component={NotFound} />
+        <ContextRoute component={NotFound} />
       </Switch>
-    </>
+    </GameProvider>
   );
 };

@@ -1,12 +1,40 @@
+## How to Context:
+
+- `src/context/GameContext.js` is where the context module is located
+- `src/ContextRoute.js` is Route wrapper which allows to use Context in the routes.
+- gameState and gameUpdate are ways of communicating with the context from inside the routes.
+
+### TODO:
+
+- Remove all URL parameters, only pass data through context where needed.
+
+### General Info:
+
+- In the component/view, the arguments you should take (props) should be `({gameState, gameUpdate})`, look at the `Home.js` page for example.
+- if you want to use `history` (e.g. `history.push('someurl')`), you now have to do this:
+  - `import { useHistory } from "react-router-dom";`
+  - in the component/view add `const history = useHistory();`
+
+### How to update/pass data through context:
+
+Set it with `gameUpdate`, e.g. `gameUpdate({hostName: 'Some host name'})`
+
+### How to get data from context:
+
+Get it with `gameState`, e.g. `const {hostName} = gameState;`
+
 ## New info:
+
 `helper.sh` now generates `Name.module.css` as well. <br />
 You can use it or use regular `index.css`.
+
 ### Why use it?
--  https://create-react-app.dev/docs/adding-a-css-modules-stylesheet/
+
+- https://create-react-app.dev/docs/adding-a-css-modules-stylesheet/
 - No need to keep track of different class names clashing
 
-
 ## Quickstart:
+
 - Install the node modules (only need to do this first time and then if new modules are added). `npm install`
 - Start the dev environment `npm start`
 - If you want to run tests type `npm test`
@@ -14,19 +42,23 @@ You can use it or use regular `index.css`.
 ## Some notes:
 
 ### Components: (`src/components`)
-Splitting up code in to components is common practice in React. 
+
+Splitting up code in to components is common practice in React.
 You can check `ExampleComponent` in the components folder to see the basic structure.
+
 - `index.js`: used just to make importing the component cleaner (`import '...ExampleComponent/ExampleComponent'` -> `import '...ExampleComponent'`)
 - `index.css`: this is where the styling for the component is. It is imported in component file (e.g. `ExampleComponent.js`)
 - `ExampleComponent.js`: this is where the React code for the component resides and main logic for the component.
 - `ExampleComponent.test.js`: this is where component testing happens.
 
 ### Views: (`src/views`)
-- These are views for the website (pages, e.g. `/home`, `/shop`). 
+
+- These are views for the website (pages, e.g. `/home`, `/shop`).
 - The file structure is the same as component structure.
 - The only difference is you have to import the views you want to use in `src/Routes.js` (see the file and it should be clear how)
 
 ### Quicker creation (`client/helper.sh`)
+
 - I've written a short bash script which allows for a quicker creation of components/views.
 - It puts in some boilerplate code and generates files (index.js, index.css, SomeName.js, SomeName.test.js).
 - You should run it when you are in 'client' folder (not from the IndustrialTeamProject root, since it uses relative path to create files).
