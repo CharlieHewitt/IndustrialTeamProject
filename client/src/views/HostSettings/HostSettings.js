@@ -77,14 +77,7 @@ const HostSettings = ({ location: { search }, history }) => {
 
   return (
     <div>
-      <div className={styles.title}>Host settings</div>
-      <SettingsBtn
-        style={{
-          position: "absolute",
-          top: 10,
-          right: 10,
-        }}
-      />
+      <div className={styles.title}>HOST SETTINGS</div>
       <div className={styles.mainWrap}>
         <div className={styles.wrap}>
           <HostSettingRow

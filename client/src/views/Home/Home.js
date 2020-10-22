@@ -44,15 +44,7 @@ const Home = ({ location: { search }, history }) => {
           name="userName" 
           placeholder="Enter name..."
           required
-          style={{
-              backgroundColor: '#ffffff',
-              width: '890px', 
-              height: '130px',
-              position: 'absolute',
-              fontSize: '70px',
-              left: '515px',
-              top:'393px'
-          }} 
+          className="inputbox"
         />
         <div onClick = {handleHost} className="hostbtn" type="submit">
           Host Game

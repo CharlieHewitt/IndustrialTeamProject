@@ -6,10 +6,8 @@ const User = require('../storage/user');
 // @route   GET / (/ is relative to the route given to this file in app.js)
 // @desc    Example Route
 router.get('/', async (req, res) => {
-  const newLobby = new Lobby(new User('username', 'id', 2), [
-    'animals',
-    'geography',
-  ]);
+  const newLobby = new Lobby(new User('username', 'id', 2));
+  newLobby.settings.updateCategories(['animals', 'geography']);
 
   newLobby.getQuestions().then((output) => {
     console.log(newLobby.questions);

@@ -18,10 +18,10 @@ const Answer = ({ location: { search }, history }) => {
   const [questionNum, setQuestionNum] = useState(1);
   const [test, setTest] = useState({
     question: "how are you",
-    correctAnswer:"a",
-    answers:["a","b","c","d"]
+    correctAnswer: "a",
+    answers: ["a", "b", "c", "d"]
   })
-  
+
   // Get data from url
   useEffect(() => {
     const data = parse(search.split("?")[1]);
@@ -34,9 +34,10 @@ const Answer = ({ location: { search }, history }) => {
 
     getQuestion(data.lobbyId, data.playerId, questionNum);
 
-    async function getQuestion(lobbyId, playerId, questionNum){
+    async function getQuestion(lobbyId, playerId, questionNum) {
       const res2 = await API.getNextQuestion(lobbyId, playerId, questionNum);
       console.log(res2);
+
       // setQuestionNum(res2.questionNumber);
       // setCategory(res2.category);
       // setQuestion(res2.question);
@@ -70,7 +71,7 @@ const Answer = ({ location: { search }, history }) => {
   }, [search, history]);
 
   // console.log(res);
-  async function getNextQuestion(){
+  async function getNextQuestion() {
     const res = await API.getNextQuestion(lobbyId, playerId, questionNum);
     setQuestion(res.question);
   }
@@ -97,14 +98,14 @@ const Answer = ({ location: { search }, history }) => {
           <div className={styles.msg}>{question}</div>
         </div>
       </div>
-      <AnswerArea 
+      <AnswerArea
         answers={answerList}
         question={question}
         query={query}
         lobbyId={lobbyId}
         playerId={playerId}
         QuestionNum={questionNum}
-        getNextQuestion={() => {getNextQuestion()}}
+        getNextQuestion={() => { getNextQuestion() }}
       />
       {/* <div className={styles.content} >
         <div>
@@ -130,16 +131,16 @@ const Answer = ({ location: { search }, history }) => {
       </div> */}
       <div className={styles.hint}>
         {/* <div className={styles.blank} /> */}
-          <div className={styles.btn}>Hint</div>
-          <div className={styles.time}>
-            <Progress
-              type="circle"
-              strokeColor={time < 4 ? "red" : "#1DA57A"}
-              format={() => dayjs(time * 1000).format("mm:ss")}
-              percent={time ? ((time * 100) / query.time).toFixed(1) : 0}
-            />
-          </div>
-          <div className={styles.skipBtn}>Skip</div>
+        <div className={styles.btn}>Hint</div>
+        <div className={styles.time}>
+          <Progress
+            type="circle"
+            strokeColor={time < 4 ? "red" : "#1DA57A"}
+            format={() => dayjs(time * 1000).format("mm:ss")}
+            percent={time ? ((time * 100) / query.time).toFixed(1) : 0}
+          />
+        </div>
+        <div className={styles.skipBtn}>Skip</div>
         {/* {answerList.map((item) => (
           <Popover key={item.hint} content={item.msg}>
             <div className={styles.btn}>{item.hint}</div>

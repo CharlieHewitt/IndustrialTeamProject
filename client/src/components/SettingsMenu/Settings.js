@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Modal from './SettingsModal'
 import "../../index.css";
 
-
 const BUTTON_WRAPPER_STYLES = {
   position: 'fixed',
   top: 5,
@@ -19,7 +18,7 @@ export default function Settings() {
 
         <Modal open={isOpen} onClose={() => setIsOpen(false)}>
           <body>
-              Settings Menu
+              <h1>Settings Menu</h1>
             <p>Volume</p>
             <p>Fullscreen</p>
             <p>Return to game</p>

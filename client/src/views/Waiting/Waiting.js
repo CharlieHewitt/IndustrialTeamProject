@@ -69,13 +69,9 @@ const Waiting = ({ location: { search }, history }) => {
       </div>
       <div className={styles.content}>
         <div className={styles.blank} />
-          <div className={`${styles.left} ${styles.box}`}>
-            {/* {playerList.map((player) => (
-                    <div key={player.playerId} className={styles.player}></div>
-                  ))} */}
-                  
-          </div>
-        <div className={`${styles.left} ${styles.box}`}>{data.categories}{categories}</div>
+
+  <div className={`${styles.left1} ${styles.box}`}>{data.competitors}{hostname}</div>
+        <div className={`${styles.left2} ${styles.box}`}>{data.categories}{categories}</div>
         <div className={styles.right}>
           <div className={`${styles.top} ${styles.box}`}>{data.time}{timePQ}s</div>
           <div className={`${styles.bottom} ${styles.box}`}>{data.num}{numQ}</div>
@@ -84,7 +80,7 @@ const Waiting = ({ location: { search }, history }) => {
       </div>
       <div className={styles.footer}>
         <div className={styles.blank} />
-        <div className={styles.btn} onClick={openModal}>HOW TO PLAY</div>
+        <div className={styles.btn1} onClick={openModal}>HOW TO PLAY</div>
         <Modal ref={modalRef}>
           <h2>How To Play</h2>
           <p>Instruction 1</p>
@@ -93,9 +89,9 @@ const Waiting = ({ location: { search }, history }) => {
           <p>Instruction 4</p>
           <p>Instruction 5</p>
 
-          <button className={styles.btn} onClick={() => modalRef.current.close()} style={{alignSelf:"center"}}>Close!</button>
+          <button className={styles.btn1} onClick={() => modalRef.current.close()} style={{alignSelf:"center"}}>Close!</button>
           </Modal>
-        <div onClick={() => handleStart()} className={styles.btn}>
+        <div onClick={() => handleStart()} className={styles.btn2}>
           START
         </div>
         <div className={styles.blank} />
