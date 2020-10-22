@@ -278,16 +278,19 @@ class Lobby {
         duplicate = true;
         // TODO: : handle error - ask user to choose new username
       }
+    }
       if (newUsername != '') {
-        if (this.players[key].username == newUsername) {
-          newUsername = Player.generatePlayerName();
-          duplicate = checkForDuplicates(player, newUsername);
+        for (let key in this.players) {
+          if (this.players[key].username == newUsername) {
+            newUsername = Player.generatePlayerName();
+            duplicate = checkForDuplicates(player, newUsername);
+          }
+        }
+        if (duplicate == false) {
+          player.username = newUsername;
         }
       }
-    }
-    if (duplicate == false) {
-      player.username = newUsername;
-    }
+  
     return duplicate;
   }
 
