@@ -16,9 +16,17 @@ router.post('/host/settings/', async (req, res) => {
   }
 
   //lobby to update
-  const lobby = lobbies.getLobby(lobbyId);
-
-  // TODO: check if request is coming from host
+  const lobby = lobbies.getLobby(lobbyId)  
+  var hostId = lobby.hostID;
+  
+  //check if host
+  if (playerId != hostId){
+    console.log('NOT HOST');
+    res.json({
+      error: 'Error: playerID does not match hostID, so not host making request',
+    });
+    return;
+  }
 
   // allow request if currently in forming/ settings phase
   if (success) {
@@ -74,10 +82,18 @@ router.post('/host/start/', async (req, res) => {
   var lobbyId = req.body.lobbyId;
   var playerId = req.body.playerId;
 
-  // TODO: check if request is coming from host
-
   //find matching lobby to lobby id
   var lobby = lobbies.getLobby(lobbyId);
+  var hostId = lobby.hostID;
+  
+  //check if host
+  if (playerId != hostId){
+    console.log('NOT HOST');
+    res.json({
+      error: 'Error: playerID does not match hostID, so not host making request',
+    });
+    return;
+  }
 
   // check if lobby exists
   if (!lobby) {
