@@ -13,6 +13,11 @@ router.post('/host/settings/', async (req, res) => {
   // allow request if lobby is valid
   if (lobbies.checkLobbyValid(lobbyId)) {
     success = true;
+  } else {
+    res.json({
+      error: 'Invalid lobbyID entered',
+    });
+    return;
   }
 
   //lobby to update
