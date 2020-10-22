@@ -8,13 +8,15 @@ router.post('/host/endLobby/', async (req, res) => {
   const lobbies = req.app.locals.allLobbies;
   const lobbyId = req.body.lobbyId;
   const playerId = req.body.playerId;
-  var wantedLobby = lobbies.getLobby(lobbyId);
-  const currPhase = wantedLobby.currentPhase.getPhase();
+  
   //check if lobby isn't in lobby manager
   if (!(lobbies.checkLobbyValid(lobbyId))){
       res.json({error: "error no lobby found", success: false})
       return;
   }
+
+  var wantedLobby = lobbies.getLobby(lobbyId);
+  const currPhase = wantedLobby.currentPhase.getPhase();
 
   //check if host
   if (playerId != lobby.hostId){
