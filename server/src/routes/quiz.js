@@ -2,6 +2,35 @@ const express = require('express');
 const player = require('../player/player');
 const router = express.Router();
 
+// @route   POST /host/endLobby/
+// @desc    removes lobby from lobby manager, ending the lobby
+router.post('/host/endLobby/', async (req, res) => {
+  const lobbies = req.app.locals.allLobbies;
+  const lobbyId = req.body.lobbyId;
+  const playerId = req.body.playerId;
+
+  //check if lobby isn't in lobby manager
+  if (!(lobbies.checkLobbyValid(lobbyId))){
+      res.json({error: "error no lobby found", success: false})
+      return;
+  }
+
+  //check if request is coming from host (dependant on afzals bit i think)
+
+  //remove lobby if in end phase
+  if (currPhase === end) {
+      var wantedLobby = lobbies.getLobby(lobbyId);
+      const index = lobbies.lobbies.indexOf(wantedLobby);
+      if (index > -1) {
+          lobbies.lobbies.splice(index, 1);
+      }
+      res.json({error: "N/A", success: true})
+  } else {
+      res.json({error: "not in end phase", success: false})
+
+  }
+});
+
 // @route   POST /host/settings/
 // @desc    Get settings details and send them back successful
 router.post('/host/settings/', async (req, res) => {
@@ -209,7 +238,7 @@ router.post('/leaderboard/', (req, res) => {
 
 // @route   POST /skip
 // @desc    A client can use the get hint to skip the question and automatically get the right answer
-router.post('/skip', async (req, res) => {
+router.post('/skip/', async (req, res) => {
   var lobbies = req.app.locals.allLobbies;
 
   //request values
@@ -242,20 +271,6 @@ router.post('/skip', async (req, res) => {
 
   res.json(skip);
 });
-
-/*
-  Request:
-  {
-    lobbyId: string,
-    playerId: string,
-  }
-
-  Response:
-  {
-    skipUsed: bool
-    correctAnswer: string
-  }
-  */
 
 // @route   POST /fiftyFifty/
 // @desc    A client can request to use the 50/50 lifeline, return 2 answers with one being correct
