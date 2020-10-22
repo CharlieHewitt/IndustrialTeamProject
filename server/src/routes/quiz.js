@@ -1,6 +1,44 @@
 const express = require('express');
 const router = express.Router();
 
+// @route   POST /host/endLobby/
+// @desc    removes lobby from lobby manager, ending the lobby
+router.post('/host/endLobby/', async (req, res) => {
+  const lobbies = req.app.locals.allLobbies;
+  const lobbyId = req.body.lobbyId;
+  const playerId = req.body.playerId;
+  
+  //check if lobby isn't in lobby manager
+  if (!(lobbies.checkLobbyValid(lobbyId))){
+      res.json({error: "error no lobby found", success: false})
+      return;
+  }
+
+  var wantedLobby = lobbies.getLobby(lobbyId);
+  const currPhase = wantedLobby.currentPhase.getPhase();
+
+  //check if host
+  if (playerId != lobby.hostId){
+    console.log('NOT HOST');
+    res.json({
+      error: 'Error: playerID does not match hostID, so not host making request', success: false,
+    });
+    return;
+  }
+
+  //remove lobby if in end phase
+  if (currPhase === 'end') {
+      const index = lobbies.lobbies.indexOf(wantedLobby);
+      if (index > -1) {
+          lobbies.lobbies.splice(index, 1);
+      }
+      res.json({error: "N/A", success: true})
+  } else {
+      res.json({error: "not in end phase", success: false})
+
+  }
+});
+
 // @route   POST /host/settings/
 // @desc    Get settings details and send them back successful
 router.post('/host/settings/', async (req, res) => {
@@ -158,6 +196,7 @@ router.post('/host/start/', async (req, res) => {
 
 // @route   POST /start/
 // @desc    A client can ask the server if the quiz has started by sending a request here.
+
 router.post('/start/', async (req, res) => {
   const lobbies = req.app.locals.allLobbies;
   const { lobbyId, playerId } = req.body;
@@ -314,7 +353,7 @@ router.post('/leaderboard/', async (req, res) => {
 
 // @route   POST /skip
 // @desc    A client can use the get hint to skip the question and automatically get the right answer
-router.post('/skip', async (req, res) => {
+router.post('/skip/', async (req, res) => {
   var lobbies = req.app.locals.allLobbies;
 
   // TODO: check if in question phase
@@ -358,26 +397,12 @@ router.post('/skip', async (req, res) => {
   res.json(skip);
 });
 
-/*
-  Request:
-  {
-    lobbyId: string,
-    playerId: string,
-  }
-
-  Response:
-  {
-    skipUsed: bool
-    correctAnswer: string
-  }
-  */
-
 // @route   POST /fiftyFifty/
 // @desc    A client can request to use the 50/50 lifeline, return 2 answers with one being correct
 router.post('/fiftyFifty/', async (req, res) => {
   var userId = req.body.playerId;
   var lobbyId = req.body.lobbyId;
-  //var currentQuestion = req.body.currentQuestion;
+  let lobbies = req.app.locals.allLobbies;
   var available = false;
 
   // TODO: check if in question phase
