@@ -68,11 +68,11 @@ const Answer = ({ location: { search }, history }) => {
       if (i === 0) {
         //Clear the timer when run out of time
         clearInterval(timer);
-        // if (data.num === data.active) {
-        //   history.push(`/totalscore?${stringify({ ...data, name: "empty" })}&lobbyId=${lobbyId}&playerId=${playerId}`);
-        // } else {
-        //   history.push(`/score?${stringify({ ...data, name: "empty" })}&lobbyId=${lobbyId}&playerId=${playerId}`);
-        // }
+        if (data.num === data.active) {
+          history.push(`/totalscore?${stringify({ ...data, name: "empty" })}&lobbyId=${lobbyId}&playerId=${playerId}`);
+        } else {
+          history.push(`/score?${stringify({ ...data, name: "empty" })}&lobbyId=${lobbyId}&playerId=${playerId}`);
+        }
       }
     }, 1000);
     return () => {
