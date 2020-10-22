@@ -19,21 +19,21 @@ const HostSettings = ({ location: { search }, history }) => {
   const [hostId, setHostId] = useState("");
   const [error, setError] = useState("");
   const [settings, setSettings] = useState({
-    categories: [],
-    timePerQuestion: 5,
+    categories: ["animals", "music", "movies"],
+    answerTime: 5,
     numQuestions: 3
   })
-
+  let array =[];
   useEffect(() => {
     const data = parse(search.split("?")[1]);
     setHostName(data.hostName);
-    console.log(hostName);
 
     async function init() {
       try {
         const categories = await API.getCategories();
         let catObj = {};
         categories.categories.forEach((cat) => (catObj[cat] = false));
+        console.log(catObj);
         setCategories(catObj);
       } catch (err) {
         setError(err.message);
@@ -47,24 +47,32 @@ const HostSettings = ({ location: { search }, history }) => {
     }
 
     init();
+
     createLobby(data.hostName);
+    console.log(categories);
     
-    setSettings({
-      categories: categories,//don't know how to set the format of categories
-      timePerQuestion: timer,
-      numQuestions: roundCount
-    })
     console.log(settings);
   }, [search, history]);
 
-  async function updateSetting(lobbyId, playerId, settings){
-    const res = await API.updateSettings(lobbyId, playerId, settings);
-    console.log(res);
-  }
-
   const handleClick = () => {
-    updateSetting(lobbyId, hostId, settings);
-    history.push(`/waiting?hostName=${hostName}&timer=${timer}&numQ=${roundCount}&lobbyId=${lobbyId}&hostId=${hostId}`)
+    for (const cat in categories){
+      { 
+        if (categories[cat] === true) 
+        { 
+          array.push(cat) 
+        }
+      }
+    }
+    updateSetting(lobbyId, hostId, 
+      { categories: array,
+        answerTime: timer,
+        numQuestions: roundCount});
+      history.push(`/waiting?hostName=${hostName}&timer=${timer}&numQ=${roundCount}&lobbyId=${lobbyId}&hostId=${hostId}&categories=${array}`)
+    }
+
+  async function updateSetting(lobbyId, playerId, settings){
+    const res3 = await API.updateSettings(lobbyId, playerId, settings);
+    console.log(res3);
   }
 
   return (
@@ -117,3 +125,12 @@ const HostSettings = ({ location: { search }, history }) => {
 };
 
 export default HostSettings;
+
+
+// for (const cat in catObj){
+//   { if (catObj[cat] === true) 
+//     { array.push(cat) 
+//       console.log(cat)
+//     }
+//   }
+// }

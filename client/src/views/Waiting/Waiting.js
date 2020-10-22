@@ -24,7 +24,6 @@ const Waiting = ({ location: { search }, history }) => {
   const openModal = () => {
     modalRef.current.openModal()
   };
-  console.log(lobbyId);
 
   useEffect(() => {
     const dataPassed = parse(search.split("?")[1]);
@@ -32,16 +31,16 @@ const Waiting = ({ location: { search }, history }) => {
     setNumQ(dataPassed.numQ);
     setLobbyId(dataPassed.lobbyId);
     setHostId(dataPassed.hostId);
-    console.log(dataPassed.categories);
+    console.log(dataPassed);
+    setCategories(dataPassed.categories);
 
-    getAPIData(dataPassed.lobbyId);
     getPlayers(dataPassed.lobbyId);
     console.log(playerList);
     
-    async function getAPIData(lobbyId){
-      const res1 = await API.getChosenCategories(lobbyId);
-      setCategories(res1);
-    }
+    // async function getAPIData(lobbyId){
+    //   const res1 = await API.getChosenCategories(lobbyId);
+    //   setCategories(res1);
+    // }
 
     async function getPlayers(lobbyId){
       const res2 = await API.getLobbyPlayers(lobbyId);
@@ -51,6 +50,7 @@ const Waiting = ({ location: { search }, history }) => {
   
     setData({
       title: "GAME CODE：",
+      categories:"CATEGORIES: ",
       time: "TIME PER QUESTION: ",
       num: "NUMBER OF QUESTIONS: ",
     });
@@ -68,9 +68,10 @@ const Waiting = ({ location: { search }, history }) => {
       <div className={styles.content}>
         <div className={styles.blank} />
           <div className={`${styles.left} ${styles.box}`}>
-            {playerList.map((player) => (
+            {/* {playerList.map((player) => (
                     <div key={player.playerId} className={styles.player}></div>
-                  ))}
+                  ))} */}
+                  
           </div>
         <div className={`${styles.left} ${styles.box}`}>{data.categories}{categories}</div>
         <div className={styles.right}>
