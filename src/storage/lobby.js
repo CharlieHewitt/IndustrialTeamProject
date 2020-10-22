@@ -24,6 +24,7 @@ class Lobby {
     this.gameStarted = false;
     this.playersAnsweredCorrectly = [];
     this.currentQuestionNumber = 0;
+    this.hostID = firstPlayer.id;
 
     this.questions = [];
 
