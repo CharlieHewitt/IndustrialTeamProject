@@ -86,6 +86,7 @@ const HostSettings = ({ gameState, gameUpdate }) => {
               gameUpdate({
                 lobbyId,
                 hostId,
+                playerId: hostId,
                 hostName,
                 categories: Object.keys(categories).filter(
                   (cat) => categories[cat]
@@ -120,10 +121,9 @@ const HostSettings = ({ gameState, gameUpdate }) => {
 
 export default HostSettings;
 
-
 // for (const cat in catObj){
-//   { if (catObj[cat] === true) 
-//     { array.push(cat) 
+//   { if (catObj[cat] === true)
+//     { array.push(cat)
 //       console.log(cat)
 //     }
 //   }

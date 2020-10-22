@@ -7,11 +7,6 @@ import { useHistory } from "react-router-dom";
 const Waiting = ({ gameState, gameUpdate }) => {
   const history = useHistory();
 
-  async function startGame(lobbyId, playerId) {
-    const res = await API.startQuiz(lobbyId, playerId);
-    console.log(res);
-  }
-
   // Get data from api
   const handleStart = async () => {
     const { lobbyId, success } = await API.startQuiz(

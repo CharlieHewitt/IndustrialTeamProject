@@ -62,9 +62,9 @@ const API = {
     return res;
   },
   //   GAME LOGIC API
-  async endLobby(lobbyId, playerId,) {
+  async endLobby(lobbyId, playerId) {
     let res = await fetchJSON(`${URL}/api/quiz/host/endLobby/`, {
-      method: 'POST',
+      method: "POST",
       body: { lobbyId, playerId },
     });
     return res;
@@ -105,7 +105,6 @@ const API = {
         playerId,
         questionNumber,
         answer,
-        time: new Date().toTimeString,
       },
     });
     return res;
@@ -119,15 +118,31 @@ const API = {
   },
   async fiftyFify(lobbyId, playerId) {
     let res = await fetchJSON(`${URL}/api/quiz/fiftyFifty/`, {
-      method: 'POST',
+      method: "POST",
       body: { lobbyId, playerId },
     });
     return res;
   },
   async skip(lobbyId, playerId) {
     let res = await fetchJSON(`${URL}/api/quiz/skip/`, {
-      method: 'POST',
+      method: "POST",
       body: { lobbyId, playerId },
+    });
+    return res;
+  },
+
+  async pollQuestion(lobbyId, playerId, questionNumber) {
+    let res = await fetchJSON(`${URL}/api/polling/questionOver`, {
+      method: "POST",
+      body: { lobbyId, playerId, questionNumber },
+    });
+    return res;
+  },
+
+  async pollLeaderboard(lobbyId, playerId, questionNumber) {
+    let res = await fetchJSON(`${URL}/api/polling/leaderboardOver`, {
+      method: "POST",
+      body: { lobbyId, playerId, questionNumber },
     });
     return res;
   },

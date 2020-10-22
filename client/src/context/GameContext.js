@@ -17,6 +17,7 @@ const initialState = { ...JSON.parse(localStorage.getItem("gameState")) } || {
   playerId: "",
   numQuestions: "",
   answerTime: "",
+  currentQuestion: 1,
 };
 
 export function GameProvider(props) {
