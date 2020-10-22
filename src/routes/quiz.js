@@ -363,16 +363,17 @@ router.post('/skip/', async (req, res) => {
 
   // check if in question phase
   const currPhase = lobby.currentPhase.getPhase();
-  if (!(currPhase === 'question')) {
-    res.json({
-      error: `Error: wrong state: currently in ${currPhase} (should be question).`,
-    });
-    return;
-  }
 
   if (!lobbies.checkLobbyValid(lobbyId)) {
     res.json({
       error: 'Invalid lobbyID entered',
+    });
+    return;
+  }
+
+  if (!(currPhase === 'question')) {
+    res.json({
+      error: `Error: wrong state: currently in ${currPhase} (should be question).`,
     });
     return;
   }
@@ -417,12 +418,6 @@ router.post('/fiftyFifty/', async (req, res) => {
 
   // check if in question phase
   const currPhase = lobby.currentPhase.getPhase();
-  if (!(currPhase === 'question')) {
-    res.json({
-      error: `Error: wrong state: currently in ${currPhase} (should be question).`,
-    });
-    return;
-  }
 
   if (!req.app.locals.allLobbies.checkLobbyValid(lobbyId)) {
     res.json({
@@ -430,6 +425,14 @@ router.post('/fiftyFifty/', async (req, res) => {
     });
     return;
   }
+
+  if (!(currPhase === 'question')) {
+    res.json({
+      error: `Error: wrong state: currently in ${currPhase} (should be question).`,
+    });
+    return;
+  }
+
 
   var wantedLobby = lobbies.getLobby(lobbyId);
   var player = wantedLobby.players[userId];
