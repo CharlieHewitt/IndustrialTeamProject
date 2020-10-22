@@ -1,5 +1,6 @@
 const User = require('../storage/user');
 const Player = require('../player/player');
+const CurrentPhase = require('./currentPhase');
 const LobbySettings = require('./LobbySettings');
 const TimeController = require('./timeController');
 const {
@@ -22,11 +23,13 @@ class Lobby {
     this.currentAnswer = {};
     this.gameStarted = false;
     this.playersAnsweredCorrectly = [];
+    this.currentQuestionNumber = 0;
 
     this.questions = [];
 
     this.settings = new LobbySettings();
     this.timers = new TimeController();
+    this.currentPhase = new CurrentPhase();
 
     console.log(`Lobby created with id: ${this.lobbyID}`);
   }
@@ -34,23 +37,93 @@ class Lobby {
   startGame() {
     this.gameStarted = true;
 
+    // put questions in single array for easier access
+    const questionsInSingleArray = [];
+
     this.questions.forEach((questionsPerCategory) => {
-      // counter will track and represent question number
-      let counter = 1;
       questionsPerCategory.forEach((question) => {
-        this.resetPlayerAnswers();
-
         if (question !== null) {
-          this.currentQuestion = this.parseQuestion(question, counter);
-          this.currentAnswer = this.parseAnswer(question, counter);
+          questionsInSingleArray.push(question);
+        } else {
+          console.log('error question = null');
         }
-        // wait this.settings.answerTime
-
-        counter++;
       });
     });
 
+    this.questions = questionsInSingleArray;
+
+    console.log(this.questions);
+
+    this.moveToNextQuestion();
+    // this.questions.forEach((questionsPerCategory) => {
+    //   // counter will track and represent question number
+    //   let counter = 1;
+    //   questionsPerCategory.forEach((question) => {
+    //     this.resetPlayerAnswers();
+    //     if (question !== null) {
+    //       this.currentQuestion = this.parseQuestion(question, counter);
+    //       this.currentAnswer = this.parseAnswer(question, counter);
+    //     }
+    //     // wait this.settings.answerTime
+
+    //     counter++;
+    //   });
+    // });
+
     // end game
+  }
+
+  moveToNextQuestion() {
+    // get question before incrementing (starts from 0 => 'index 0 = question 1')
+    const question = this.questions[this.currentQuestionNumber];
+    this.currentQuestionNumber++;
+    console.log(`now on question ${this.currentQuestionNumber}`);
+    this.currentPhase.questionPhase();
+
+    // get next question
+    this.currentQuestion = this.parseQuestion(
+      question,
+      this.currentQuestionNumber
+    );
+
+    // get next answer
+    this.currentAnswer = this.parseAnswer(question, this.currentQuestionNumber);
+
+    // reset players their answers from previous question.
+    this.resetPlayerAnswers();
+    this.playersAnsweredCorrectly = [];
+
+    // start timer
+    if (this.questionTimerExists()) {
+      this.timers.removeTimer('questionTimer');
+    }
+
+    this.startQuestionTimer();
+  }
+
+  moveToLeaderboard() {
+    // update scores
+    this.currentPhase.leaderboardPhase();
+
+    // check if Quiz finished.
+    if (this.currentQuestionNumber === this.questions.length) {
+      // end of quiz
+      console.log('quiz finished');
+      this.currentPhase.gameEnded();
+      // Do end of quiz logic -> leaderboard route -> special response param for end of game screen? -> eventually destroys lobby
+      return;
+    }
+
+    // /leaderboard is available
+    console.log(
+      `doing leaderboard things that aren't yet implemented ... (leaderboard after question ${this.currentQuestionNumber})`
+    );
+
+    // start timer
+    if (this.leaderboardTimerExists()) {
+      this.timers.removeTimer('leaderboardTimer');
+    }
+    this.startLeaderboardTimer();
   }
 
   /**
@@ -249,19 +322,70 @@ class Lobby {
 
   // Timer related code
 
+  // Question Timer
+
+  questionTimerExists() {
+    if (this.timers.getTimer('questionTimer')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   startQuestionTimer() {
-    const name = 'questionTimer-addNUMBER HERE'; //+
-    this.timers.addTimer(name, this.settings.answerTime);
+    this.timers.addTimer('questionTimer', this.settings.answerTime);
   }
 
-  hasCurrentQuestionTimerExpired() {
-    const name = 'questionTimer-addNUMBER HERE';
-    return this.timers.getTimer(name).hasTargetTimePassed();
+  hasQuestionTimerExpired() {
+    if (this.timers.getTimer('questionTimer')) {
+      return this.timers.getTimer('questionTimer').hasTargetTimePassed();
+    }
+
+    // handle this if needed
+    console.log("error questionTimer didn't exist");
   }
 
-  timeRemainingOnCurrentTimer() {
-    const name = 'questionTimer-addNUMBER HERE';
-    return this.timers.getTimer(name).timeToTarget();
+  timeRemainingOnQuestionTimer() {
+    if (this.timers.getTimer('questionTimer')) {
+      return this.timers.getTimer('questionTimer').timeToTarget();
+    }
+
+    // handle if needed
+    console.log("error questionTimer didn't exist");
+  }
+
+  // Leaderboard Timer
+
+  leaderboardTimerExists() {
+    if (this.timers.getTimer('leaderboardTimer')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  startLeaderboardTimer() {
+    // hardcoded for now
+    const LEADERBOARD_DURATION = 10;
+    this.timers.addTimer('leaderboardTimer', LEADERBOARD_DURATION);
+  }
+
+  hasLeaderboardTimerExpired() {
+    if (this.timers.getTimer('leaderboardTimer')) {
+      return this.timers.getTimer('leaderboardTimer').hasTargetTimePassed();
+    }
+
+    // handle this if needed
+    console.log("error leaderboardTimer didn't exist");
+  }
+
+  timeRemainingOnLeaderboardTimer() {
+    if (this.timers.getTimer('leaderboardTimer')) {
+      return this.timers.getTimer('leaderboardTimer').timeToTarget();
+    }
+
+    // handle if needed
+    console.log("error leaderboardTimer didn't exist");
   }
 }
 

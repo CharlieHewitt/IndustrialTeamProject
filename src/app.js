@@ -26,6 +26,7 @@ app.use('/api/databasetest', require('./routes/exampleAsyncRequest.js'));
 app.use('/api/quiz', require('./routes/quiz.js'));
 app.use('/api/categories', require('./routes/categories_list.js'));
 app.use('/time', require('./routes/timeTesting.js'));
+app.use('/api/polling/', require('./routes/polling.js'));
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
