@@ -23,6 +23,7 @@ const Home = ({ location: { search }, gameState, gameUpdate }) => {
   };
 
   const handleJoin = (e) => {
+    gameUpdate({ hostName: "", userName: gameState.hostName });
     history.push(`/joinwaiting`);
   };
 
@@ -75,6 +76,8 @@ const Home = ({ location: { search }, gameState, gameUpdate }) => {
               fontSize: "20px",
             }}
             placeholder="Enter game code..."
+            value={gameState.lobbyId}
+            onChange={(ev) => gameUpdate({ lobbyId: ev.target.value })}
           />
           {/* the small one  */}
           <button onClick={handleJoin} type="submit">
