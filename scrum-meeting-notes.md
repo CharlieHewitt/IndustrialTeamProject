@@ -445,3 +445,35 @@ Apologies: Charlie, Justas
   - worked on leaderboard
   - Plan for Today: displaying leaderboard
 
+  ---
+
+## Thursday 22/10/2020
+Present: Neilson, John, Kamila, Charlie, Afzal, Gregor, Tingjie, Peter, Teodora
+Apologies: Justas
+- Neilson
+  - Finished main logic loop and integrated with timing
+  - Plan for Today: helping with merging and tidying up database
+- John
+  - 50/50 hint fixed, report writing
+  - Plan for Today: remove lobby when game has finished
+- Kamila
+  - presentation, fixed the host name error
+  - Plan for Today: check for wrong lobby id
+- Charlie
+  - helped neilson with game loop, calling game loop with requests
+  - Plan for Today: todo list tasks and integrating
+- Afzal
+  - report + fixing minor changes
+  - Plan for Today: checking that only host can start games and set settings
+- Gregor
+  - working on scaling website
+  - Plan for Today: categories and questions page scaling
+- Peter
+  - leave button in settings, volume slider
+  - Plan for Today: ficing volume slider issues
+- Tingjie
+  - linking corresponding functions to pages
+  - Plan for Today: categories displaying in lobby + helping with leaderboard
+- Teodora
+  - tried to implement join lobby linking, form for final user testing
+  - Plan for Today: corrent answer styling + leaderboard
