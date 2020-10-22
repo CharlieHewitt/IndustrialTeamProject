@@ -453,13 +453,15 @@ router.post('/fiftyFifty/', async (req, res) => {
   if (player.fiftyFifty == false) {
     //check if its a true or false Q, if not continue
     var allAnswers = Object.keys(
-      wantedLobby.currentQuestion.questionInfo.answers
+
+      wantedLobby.currentQuestion.answers
     );
     if (allAnswers.length != 2) {
       //available = false
 
       //remove the right answer so i can get another random one
       const index = allAnswers.indexOf(wantedLobby.currentAnswer);
+      console.log(index);
       if (index > -1) {
         allAnswers.splice(index, 1);
       }
@@ -470,14 +472,14 @@ router.post('/fiftyFifty/', async (req, res) => {
 
       //pick a random answer and answer
       randomAnswer = Math.floor(Math.random() * allAnswers.length);
-      answer = wantedLobby.answer;
+      answer = wantedLobby.currentAnswer.correctAnswer;
     }
   }
 
   var hint = {
     available: available, //if false shouldn't use it
     answer1: answer,
-    answer2: randomAnswer,
+    answer2: allAnswers[randomAnswer]
   };
 
   res.json(hint);
