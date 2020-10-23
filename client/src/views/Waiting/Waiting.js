@@ -84,11 +84,11 @@ const Waiting = ({ gameState, gameUpdate }) => {
         </div>
         <Modal ref={modalRef}>
           <h2>How To Play</h2>
-          <p>Instruction 1</p>
-          <p>Instruction 2</p>
-          <p>Instruction 3</p>
-          <p>Instruction 4</p>
-          <p>Instruction 5</p>
+          <p>You will have a certain number of seconds to choose your answer to each question</p>
+          <p>You will have to answer questions from different categories </p>
+          <p>Each question has one correct answer</p>
+          <p>Click on the answer you think is right to increase your score and win</p>
+          <p>Have fun keeping your brain active</p>
           <button
             className={styles.btn1}
             onClick={() => modalRef.current.close()}
