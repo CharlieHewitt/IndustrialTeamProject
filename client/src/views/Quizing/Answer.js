@@ -124,10 +124,14 @@ const Answer = ({ gameState, gameUpdate }) => {
             <div className={styles.time}>
               <Progress
                 type="circle"
-                strokeColor={time < 4 ? "red" : "#1DA57A"}
-                format={() => dayjs(time * 1000).format("mm:ss")}
+                strokeColor={time > 4 ? "red" : "#1DA57A"}
+                format={() =>
+                  dayjs((gameState.answerTime - time) * 1000).format("mm:ss")
+                }
                 percent={
-                  time ? ((time * 100) / gameState.answerTime).toFixed(1) : 0
+                  time
+                    ? 100 - ((time * 100) / gameState.answerTime).toFixed(1)
+                    : 100
                 }
               />
             </div>
