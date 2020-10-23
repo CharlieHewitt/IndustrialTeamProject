@@ -216,15 +216,24 @@ router.post('/start/', async (req, res) => {
     return;
   }
 
+  let arr = [];
   //find matching lobby to lobby id
   const lobby = lobbies.getLobby(lobbyId);
+
+  // add players
+  for (const playerId in lobby.players) {
+    const { username, id } = lobby.players[playerId];
+    const playerObject = { playerName: username, playerId: id };
+    arr.push(playerObject);
+    console.log(playerObject, '  pushing');
+  }
+
+  responseObject.players = arr;
 
   //check if the game has started. NO - respond false YES - respond with true & lobby settings
   responseObject.started = lobby.isGameStarted();
 
-  if (responseObject.started) {
-    responseObject.settings = lobby.settings.getObject();
-  }
+  responseObject.settings = lobby.settings.getObject();
 
   res.json(responseObject);
 });
@@ -487,9 +496,7 @@ router.post('/fiftyFifty/', async (req, res) => {
   //check if they've not used the 50/50 lifeline
   if (player.fiftyFifty == false) {
     //check if its a true or false Q, if not continue
-    var allAnswers = Object.keys(
-      wantedLobby.currentQuestion.answers
-    );
+    var allAnswers = Object.keys(wantedLobby.currentQuestion.answers);
     if (allAnswers.length != 2) {
       //available = false
 
@@ -512,7 +519,7 @@ router.post('/fiftyFifty/', async (req, res) => {
   var hint = {
     available: available, //if false shouldn't use it
     answer1: answer,
-    answer2: allAnswers[randomAnswer]
+    answer2: allAnswers[randomAnswer],
   };
 
   res.json(hint);
