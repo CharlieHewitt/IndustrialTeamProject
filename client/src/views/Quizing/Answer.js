@@ -12,6 +12,7 @@ const Answer = ({ gameState, gameUpdate }) => {
   const [time, setTime] = useState(0);
   const [skipAnswer, setSkipAnswer] = useState("");
   const [hintAnswers, setHintAnswers] = useState([]);
+  const [answered, setAnswered] = useState(false);
 
   const [questionData, setQuestionData] = useState(null);
 
@@ -74,6 +75,7 @@ const Answer = ({ gameState, gameUpdate }) => {
 
     if (!skipUsed) {
       gameUpdate({ hasSkipped: true });
+      setAnswered(true);
       setSkipAnswer(correctAnswer.correctAnswer);
     }
   }
@@ -86,6 +88,7 @@ const Answer = ({ gameState, gameUpdate }) => {
 
     if (available) {
       gameUpdate({ hasHint: true });
+      setAnswered(true);
       setHintAnswers([answer1, answer2]);
     }
   }
@@ -112,10 +115,11 @@ const Answer = ({ gameState, gameUpdate }) => {
             getNextQuestion={() => {}}
             skipAnswer={skipAnswer}
             hintAnswers={hintAnswers}
+            setAnswered={setAnswered}
           />
           <div className={styles.hint}>
             {/* <div className={styles.blank} /> */}
-            {!gameState.hasHint && (
+            {!gameState.hasHint && !answered && (
               <div className={styles.btn} onClick={handleHint}>
                 50/50
               </div>
@@ -136,7 +140,7 @@ const Answer = ({ gameState, gameUpdate }) => {
               />
             </div>
 
-            {!gameState.hasSkipped && (
+            {!gameState.hasSkipped && !answered && (
               <div className={styles.skipBtn} onClick={handleSkip}>
                 Skip
               </div>
