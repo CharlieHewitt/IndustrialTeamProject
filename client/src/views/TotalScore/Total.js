@@ -59,7 +59,13 @@ const Total = ({ gameState, gameUpdate }) => {
           </div>
         ))}
       </div>
-      <Link to="/" className={styles.back}>
+      <Link
+        to="/"
+        onClick={() => {
+          API.endLobby(gameState.lobbyId, gameState.playerId);
+        }}
+        className={styles.back}
+      >
         EXIT
       </Link>
     </div>
