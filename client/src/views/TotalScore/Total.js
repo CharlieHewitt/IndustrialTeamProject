@@ -3,6 +3,7 @@ import { parse, stringify } from "querystring";
 import { Link } from "react-router-dom";
 import styles from "./Total.less";
 import API from "../../api";
+import { getNumberSuffix } from "../../utils";
 
 const Total = ({ gameState, gameUpdate }) => {
   // Retrive the score and back to the next question after 3s
@@ -16,11 +17,11 @@ const Total = ({ gameState, gameUpdate }) => {
         gameState.playerId
       );
 
-      for (let i = 0; i < playersRanked.length; i += 1) {
-        playersRanked[i] = users[playersRanked[i]];
-        if (playersRanked[i] === gameState.playerId) {
+      for (let i = 0; i < playersRanked.length; i++) {
+        if (playersRanked[i] == gameState.playerId) {
           setSelfScore(i + 1);
         }
+        playersRanked[i] = users[playersRanked[i]];
       }
 
       setScores(playersRanked);
@@ -37,7 +38,7 @@ const Total = ({ gameState, gameUpdate }) => {
           <div className={styles.msg}>
             <div>
               YOU PLACED {selfScore}
-              {selfScore <= 1 ? "ST" : selfScore > 2 ? "TH" : "ND"}
+              {getNumberSuffix(selfScore)}
             </div>
           </div>
           {/*<div className={styles.setting}>Settings</div>*/}
@@ -49,7 +50,10 @@ const Total = ({ gameState, gameUpdate }) => {
             key={item.username}
             className={`${styles.item} ${index === 0 ? styles.first : ""}`}
           >
-            <div>{index + 1}st</div>
+            <div>
+              {index + 1}
+              {getNumberSuffix(index + 1)}
+            </div>
             <div className={styles.name}>{item.username}</div>
             <div>{item.score}</div>
           </div>

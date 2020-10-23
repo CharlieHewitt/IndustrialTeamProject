@@ -119,7 +119,7 @@ class Lobby {
 
     // /leaderboard is available
     console.log(
-      `doing leaderboard things that aren't yet implemented ... (leaderboard after question ${this.currentQuestionNumber})`
+      `(leaderboard now set: after question ${this.currentQuestionNumber})`
     );
 
     // start timer
@@ -324,7 +324,6 @@ class Lobby {
 
   updatePlayerScores() {
     let highestScore = Object.keys(this.players).length * 5;
-    console.log(this.players.length);
     for (let i = 0; i < this.playersAnsweredCorrectly.length; i++) {
       const playerId = this.playersAnsweredCorrectly[i].id;
       this.players[playerId].updateScore(highestScore - i * 5);
