@@ -216,15 +216,24 @@ router.post('/start/', async (req, res) => {
     return;
   }
 
+  let arr = [];
   //find matching lobby to lobby id
   const lobby = lobbies.getLobby(lobbyId);
+
+  // add players
+  for (const playerId in lobby.players) {
+    const { username, id } = lobby.players[playerId];
+    const playerObject = { playerName: username, playerId: id };
+    arr.push(playerObject);
+    console.log(playerObject, '  pushing');
+  }
+
+  responseObject.players = arr;
 
   //check if the game has started. NO - respond false YES - respond with true & lobby settings
   responseObject.started = lobby.isGameStarted();
 
-  if (responseObject.started) {
-    responseObject.settings = lobby.settings.getObject();
-  }
+  responseObject.settings = lobby.settings.getObject();
 
   res.json(responseObject);
 });
@@ -232,7 +241,6 @@ router.post('/start/', async (req, res) => {
 // @route   POST /nextQuestion/
 // @desc    A client can request information on the next question by sending a request here
 router.post('/nextQuestion/', async (req, res) => {
-
   // TODO: check if in question phase
 
   var lobbies = req.app.locals.allLobbies;
@@ -251,7 +259,9 @@ router.post('/nextQuestion/', async (req, res) => {
   var lobby = lobbies.getLobby(lobbyId);
 
   if (questionNumber !== lobby.getCurrentQuestionNumber()) {
-    res.json({error: 'question number passed in does not match the current question'})
+    res.json({
+      error: 'question number passed in does not match the current question',
+    });
     return;
   }
 
@@ -385,11 +395,8 @@ router.post('/leaderboard/', async (req, res) => {
 router.post('/skip/', async (req, res) => {
   var lobbies = req.app.locals.allLobbies;
 
-  // TODO: check if in question phase
-
   //request values
-  var lobbyId = req.body.lobbyId;
-  var playerId = req.body.playerId;
+  const { lobbyId, playerId, questionNumber } = req.body;
 
   if (!lobbies.checkLobbyValid(lobbyId)) {
     res.json({
@@ -398,18 +405,45 @@ router.post('/skip/', async (req, res) => {
     return;
   }
 
+  const lobby = lobbies.getLobby(lobbyId);
+
+  // check if in question phase
+  const currPhase = lobby.currentPhase.getPhase();
+
+  if (!(currPhase === 'question')) {
+    res.json({
+      error: `Error: wrong state: currently in ${currPhase} (should be question).`,
+    });
+    return;
+  }
+
+  // check correct question
+  if (questionNumber !== lobby.currentQuestionNumber) {
+    res.json({
+      error: `Error: wrong questionNumber: ${questionNumber}, expected ${lobby.currentQuestionNumber}`,
+    });
+    return;
+  }
+
   //lobby and player values needed
-  var lobby = lobbies.getLobby(lobbyId);
   var players = lobby.players;
   var correctA = lobby.getCurrentAnswer();
   var player = players[playerId];
   var skipUsed = true;
+
+  if (player.hasAnswered) {
+    res.json({
+      error: `Error: player has already answered this question and can't skip it.`,
+    });
+    return;
+  }
 
   //check if skip has been used.
   if (player.skipUsed == false) {
     skipUsed = false;
     player.skipUsed = true; //hint will now be used so set player used to true
     lobby.playersAnsweredCorrectly.push(players[playerId]);
+    player.hasAnswered = true;
   }
 
   //if skip has been used then dont send correct answer and instead send back dummy data
@@ -419,7 +453,7 @@ router.post('/skip/', async (req, res) => {
 
   //response json structure
   const skip = {
-    skipUsed: skipUsed,
+    skipUsed: skipUsed, // returns false -> success.
     correctAnswer: correctA,
   };
 
@@ -434,11 +468,21 @@ router.post('/fiftyFifty/', async (req, res) => {
   let lobbies = req.app.locals.allLobbies;
   var available = false;
 
-  // TODO: check if in question phase
+  var lobby = lobbies.getLobby(lobbyId);
+
+  // check if in question phase
+  const currPhase = lobby.currentPhase.getPhase();
 
   if (!req.app.locals.allLobbies.checkLobbyValid(lobbyId)) {
     res.json({
       error: 'Invalid lobbyID entered',
+    });
+    return;
+  }
+
+  if (!(currPhase === 'question')) {
+    res.json({
+      error: `Error: wrong state: currently in ${currPhase} (should be question).`,
     });
     return;
   }
@@ -452,9 +496,7 @@ router.post('/fiftyFifty/', async (req, res) => {
   //check if they've not used the 50/50 lifeline
   if (player.fiftyFifty == false) {
     //check if its a true or false Q, if not continue
-    var allAnswers = Object.keys(
-      wantedLobby.currentQuestion.questionInfo.answers
-    );
+    var allAnswers = Object.keys(wantedLobby.currentQuestion.answers);
     if (allAnswers.length != 2) {
       //available = false
 
@@ -470,14 +512,14 @@ router.post('/fiftyFifty/', async (req, res) => {
 
       //pick a random answer and answer
       randomAnswer = Math.floor(Math.random() * allAnswers.length);
-      answer = wantedLobby.answer;
+      answer = wantedLobby.currentAnswer.correctAnswer;
     }
   }
 
   var hint = {
     available: available, //if false shouldn't use it
     answer1: answer,
-    answer2: randomAnswer,
+    answer2: allAnswers[randomAnswer],
   };
 
   res.json(hint);

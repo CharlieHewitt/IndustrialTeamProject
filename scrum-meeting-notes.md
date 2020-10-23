@@ -445,3 +445,67 @@ Apologies: Charlie, Justas
   - worked on leaderboard
   - Plan for Today: displaying leaderboard
 
+  ---
+
+## Thursday 22/10/2020
+Present: Neilson, John, Kamila, Charlie, Afzal, Gregor, Tingjie, Peter, Teodora
+Apologies: Justas
+- Neilson
+  - Finished main logic loop and integrated with timing
+  - Plan for Today: helping with merging and tidying up database
+- John
+  - 50/50 hint fixed, report writing
+  - Plan for Today: remove lobby when game has finished
+- Kamila
+  - presentation, fixed the host name error
+  - Plan for Today: check for wrong lobby id
+- Charlie
+  - helped neilson with game loop, calling game loop with requests
+  - Plan for Today: todo list tasks and integrating
+- Afzal
+  - report + fixing minor changes
+  - Plan for Today: checking that only host can start games and set settings
+- Gregor
+  - working on scaling website
+  - Plan for Today: categories and questions page scaling
+- Peter
+  - leave button in settings, volume slider
+  - Plan for Today: ficing volume slider issues
+- Tingjie
+  - linking corresponding functions to pages
+  - Plan for Today: categories displaying in lobby + helping with leaderboard
+- Teodora
+  - tried to implement join lobby linking, form for final user testing
+  - Plan for Today: corrent answer styling + leaderboard  
+---
+
+## Friday 23/10/2020
+Present: Neilson, John, Kamila, Charlie, Afzal, Gregor, Tingjie, Teodora, Justas
+Apologies: Peter
+- Neilson
+  - fixing bug on backend
+  - Plan for Today: report + tidying things up
+- John
+  - end lobby route, 50/50 hint, added to API wrapper
+  - Plan for Today: 
+- Kamila
+  - checking user lobbyId, bug fixes, helping out
+  - Plan for Today: finish presentaiton
+- Charlie
+  - answer + leaderboard routes, linking + deploying
+  - Plan for Today: tidying up and finishing off code
+- Afzal
+  - skip route, phase checks, minor code changes
+  - Plan for Today: report or help out with anything else
+- Gregor
+  - finished pages working on mobile 
+  - Plan for Today: help out where needed
+- Tingjie
+  - working on frontend linking
+  - Plan for Today: helping where needed
+- Teodora
+  - css on answer buttons, how to play, compiled feedback
+  - Plan for Today: fixing minor css bug, adding feedback to presentaation, heling where needed
+- Justas
+  - implementing states
+  - Plan for Today: fix bugs and test
