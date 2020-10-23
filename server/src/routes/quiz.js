@@ -490,8 +490,8 @@ router.post('/fiftyFifty/', async (req, res) => {
   var wantedLobby = lobbies.getLobby(lobbyId);
   var player = wantedLobby.players[userId];
 
-  var answer = '';
-  var randomAnswer = '';
+  let answer = '';
+  let randomAnswer = '';
 
   //check if they've not used the 50/50 lifeline
   if (player.fiftyFifty == false) {
@@ -501,10 +501,16 @@ router.post('/fiftyFifty/', async (req, res) => {
       //available = false
 
       //remove the right answer so i can get another random one
-      const index = allAnswers.indexOf(wantedLobby.currentAnswer);
+
+      // console.log(allAnswers);
+      const index = allAnswers.indexOf(wantedLobby.currentAnswer.correctAnswer);
+      // console.log(wantedLobby.currentAnswer);
+      // console.log(index);
       if (index > -1) {
         allAnswers.splice(index, 1);
+        //console.log('removed');
       }
+      //console.log(allAnswers);
 
       //set available and thats its been used for the player
       available = true;
