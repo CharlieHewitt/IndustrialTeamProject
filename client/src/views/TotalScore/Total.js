@@ -16,11 +16,11 @@ const Total = ({ gameState, gameUpdate }) => {
         gameState.playerId
       );
 
-      for (let i = 0; i < playersRanked.length; i += 1) {
-        playersRanked[i] = users[playersRanked[i]];
-        if (playersRanked[i] === gameState.playerId) {
+      for (let i = 0; i < playersRanked.length; i++) {
+        if (playersRanked[i] == gameState.playerId) {
           setSelfScore(i + 1);
         }
+        playersRanked[i] = users[playersRanked[i]];
       }
 
       setScores(playersRanked);
