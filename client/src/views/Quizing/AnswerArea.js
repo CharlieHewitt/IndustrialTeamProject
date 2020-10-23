@@ -10,11 +10,13 @@ const AnswerArea = (props) => {
     questionNum,
     skipAnswer,
     hintAnswers,
+    setAnswered,
   } = props;
   const [isChosen, setIsChosen] = useState(false);
   const [correctAnswer, setCorrectAnswer] = useState("");
 
   const handleChose = (answer) => {
+    setAnswered(true);
     sendAnswer(lobbyId, playerId, questionNum, answer);
     setIsChosen(true);
   };

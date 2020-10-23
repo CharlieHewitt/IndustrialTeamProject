@@ -4,6 +4,7 @@ import Modal from "../../components/Modal/Modal";
 import { parse } from "querystring";
 import API from "../../api";
 import { useHistory } from "react-router-dom";
+import Instructions from "../../components/Instructions";
 
 let interval;
 
@@ -69,13 +70,13 @@ const JoinWaiting = ({ gameState, gameUpdate }) => {
         <div className={styles.blank} />
 
         <div className={`${styles.left1} ${styles.box}`}>
-        {"COMPETITORS: "}
+          {"COMPETITORS: "}
           {players.map((player) => (
             <div>{player.playerName}</div>
           ))}
         </div>
         <div className={`${styles.left2} ${styles.box}`}>
-        {"CATEGORIES: "}
+          {"CATEGORIES: "}
           {gameState.categories.map((cat) => (
             <div>{cat}</div>
           ))}
@@ -96,12 +97,7 @@ const JoinWaiting = ({ gameState, gameUpdate }) => {
           HOW TO PLAY
         </div>
         <Modal ref={modalRef}>
-          <h2>How To Play</h2>
-          <p>Instruction 1</p>
-          <p>Instruction 2</p>
-          <p>Instruction 3</p>
-          <p>Instruction 4</p>
-          <p>Instruction 5</p>
+          <Instructions />
 
           <button
             className={styles.btn}

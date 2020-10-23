@@ -45,7 +45,7 @@ const HostSettings = ({ gameState, gameUpdate }) => {
           <HostSettingRow
             value={numQuestions}
             setValue={setNumQuestions}
-            title="Number of Questions"
+            title="Number of Questions (per Category)"
           />
           <HostSettingRow
             value={timer}
