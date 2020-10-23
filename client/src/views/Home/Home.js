@@ -43,15 +43,7 @@ const Home = ({ location: { search }, gameState, gameUpdate }) => {
           name="userName"
           placeholder="Enter name..."
           required
-          style={{
-            backgroundColor: "#ffffff",
-            width: "890px",
-            height: "130px",
-            position: "absolute",
-            fontSize: "70px",
-            left: "515px",
-            top: "393px",
-          }}
+          className="inputbox"
           value={gameState.hostName}
           onChange={(ev) => gameUpdate({ hostName: ev.target.value })}
           className="inputbox"
