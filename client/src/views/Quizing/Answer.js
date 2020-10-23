@@ -117,7 +117,7 @@ const Answer = ({ gameState, gameUpdate }) => {
             {/* <div className={styles.blank} /> */}
             {!gameState.hasHint && (
               <div className={styles.btn} onClick={handleHint}>
-                Hint
+                50/50
               </div>
             )}
 
