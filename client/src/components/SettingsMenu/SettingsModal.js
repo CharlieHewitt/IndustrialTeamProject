@@ -42,6 +42,7 @@ export default function Modal({ open, children, onClose, history }) {
             Leave Game
           </button>
           <p></p>
+
         </div>
       </div>
     </>,
