@@ -4,151 +4,113 @@ import { Progress, Popover } from "antd";
 import dayjs from "dayjs";
 import styles from "./Answer.less";
 import API from "../../api";
-import AnswerArea from './AnswerArea';
+import AnswerArea from "./AnswerArea";
+import { useHistory } from "react-router-dom";
 
-const Answer = ({ location: { search }, history }) => {
-  const [query, setQuery] = useState({});
-  const [answerList, setAnswerList] = useState([]);
+const Answer = ({ gameState, gameUpdate }) => {
+  const history = useHistory();
+
   const [time, setTime] = useState(0);
 
-  const [lobbyId, setLobbyId] = useState("");
-  const [playerId, setPlayerId] = useState(0);
-  const [category, setCategory] = useState("");
-  const [question, setQuestion] = useState("");
-  const [questionNum, setQuestionNum] = useState(1);
-  const [test, setTest] = useState({
-    question: "how are you",
-    correctAnswer: "a",
-    answers: ["a", "b", "c", "d"]
-  })
+  const [questionData, setQuestionData] = useState(null);
 
-  // Get data from url
   useEffect(() => {
-    const data = parse(search.split("?")[1]);
-    console.log(data);
-    // Store the data into query, set the timer
-    setQuery(data);
-    setTime(data.time);
-    setPlayerId(data.playerId);
-    setLobbyId(data.lobbyId);
+    async function getQuestion() {
+      const {
+        answers,
+        question,
+        category,
+        questionNumber,
+        success,
+      } = await API.getNextQuestion(
+        gameState.lobbyId,
+        gameState.playerId,
+        gameState.currentQuestion || 1
+      );
 
-    getQuestion(data.lobbyId, data.playerId, questionNum);
-
-    async function getQuestion(lobbyId, playerId, questionNum) {
-      const res2 = await API.getNextQuestion(lobbyId, playerId, questionNum);
-      console.log(res2);
-
-      // setQuestionNum(res2.questionNumber);
-      // setCategory(res2.category);
-      // setQuestion(res2.question);
-      // setAnswerList([
-      //      res2.answers.a,
-      //      res2.answers.b,
-      //      res2.answers.c,
-      //      res2.answers.d,
-      // ]);                        uncomment these after this function is fixed
-
-    }
-
-    // Start the timer after getting data of the questions
-    let i = data.time;
-    const timer = setInterval(() => {
-      i = i - 1;
-      setTime(i);
-      if (i === 0) {
-        //Clear the timer when run out of time
-        clearInterval(timer);
-        if (data.num === data.active) {
-          history.push(`/totalscore?${stringify({ ...data, name: "empty" })}&lobbyId=${lobbyId}&playerId=${playerId}`);
-        } else {
-          history.push(`/score?${stringify({ ...data, name: "empty" })}&lobbyId=${lobbyId}&playerId=${playerId}`);
-        }
+      if (!success) {
+        alert("Error getting question!");
+        gameUpdate({});
+        history.push("/");
+      } else {
+        setQuestionData({
+          answers,
+          question,
+          category,
+          questionNumber,
+        });
       }
-    }, 1000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, [search, history]);
-
-  // console.log(res);
-  async function getNextQuestion() {
-    const res = await API.getNextQuestion(lobbyId, playerId, questionNum);
-    setQuestion(res.question);
-  }
-
-  // Upload the answer and get points
-  const handleChose = (name) => {
-    console.log(query);
-    //Compare with the correct answer to see if it is right
-    // sendAnswer(lobbyId, playerId, questionNum, name);
-    alert("Testing")
-    // To see if it is the last question, push everything if it is
-    if (query.num === query.active) {
-      history.push(`/totalscore?${stringify({ ...query, name })}&lobbyId=${lobbyId}&playerId=${playerId}`);
-    } else {
-      history.push(`/score?${stringify({ ...query, name })}&lobbyId=${lobbyId}&playerId=${playerId}`);
     }
-  };
+
+    const interval = setInterval(() => setTime((t) => t + 1), 1000);
+
+    const pollInterval = setInterval(async () => {
+      const { questionOver } = await API.pollQuestion(
+        gameState.lobbyId,
+        gameState.playerId,
+        gameState.currentQuestion || 1
+      );
+
+      if (questionOver) {
+        history.push("/score");
+      }
+    }, 500);
+
+    getQuestion();
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(pollInterval);
+    };
+  }, []);
 
   return (
-    <div className={styles.answer}>
-      <div className={styles.header}>
-        <div className={styles.container}>
-          <div className={styles.title}>CATEGORY: {category}</div>
-          <div className={styles.msg}>{question}</div>
-        </div>
-      </div>
-      <AnswerArea
-        answers={answerList}
-        question={question}
-        query={query}
-        lobbyId={lobbyId}
-        playerId={playerId}
-        QuestionNum={questionNum}
-        getNextQuestion={() => { getNextQuestion() }}
-      />
-      {/* <div className={styles.content} >
-        <div>
-          {answerList.map((item) => (
-            <div
-              key={item.name}
-              onClick={() => handleChose(item.name)}
-              className={styles.btnBox}
-            >
-              <div className={styles.btn}>{item.name}</div>
+    <>
+      {questionData ? (
+        <div className={styles.answer}>
+          <div className={styles.header}>
+            <div className={styles.container}>
+              <div className={styles.title}>
+                CATEGORY: {questionData.category}
+              </div>
+              <div className={styles.msg}>{questionData.question}</div>
             </div>
-          ))}
-        </div>
-        
-        <div className={styles.time}>
-          <Progress
-            type="circle"
-            strokeColor={time < 4 ? "red" : "#1DA57A"}
-            format={() => dayjs(time * 1000).format("mm:ss")}
-            percent={time ? ((time * 100) / query.time).toFixed(1) : 0}
+          </div>
+          <AnswerArea
+            answers={questionData.answers}
+            question={questionData.question}
+            query={""}
+            lobbyId={gameState.lobbyId}
+            playerId={gameState.playerId}
+            questionNum={questionData.questionNumber}
+            getNextQuestion={() => {}}
           />
-        </div>
-      </div> */}
-      <div className={styles.hint}>
-        {/* <div className={styles.blank} /> */}
-        <div className={styles.btn}>Hint</div>
-        <div className={styles.time}>
-          <Progress
-            type="circle"
-            strokeColor={time < 4 ? "red" : "#1DA57A"}
-            format={() => dayjs(time * 1000).format("mm:ss")}
-            percent={time ? ((time * 100) / query.time).toFixed(1) : 0}
-          />
-        </div>
-        <div className={styles.skipBtn}>Skip</div>
-        {/* {answerList.map((item) => (
+          <div className={styles.hint}>
+            {/* <div className={styles.blank} /> */}
+            <div className={styles.btn}>Hint</div>
+            <div className={styles.time}>
+              <Progress
+                type="circle"
+                strokeColor={time < 4 ? "red" : "#1DA57A"}
+                format={() => dayjs(time * 1000).format("mm:ss")}
+                percent={
+                  time ? ((time * 100) / gameState.answerTime).toFixed(1) : 0
+                }
+              />
+            </div>
+            <div className={styles.skipBtn}>Skip</div>
+            {/* {answerList.map((item) => (
           <Popover key={item.hint} content={item.msg}>
             <div className={styles.btn}>{item.hint}</div>
           </Popover>
         ))} */}
-        {/* <div className={styles.blank} /> */}
-      </div>
-    </div>
+            {/* <div className={styles.blank} /> */}
+          </div>
+        </div>
+      ) : (
+        <p style={{ textAlign: "center" }}>Loading...</p>
+      )}
+    </>
   );
 };
 export default Answer;

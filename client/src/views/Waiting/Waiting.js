@@ -7,11 +7,7 @@ import { useHistory } from "react-router-dom";
 const Waiting = ({ gameState, gameUpdate }) => {
   const history = useHistory();
 
-
-  async function startGame(lobbyId, playerId){
-    const res = await API.startQuiz(lobbyId, playerId);
-    console.log(res);
-  }
+  const [players, setPlayers] = useState([]);
 
   // Get data from api
   const handleStart = async () => {
@@ -30,21 +26,21 @@ const Waiting = ({ gameState, gameUpdate }) => {
     }
   };
 
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const res = await API.getLobbyPlayers(gameState.lobbyId);
+
+      setPlayers(res.players);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const modalRef = React.useRef();
 
   const openModal = () => {
     modalRef.current.openModal();
   };
-  // title: "GAME CODE: ",
-  // competitors: "COMPETITORS",
-  // topics: "CATEGORIES",
-  // time: "TIME PER QUESTION: ",
-  // num: "NUMBER OF QUESTIONS: ",
-    async function getPlayers(lobbyId){
-      const res2 = await API.getLobbyPlayers(lobbyId);
-      console.log(res2.players[0]);
-      setPlayerList(res2.players);
-
 
   return (
     <div className={styles.waiting}>
@@ -61,7 +57,9 @@ const Waiting = ({ gameState, gameUpdate }) => {
         <div className={styles.blank} />
         <div className={`${styles.left} ${styles.box}`}>
           {"COMPETITORS: "}
-          {gameState.hostName}
+          {players.map((player) => (
+            <div>{player.playerName}</div>
+          ))}
         </div>
         <div className={`${styles.left} ${styles.box}`}>
           {"CATEGORIES: "}
@@ -81,7 +79,9 @@ const Waiting = ({ gameState, gameUpdate }) => {
       </div>
       <div className={styles.footer}>
         <div className={styles.blank} />
-        <div className={styles.btn1} onClick={openModal}>HOW TO PLAY</div>
+        <div className={styles.btn1} onClick={openModal}>
+          HOW TO PLAY
+        </div>
         <Modal ref={modalRef}>
           <h2>How To Play</h2>
           <p>Instruction 1</p>
@@ -89,8 +89,14 @@ const Waiting = ({ gameState, gameUpdate }) => {
           <p>Instruction 3</p>
           <p>Instruction 4</p>
           <p>Instruction 5</p>
-          <button className={styles.btn1} onClick={() => modalRef.current.close()} style={{alignSelf:"center"}}>Close!</button>
-          </Modal>
+          <button
+            className={styles.btn1}
+            onClick={() => modalRef.current.close()}
+            style={{ alignSelf: "center" }}
+          >
+            Close!
+          </button>
+        </Modal>
         <div onClick={() => handleStart()} className={styles.btn2}>
           START
         </div>
