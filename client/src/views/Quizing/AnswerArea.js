@@ -38,7 +38,7 @@ const AnswerArea = (props) => {
 
     async function send(lobbyId, playerId, questionNum, answer) {
       const res = await API.sendAnswer(lobbyId, playerId, questionNum, answer);
-      setCorrectAnswer(res.correctAnswer);
+      setCorrectAnswer(res.correctAnswer.correctAnswer);
     }
   };
 
