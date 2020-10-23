@@ -121,7 +121,7 @@ router.post('/leaderboardOver', async (req, res) => {
     return;
   }
 
-  if (!lobby.leaderboardTimerExists()) {
+  if (!lobby.leaderboardTimerExists() && lobby.questions.length > 1) {
     res.json({ error: "Error : leaderboardTimer doesn't exist" });
     return;
   }
