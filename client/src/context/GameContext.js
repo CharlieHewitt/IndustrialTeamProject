@@ -7,19 +7,8 @@ const reducer = (state, pair) => {
   localStorage.setItem("gameState", JSON.stringify(newState));
   return newState;
 };
-const initialState = { ...JSON.parse(localStorage.getItem("gameState")) } || {
-  hostName: "",
-  lobbyId: "",
-  userName: "",
-  timeSetting: "",
-  roundCount: "",
-  categories: "",
-  playerId: "",
-  numQuestions: "",
-  answerTime: "",
-  currentQuestion: 1,
-};
-
+const initialState =
+  { ...JSON.parse(localStorage.getItem("gameState")) } || initialState;
 export function GameProvider(props) {
   const [state, update] = useReducer(reducer, initialState);
 

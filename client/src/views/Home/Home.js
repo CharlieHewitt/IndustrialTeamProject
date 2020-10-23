@@ -4,6 +4,7 @@ import "./index.css";
 // import EnterName from "../../components/EnterName";
 import Modal from "../../components/Modal/Modal";
 import { useHistory } from "react-router-dom";
+import initialState from "../../context/initialState";
 
 const Home = ({ location: { search }, gameState, gameUpdate }) => {
   const modalRef = React.useRef();
@@ -11,6 +12,7 @@ const Home = ({ location: { search }, gameState, gameUpdate }) => {
 
   useEffect(() => {
     localStorage.setItem("gameState", JSON.stringify({ currentQuestion: 1 }));
+    gameUpdate(initialState);
   }, []);
 
   const handleHost = (e) => {

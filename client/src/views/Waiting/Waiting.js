@@ -7,6 +7,8 @@ import { useHistory } from "react-router-dom";
 const Waiting = ({ gameState, gameUpdate }) => {
   const history = useHistory();
 
+  const [players, setPlayers] = useState([]);
+
   // Get data from api
   const handleStart = async () => {
     const { lobbyId, success } = await API.startQuiz(
@@ -24,21 +26,21 @@ const Waiting = ({ gameState, gameUpdate }) => {
     }
   };
 
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const res = await API.getLobbyPlayers(gameState.lobbyId);
+
+      setPlayers(res.players);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const modalRef = React.useRef();
 
   const openModal = () => {
     modalRef.current.openModal();
   };
-  // title: "GAME CODE: ",
-  // competitors: "COMPETITORS",
-  // topics: "CATEGORIES",
-  // time: "TIME PER QUESTION: ",
-  // num: "NUMBER OF QUESTIONS: ",
-  // async function getPlayers(lobbyId) {
-  //   const res2 = await API.getLobbyPlayers(lobbyId);
-  //   console.log(res2.players[0]);
-  //   setPlayerList(res2.players);
-  // }
 
   return (
     <div className={styles.waiting}>
@@ -55,7 +57,9 @@ const Waiting = ({ gameState, gameUpdate }) => {
         <div className={styles.blank} />
         <div className={`${styles.left} ${styles.box}`}>
           {"COMPETITORS: "}
-          {gameState.hostName}
+          {players.map((player) => (
+            <div>{player.playerName}</div>
+          ))}
         </div>
         <div className={`${styles.left} ${styles.box}`}>
           {"CATEGORIES: "}
