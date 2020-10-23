@@ -32,7 +32,7 @@ export default function Modal({ open, children, onClose }) {
         {children}
         <button onClick={onClose}>Return to Game</button>
         <p></p>
-        <div><button onClick={() => window.location.replace("http://localhost:3001/Home")}>Leave Game</button>
+        <div><button onClick={() => window.location.replace("http://localhost:3000/Home")}>Leave Game</button>
         <p></p>
         </div>
     </div>  
