@@ -476,4 +476,36 @@ Apologies: Justas
   - Plan for Today: categories displaying in lobby + helping with leaderboard
 - Teodora
   - tried to implement join lobby linking, form for final user testing
-  - Plan for Today: corrent answer styling + leaderboard
+  - Plan for Today: corrent answer styling + leaderboard  
+---
+
+## Friday 23/10/2020
+Present: Neilson, John, Kamila, Charlie, Afzal, Gregor, Tingjie, Teodora, Justas
+Apologies: Peter
+- Neilson
+  - fixing bug on backend
+  - Plan for Today: report + tidying things up
+- John
+  - end lobby route, 50/50 hint, added to API wrapper
+  - Plan for Today: 
+- Kamila
+  - checking user lobbyId, bug fixes, helping out
+  - Plan for Today: finish presentaiton
+- Charlie
+  - answer + leaderboard routes, linking + deploying
+  - Plan for Today: tidying up and finishing off code
+- Afzal
+  - skip route, phase checks, minor code changes
+  - Plan for Today: report or help out with anything else
+- Gregor
+  - finished pages working on mobile 
+  - Plan for Today: help out where needed
+- Tingjie
+  - working on frontend linking
+  - Plan for Today: helping where needed
+- Teodora
+  - css on answer buttons, how to play, compiled feedback
+  - Plan for Today: fixing minor css bug, adding feedback to presentaation, heling where needed
+- Justas
+  - implementing states
+  - Plan for Today: fix bugs and test
