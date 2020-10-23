@@ -3,6 +3,7 @@ import styles from "./Waiting.less";
 import Modal from "../../components/Modal/Modal";
 import API from "../../api";
 import { useHistory } from "react-router-dom";
+import Instructions from "../../components/Instructions";
 
 const Waiting = ({ gameState, gameUpdate }) => {
   const history = useHistory();
@@ -83,12 +84,7 @@ const Waiting = ({ gameState, gameUpdate }) => {
           HOW TO PLAY
         </div>
         <Modal ref={modalRef}>
-          <h2>How To Play</h2>
-          <p>You will have a certain number of seconds to choose your answer to each question</p>
-          <p>You will have to answer questions from different categories </p>
-          <p>Each question has one correct answer</p>
-          <p>Click on the answer you think is right to increase your score and win</p>
-          <p>Have fun keeping your brain active</p>
+          <Instructions />
           <button
             className={styles.btn1}
             onClick={() => modalRef.current.close()}

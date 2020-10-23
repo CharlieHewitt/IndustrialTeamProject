@@ -3,6 +3,7 @@ import { parse, stringify } from "querystring";
 import styles from "./Score.less";
 import API from "../../api";
 import { useHistory } from "react-router-dom";
+import { getNumberSuffix } from "../../utils";
 
 const Score = ({ gameState, gameUpdate }) => {
   // Retrive the score and back to the next question after 3s
@@ -57,7 +58,10 @@ const Score = ({ gameState, gameUpdate }) => {
             key={item.username}
             className={`${styles.item} ${index === 0 ? styles.first : ""}`}
           >
-            <div>{index + 1}st</div>
+            <div>
+              {index + 1}
+              {getNumberSuffix(index + 1)}
+            </div>
             <div className={styles.name}>{item.username}</div>
             <div>{item.score}</div>
           </div>
