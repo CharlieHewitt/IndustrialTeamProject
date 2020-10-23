@@ -69,11 +69,13 @@ const JoinWaiting = ({ gameState, gameUpdate }) => {
         <div className={styles.blank} />
 
         <div className={`${styles.left1} ${styles.box}`}>
+        {"COMPETITORS: "}
           {players.map((player) => (
             <div>{player.playerName}</div>
           ))}
         </div>
         <div className={`${styles.left2} ${styles.box}`}>
+        {"CATEGORIES: "}
           {gameState.categories.map((cat) => (
             <div>{cat}</div>
           ))}
