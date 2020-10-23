@@ -232,7 +232,6 @@ router.post('/start/', async (req, res) => {
 // @route   POST /nextQuestion/
 // @desc    A client can request information on the next question by sending a request here
 router.post('/nextQuestion/', async (req, res) => {
-
   // TODO: check if in question phase
 
   var lobbies = req.app.locals.allLobbies;
@@ -251,7 +250,9 @@ router.post('/nextQuestion/', async (req, res) => {
   var lobby = lobbies.getLobby(lobbyId);
 
   if (questionNumber !== lobby.getCurrentQuestionNumber()) {
-    res.json({error: 'question number passed in does not match the current question'})
+    res.json({
+      error: 'question number passed in does not match the current question',
+    });
     return;
   }
 
@@ -386,12 +387,7 @@ router.post('/skip/', async (req, res) => {
   var lobbies = req.app.locals.allLobbies;
 
   //request values
-  var lobbyId = req.body.lobbyId;
-  var playerId = req.body.playerId;
-  var lobby = lobbies.getLobby(lobbyId);
-
-  // check if in question phase
-  const currPhase = lobby.currentPhase.getPhase();
+  const { lobbyId, playerId, questionNumber } = req.body;
 
   if (!lobbies.checkLobbyValid(lobbyId)) {
     res.json({
@@ -400,6 +396,11 @@ router.post('/skip/', async (req, res) => {
     return;
   }
 
+  const lobby = lobbies.getLobby(lobbyId);
+
+  // check if in question phase
+  const currPhase = lobby.currentPhase.getPhase();
+
   if (!(currPhase === 'question')) {
     res.json({
       error: `Error: wrong state: currently in ${currPhase} (should be question).`,
@@ -407,18 +408,33 @@ router.post('/skip/', async (req, res) => {
     return;
   }
 
+  // check correct question
+  if (questionNumber !== lobby.currentQuestionNumber) {
+    res.json({
+      error: `Error: wrong questionNumber: ${questionNumber}, expected ${lobby.currentQuestionNumber}`,
+    });
+    return;
+  }
+
   //lobby and player values needed
-  var lobby = lobbies.getLobby(lobbyId);
   var players = lobby.players;
   var correctA = lobby.getCurrentAnswer();
   var player = players[playerId];
   var skipUsed = true;
+
+  if (player.hasAnswered) {
+    res.json({
+      error: `Error: player has already answered this question and can't skip it.`,
+    });
+    return;
+  }
 
   //check if skip has been used.
   if (player.skipUsed == false) {
     skipUsed = false;
     player.skipUsed = true; //hint will now be used so set player used to true
     lobby.playersAnsweredCorrectly.push(players[playerId]);
+    player.hasAnswered = true;
   }
 
   //if skip has been used then dont send correct answer and instead send back dummy data
@@ -428,7 +444,7 @@ router.post('/skip/', async (req, res) => {
 
   //response json structure
   const skip = {
-    skipUsed: skipUsed,
+    skipUsed: skipUsed, // returns false -> success.
     correctAnswer: correctA,
   };
 
@@ -461,7 +477,6 @@ router.post('/fiftyFifty/', async (req, res) => {
     });
     return;
   }
-
 
   var wantedLobby = lobbies.getLobby(lobbyId);
   var player = wantedLobby.players[userId];
