@@ -30,13 +30,6 @@ const API = {
     });
     return res;
   },
-  async getLobbyPlayers(lobbyId) {
-    let res = await fetchJSON(`${URL}/api/lobby/getLobbyPlayers`, {
-      method: "POST",
-      body: { lobbyId },
-    });
-    return res;
-  },
 
   async joinLobby(lobbyId, playerName) {
     let res = await fetchJSON(`${URL}/api/lobby/join/`, {
@@ -123,10 +116,10 @@ const API = {
     });
     return res;
   },
-  async skip(lobbyId, playerId) {
+  async skip(lobbyId, playerId, questionNumber) {
     let res = await fetchJSON(`${URL}/api/quiz/skip/`, {
       method: "POST",
-      body: { lobbyId, playerId },
+      body: { lobbyId, playerId, questionNumber },
     });
     return res;
   },

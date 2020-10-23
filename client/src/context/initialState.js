@@ -9,4 +9,6 @@ export default {
   numQuestions: "",
   answerTime: "",
   currentQuestion: 1,
+  hasSkipped: false,
+  hasHint: false,
 };

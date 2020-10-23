@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from "react";
+import initialState from "./initialState";
 
 export const GameContext = createContext();
 
@@ -7,10 +8,10 @@ const reducer = (state, pair) => {
   localStorage.setItem("gameState", JSON.stringify(newState));
   return newState;
 };
-const initialState =
+const inState =
   { ...JSON.parse(localStorage.getItem("gameState")) } || initialState;
 export function GameProvider(props) {
-  const [state, update] = useReducer(reducer, initialState);
+  const [state, update] = useReducer(reducer, inState);
 
   return (
     <GameContext.Provider value={{ state, update }}>

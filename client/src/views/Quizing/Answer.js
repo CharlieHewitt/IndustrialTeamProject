@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { parse, stringify } from "querystring";
-import { Progress, Popover } from "antd";
+import { Progress } from "antd";
 import dayjs from "dayjs";
 import styles from "./Answer.less";
 import API from "../../api";
@@ -11,6 +10,8 @@ const Answer = ({ gameState, gameUpdate }) => {
   const history = useHistory();
 
   const [time, setTime] = useState(0);
+  const [skipAnswer, setSkipAnswer] = useState("");
+  const [hintAnswers, setHintAnswers] = useState([]);
 
   const [questionData, setQuestionData] = useState(null);
 
@@ -64,6 +65,31 @@ const Answer = ({ gameState, gameUpdate }) => {
     };
   }, []);
 
+  async function handleSkip() {
+    const { skipUsed, correctAnswer } = await API.skip(
+      gameState.lobbyId,
+      gameState.playerId,
+      gameState.currentQuestion
+    );
+
+    if (!skipUsed) {
+      gameUpdate({ hasSkipped: true });
+      setSkipAnswer(correctAnswer.correctAnswer);
+    }
+  }
+
+  async function handleHint() {
+    const { available, answer1, answer2 } = await API.fiftyFify(
+      gameState.lobbyId,
+      gameState.playerId
+    );
+
+    if (available) {
+      gameUpdate({ hasHint: true });
+      setHintAnswers([answer1, answer2]);
+    }
+  }
+
   return (
     <>
       {questionData ? (
@@ -84,10 +110,17 @@ const Answer = ({ gameState, gameUpdate }) => {
             playerId={gameState.playerId}
             questionNum={questionData.questionNumber}
             getNextQuestion={() => {}}
+            skipAnswer={skipAnswer}
+            hintAnswers={hintAnswers}
           />
           <div className={styles.hint}>
             {/* <div className={styles.blank} /> */}
-            <div className={styles.btn}>Hint</div>
+            {!gameState.hasHint && (
+              <div className={styles.btn} onClick={handleHint}>
+                Hint
+              </div>
+            )}
+
             <div className={styles.time}>
               <Progress
                 type="circle"
@@ -98,13 +131,12 @@ const Answer = ({ gameState, gameUpdate }) => {
                 }
               />
             </div>
-            <div className={styles.skipBtn}>Skip</div>
-            {/* {answerList.map((item) => (
-          <Popover key={item.hint} content={item.msg}>
-            <div className={styles.btn}>{item.hint}</div>
-          </Popover>
-        ))} */}
-            {/* <div className={styles.blank} /> */}
+
+            {!gameState.hasSkipped && (
+              <div className={styles.skipBtn} onClick={handleSkip}>
+                Skip
+              </div>
+            )}
           </div>
         </div>
       ) : (
